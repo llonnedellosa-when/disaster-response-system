@@ -1,0 +1,748 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>DRES · Polangui</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="dashboard.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <div class="topbar-logo">🛡️</div>
+          <div>
+            <div class="topbar-title">DRES Polangui</div>
+            <div class="topbar-sub">Disaster Response System</div>
+          </div>
+        </div>
+        <div class="topbar-right">
+          <div class="alert-chip" id="alertChip">⚠️ SIGNAL #2</div>
+          <div class="topbar-avatar" id="userAvatar">U</div>
+        </div>
+      </div>
+
+      <!-- PAGES -->
+      <div class="pages">
+        <!-- HOME -->
+        <div class="page active" id="page-home">
+          <div class="page-pad">
+            <div class="home-greeting">
+              <div class="greet-hi">Magandang araw! / Good day!</div>
+              <div class="greet-name" id="greetName">Resident</div>
+              <div class="greet-sub">
+                Polangui, Albay &middot; Stay safe and prepared
+              </div>
+            </div>
+            <div class="quick-grid">
+              <button class="quick-card" onclick="switchPage('report')">
+                <span class="qc-icon">🚨</span>
+                <span class="qc-label">I-report / Report</span>
+                <span class="qc-sub">Submit an incident</span>
+              </button>
+              <button class="quick-card" onclick="switchPage('chat')">
+                <span class="qc-icon">💬</span>
+                <span class="qc-label">Ask DRES-Bot</span>
+                <span class="qc-sub">Disaster guidance</span>
+              </button>
+              <button
+                class="quick-card"
+                onclick="
+                  quickChat('Saan ang mga evacuation center sa Polangui?')
+                "
+              >
+                <span class="qc-icon">🏫</span>
+                <span class="qc-label">Evacuation</span>
+                <span class="qc-sub">Mga evacuation center</span>
+              </button>
+              <button
+                class="quick-card"
+                onclick="
+                  quickChat(
+                    'Ano ang mga emergency contact numbers sa Polangui?',
+                  )
+                "
+              >
+                <span class="qc-icon">📞</span>
+                <span class="qc-label">Emergency Nos.</span>
+                <span class="qc-sub">Mga emergency contact</span>
+              </button>
+            </div>
+            <div class="card" style="margin-bottom: 0.75rem">
+              <div class="card-title">📊 My Reports Summary</div>
+              <div class="summary-row">
+                <div class="summary-box">
+                  <div class="summary-val" id="home-total">0</div>
+                  <div class="summary-key">TOTAL</div>
+                </div>
+                <div class="summary-box warn">
+                  <div class="summary-val" id="home-pending">0</div>
+                  <div class="summary-key">PENDING</div>
+                </div>
+                <div class="summary-box success">
+                  <div class="summary-val" id="home-resolved">0</div>
+                  <div class="summary-key">RESOLVED</div>
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">💡 Safety Tips / Payo sa Kaligtasan</div>
+              <div class="tips-list">
+                <div class="tip-item">
+                  <span class="tip-icon">🔦</span>
+                  <span
+                    >Mag-imbak ng flashlight, de-lata, at tubig para sa 3 araw
+                    bago dumating ang bagyo.</span
+                  >
+                </div>
+                <div class="tip-item">
+                  <span class="tip-icon">📱</span>
+                  <span
+                    >I-charge ang inyong cellphone at powerbank bago tumaas ang
+                    signal ng bagyo.</span
+                  >
+                </div>
+                <div class="tip-item">
+                  <span class="tip-icon">🏠</span>
+                  <span
+                    >Alamin ang pinakamalapit na evacuation center sa inyong
+                    barangay ngayon.</span
+                  >
+                </div>
+                <div class="tip-item">
+                  <span class="tip-icon">📋</span>
+                  <span
+                    >I-report agad ang anumang flood, damage, o missing person
+                    sa pamamagitan ng app na ito.</span
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHAT -->
+        <div class="page" id="page-chat">
+          <div class="chat-quick">
+            <button
+              class="cq-btn"
+              onclick="quickChat('Ano ang gagawin bago dumating ang bagyo?')"
+            >
+              🌀 Bago ang Bagyo
+            </button>
+            <button
+              class="cq-btn"
+              onclick="quickChat('Saan ang mga evacuation center sa Polangui?')"
+            >
+              🏫 Evacuation
+            </button>
+            <button
+              class="cq-btn"
+              onclick="quickChat('Ano ang mga emergency contact numbers?')"
+            >
+              📞 Emergency
+            </button>
+            <button
+              class="cq-btn"
+              onclick="quickChat('How do I submit an incident report?')"
+            >
+              📋 Mag-report
+            </button>
+            <button
+              class="cq-btn"
+              onclick="
+                quickChat('Anong signal level ang kasalukuyan sa Polangui?')
+              "
+            >
+              ⚠️ Signal Level
+            </button>
+          </div>
+          <div class="chat-messages" id="chatMessages">
+            <div class="msg msg-bot">
+              👋 Kumusta! Ako si <strong>DRES-Bot</strong>, ang inyong assistant
+              para sa disaster preparedness at emergency response sa Polangui,
+              Albay.<br /><br />
+              Maaari akong tumulong sa:<br />
+              &bull; 🌀 Typhoon &amp; flood safety guidance<br />
+              &bull; 📞 Emergency hotlines &amp; contacts<br />
+              &bull; 🏫 Evacuation center locations<br />
+              &bull; 🎒 Go bag &amp; preparation checklist<br />
+              &bull; 📋 Incident report assistance<br /><br />
+              <em
+                >I-tap ang mga button sa itaas o magtanong para
+                makapagsimula.</em
+              >
+            </div>
+          </div>
+          <div class="chat-input-wrap">
+            <button
+              class="ci-btn ci-voice"
+              id="voiceBtn"
+              onclick="toggleVoice()"
+              title="Voice input"
+            >
+              🎤
+            </button>
+            <input
+              type="text"
+              id="chatInput"
+              placeholder="Magtanong / Ask anything..."
+              onkeypress="if (event.key === 'Enter') sendChat();"
+            />
+            <button class="ci-btn ci-send" onclick="sendChat()">&#9654;</button>
+          </div>
+        </div>
+
+        <!-- REPORT -->
+        <div class="page" id="page-report">
+          <div class="page-pad">
+            <div class="report-header">
+              <h2>🚨 I-submit ang Report</h2>
+              <p>Iulat ang insidente sa MDRRMO ng Polangui</p>
+            </div>
+            <div class="card">
+              <div class="form-group">
+                <label class="form-label"
+                  >Uri ng Insidente / Report Type <span>*</span></label
+                >
+                <div class="type-grid" id="typeGrid">
+                  <button
+                    class="type-btn"
+                    data-type="Flood"
+                    onclick="selectType(this)"
+                  >
+                    <span class="tb-icon">🌊</span
+                    ><span class="tb-label">Flood / Baha</span>
+                  </button>
+                  <button
+                    class="type-btn"
+                    data-type="Wind Damage"
+                    onclick="selectType(this)"
+                  >
+                    <span class="tb-icon">💨</span
+                    ><span class="tb-label">Wind Damage</span>
+                  </button>
+                  <button
+                    class="type-btn"
+                    data-type="Missing Person"
+                    onclick="selectType(this)"
+                  >
+                    <span class="tb-icon">🔍</span
+                    ><span class="tb-label">Missing Person</span>
+                  </button>
+                  <button
+                    class="type-btn"
+                    data-type="Road Block"
+                    onclick="selectType(this)"
+                  >
+                    <span class="tb-icon">🚧</span
+                    ><span class="tb-label">Road Block</span>
+                  </button>
+                  <button
+                    class="type-btn"
+                    data-type="Power Outage"
+                    onclick="selectType(this)"
+                  >
+                    <span class="tb-icon">⚡</span
+                    ><span class="tb-label">Power Outage</span>
+                  </button>
+                  <button
+                    class="type-btn"
+                    data-type="Other"
+                    onclick="selectType(this)"
+                  >
+                    <span class="tb-icon">📝</span
+                    ><span class="tb-label">Iba pa / Other</span>
+                  </button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Barangay <span>*</span></label>
+                <select class="form-select" id="rptBarangay">
+                  <option value="">— Piliin ang inyong barangay —</option>
+                  <option>Agos</option>
+                  <option>Alod</option>
+                  <option>Ason</option>
+                  <option>Bagumbayan</option>
+                  <option>Barcelonita</option>
+                  <option>Binatagan</option>
+                  <option>Burabod</option>
+                  <option>Cagmanaba</option>
+                  <option>Cotmon</option>
+                  <option>Cuyaoyao</option>
+                  <option>Delos Reyes</option>
+                  <option>Francia</option>
+                  <option>Magpanambo</option>
+                  <option>Magurang</option>
+                  <option>Napo</option>
+                  <option>Oas</option>
+                  <option>Paulba</option>
+                  <option>Paulog</option>
+                  <option>Pinamaniquian</option>
+                  <option>Poblacion</option>
+                  <option>Quirino</option>
+                  <option>Salvacion</option>
+                  <option>San Francisco</option>
+                  <option>San Isidro</option>
+                  <option>San Jose</option>
+                  <option>San Miguel</option>
+                  <option>San Roque</option>
+                  <option>San Vicente</option>
+                  <option>Santa Cruz</option>
+                  <option>Santa Misericordia</option>
+                  <option>Santo Cristo</option>
+                  <option>Tambo</option>
+                  <option>Tinago</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Kalubhaan / Severity</label>
+                <div class="severity-row" id="sevRow">
+                  <button
+                    class="sev-btn"
+                    data-sev="low"
+                    onclick="selectSeverity(this)"
+                  >
+                    🟢 Low
+                  </button>
+                  <button
+                    class="sev-btn"
+                    data-sev="moderate"
+                    onclick="selectSeverity(this)"
+                  >
+                    🟡 Moderate
+                  </button>
+                  <button
+                    class="sev-btn"
+                    data-sev="high"
+                    onclick="selectSeverity(this)"
+                  >
+                    🔴 High
+                  </button>
+                  <button
+                    class="sev-btn"
+                    data-sev="critical"
+                    onclick="selectSeverity(this)"
+                  >
+                    🟣 Critical
+                  </button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label"
+                  >Paglalarawan / Description <span>*</span></label
+                >
+                <textarea
+                  class="form-textarea"
+                  id="rptDesc"
+                  placeholder="Ilarawan ang insidente... / Describe what happened..."
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Larawan / Photo (optional)</label>
+                <input
+                  type="file"
+                  id="rptImage"
+                  accept="image/*"
+                  style="display: none"
+                  onchange="previewRptImage(event)"
+                />
+                <div
+                  class="image-upload-box"
+                  onclick="document.getElementById('rptImage').click()"
+                >
+                  <div class="iu-icon">📷</div>
+                  <div class="iu-text">
+                    <strong>Mag-upload ng larawan</strong><br />Pindutin para
+                    pumili ng larawan
+                  </div>
+                  <img id="imgPreview" alt="preview" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Lokasyon / Location (optional)</label>
+                <div class="loc-row">
+                  <input
+                    class="form-input"
+                    id="rptLat"
+                    placeholder="Latitude"
+                    readonly
+                  />
+                  <input
+                    class="form-input"
+                    id="rptLng"
+                    placeholder="Longitude"
+                    readonly
+                  />
+                  <button class="loc-btn" onclick="getLocation()">
+                    📍 Kuhanin
+                  </button>
+                </div>
+              </div>
+              <button
+                class="submit-btn"
+                id="submitBtn"
+                onclick="submitReport()"
+              >
+                🚨 I-submit ang Report
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MY REPORTS -->
+        <div class="page" id="page-myreports">
+          <div class="page-pad">
+            <div class="myreports-header">
+              <h2>📋 Aking Mga Report</h2>
+              <span id="reportCount">Loading...</span>
+            </div>
+            <div class="filter-row">
+              <button
+                class="filter-chip active"
+                onclick="filterReports('all', this)"
+              >
+                Lahat / All
+              </button>
+              <button
+                class="filter-chip"
+                onclick="filterReports('pending', this)"
+              >
+                ⏳ Pending
+              </button>
+              <button
+                class="filter-chip"
+                onclick="filterReports('reviewed', this)"
+              >
+                🔵 Reviewed
+              </button>
+              <button
+                class="filter-chip"
+                onclick="filterReports('resolved', this)"
+              >
+                ✅ Resolved
+              </button>
+            </div>
+            <div id="reportsList">
+              <div class="empty-state">
+                <div class="es-icon">⏳</div>
+                <div class="es-title">Loading...</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFILE -->
+        <div class="page" id="page-profile">
+          <div class="page-pad">
+            <div class="profile-header">
+              <div class="profile-avatar" id="profileAvatar">U</div>
+              <div class="profile-name" id="profileName">Resident</div>
+              <div class="profile-sub">Polangui, Albay</div>
+            </div>
+
+            <div class="card" style="margin-bottom: 0.75rem">
+              <div class="card-title">👤 Personal Information</div>
+              <div class="profile-info-row">
+                <span class="pi-label">Full Name</span>
+                <span class="pi-val" id="piName">—</span>
+              </div>
+              <div class="profile-info-row">
+                <span class="pi-label">Barangay</span>
+                <span class="pi-val" id="piBarangay">—</span>
+              </div>
+              <div class="profile-info-row">
+                <span class="pi-label">Contact No.</span>
+                <span class="pi-val" id="piContact">—</span>
+              </div>
+              <div class="profile-info-row">
+                <span class="pi-label">Email</span>
+                <span class="pi-val" id="piEmail">—</span>
+              </div>
+              <button class="profile-edit-btn" onclick="openEditProfile()">
+                ✏️ I-edit ang Profile
+              </button>
+            </div>
+
+            <div class="card" style="margin-bottom: 0.75rem">
+              <div class="card-title">📊 My Report Statistics</div>
+              <div class="summary-row">
+                <div class="summary-box">
+                  <div class="summary-val" id="prof-total">0</div>
+                  <div class="summary-key">TOTAL</div>
+                </div>
+                <div class="summary-box warn">
+                  <div class="summary-val" id="prof-pending">0</div>
+                  <div class="summary-key">PENDING</div>
+                </div>
+                <div class="summary-box success">
+                  <div class="summary-val" id="prof-resolved">0</div>
+                  <div class="summary-key">RESOLVED</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 0.75rem">
+              <div class="card-title">📞 Quick Emergency Access</div>
+              <a href="tel:911" class="emergency-link-btn red"
+                >🚨 Call 911 — Emergency</a
+              >
+              <a href="tel:+63524860160" class="emergency-link-btn orange"
+                >🛡️ MDRRMO: (052) 486-0160</a
+              >
+              <a href="tel:+63524860116" class="emergency-link-btn blue"
+                >👮 PNP Police: (052) 486-0116</a
+              >
+              <a href="tel:+63524860117" class="emergency-link-btn dark"
+                >🚒 BFP Fire: (052) 486-0117</a
+              >
+            </div>
+
+            <div class="card">
+              <div class="card-title">⚙️ Account</div>
+              <button class="profile-logout-btn" onclick="handleLogout()">
+                🚪 Mag-logout / Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /pages -->
+
+      <!-- BOTTOM NAV -->
+      <nav class="bottom-nav">
+        <button
+          class="nav-item active"
+          id="nav-home"
+          onclick="switchPage('home')"
+        >
+          <span class="nav-icon">🏠</span><span class="nav-label">Home</span>
+        </button>
+        <button class="nav-item" id="nav-chat" onclick="switchPage('chat')">
+          <span class="nav-icon">💬</span
+          ><span class="nav-label">DRES-Bot</span>
+        </button>
+        <button class="nav-fab" id="nav-report" onclick="switchPage('report')">
+          <div class="fab-circle">🚨</div>
+          <span class="nav-label">Report</span>
+        </button>
+        <button
+          class="nav-item"
+          id="nav-myreports"
+          onclick="switchPage('myreports')"
+        >
+          <span class="nav-icon">📋</span
+          ><span class="nav-label">My Reports</span>
+        </button>
+        <button
+          class="nav-item"
+          id="nav-profile"
+          onclick="switchPage('profile')"
+        >
+          <span class="nav-icon">👤</span><span class="nav-label">Profile</span>
+        </button>
+      </nav>
+    </div>
+    <!-- /shell -->
+
+    <div class="toast" id="toast"></div>
+
+    <!-- REPORT DETAIL MODAL -->
+    <div class="modal-overlay" id="modalOverlay" onclick="closeModal()">
+      <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-handle"></div>
+        <div class="modal-title" id="modalTitle">Report Details</div>
+        <div id="modalBody"></div>
+        <button class="modal-close" onclick="closeModal()">
+          Isara / Close
+        </button>
+      </div>
+    </div>
+
+    <!-- EDIT PROFILE MODAL -->
+    <div
+      class="modal-overlay"
+      id="editProfileOverlay"
+      onclick="closeEditProfile()"
+    >
+      <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-handle"></div>
+        <div class="modal-title">✏️ I-edit ang Profile</div>
+        <div style="padding: 0 0.25rem">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input
+              class="form-input"
+              id="editName"
+              placeholder="Ilagay ang inyong pangalan"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Barangay</label>
+            <select class="form-select" id="editBarangay">
+              <option value="">— Piliin ang barangay —</option>
+              <option>Agos</option>
+              <option>Alod</option>
+              <option>Ason</option>
+              <option>Bagumbayan</option>
+              <option>Barcelonita</option>
+              <option>Binatagan</option>
+              <option>Burabod</option>
+              <option>Cagmanaba</option>
+              <option>Cotmon</option>
+              <option>Cuyaoyao</option>
+              <option>Delos Reyes</option>
+              <option>Francia</option>
+              <option>Magpanambo</option>
+              <option>Magurang</option>
+              <option>Napo</option>
+              <option>Oas</option>
+              <option>Paulba</option>
+              <option>Paulog</option>
+              <option>Pinamaniquian</option>
+              <option>Poblacion</option>
+              <option>Quirino</option>
+              <option>Salvacion</option>
+              <option>San Francisco</option>
+              <option>San Isidro</option>
+              <option>San Jose</option>
+              <option>San Miguel</option>
+              <option>San Roque</option>
+              <option>San Vicente</option>
+              <option>Santa Cruz</option>
+              <option>Santa Misericordia</option>
+              <option>Santo Cristo</option>
+              <option>Tambo</option>
+              <option>Tinago</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contact Number</label>
+            <input
+              class="form-input"
+              id="editContact"
+              placeholder="e.g. 09XX-XXX-XXXX"
+              type="tel"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email (optional)</label>
+            <input
+              class="form-input"
+              id="editEmail"
+              placeholder="email@example.com"
+              type="email"
+            />
+          </div>
+          <button
+            class="submit-btn"
+            onclick="saveProfile()"
+            style="margin-top: 0.5rem"
+          >
+            💾 I-save ang Profile
+          </button>
+        </div>
+        <button class="modal-close" onclick="closeEditProfile()">
+          Isara / Close
+        </button>
+      </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script>
+      // ── PROFILE PAGE ────────────────────────────────────────────────────────
+      function loadProfilePage() {
+        const name =
+          sessionStorage.getItem("user_name") ||
+          localStorage.getItem("prof_name") ||
+          "Resident";
+        const barangay = localStorage.getItem("prof_barangay") || "—";
+        const contact = localStorage.getItem("prof_contact") || "—";
+        const email = localStorage.getItem("prof_email") || "—";
+
+        document.getElementById("profileAvatar").textContent = name
+          .charAt(0)
+          .toUpperCase();
+        document.getElementById("profileName").textContent = name;
+        document.getElementById("piName").textContent = name;
+        document.getElementById("piBarangay").textContent = barangay;
+        document.getElementById("piContact").textContent = contact;
+        document.getElementById("piEmail").textContent = email;
+
+        // Report stats from allReports
+        document.getElementById("prof-total").textContent = allReports.length;
+        document.getElementById("prof-pending").textContent = allReports.filter(
+          (r) => (r.status || "").toLowerCase() === "pending",
+        ).length;
+        document.getElementById("prof-resolved").textContent =
+          allReports.filter(
+            (r) => (r.status || "").toLowerCase() === "resolved",
+          ).length;
+      }
+
+      function openEditProfile() {
+        document.getElementById("editName").value =
+          localStorage.getItem("prof_name") || "";
+        document.getElementById("editBarangay").value =
+          localStorage.getItem("prof_barangay") || "";
+        document.getElementById("editContact").value =
+          localStorage.getItem("prof_contact") || "";
+        document.getElementById("editEmail").value =
+          localStorage.getItem("prof_email") || "";
+        document.getElementById("editProfileOverlay").classList.add("open");
+      }
+
+      function closeEditProfile() {
+        document.getElementById("editProfileOverlay").classList.remove("open");
+      }
+
+      function saveProfile() {
+        const name = document.getElementById("editName").value.trim();
+        const barangay = document.getElementById("editBarangay").value;
+        const contact = document.getElementById("editContact").value.trim();
+        const email = document.getElementById("editEmail").value.trim();
+
+        if (name) {
+          localStorage.setItem("prof_name", name);
+          sessionStorage.setItem("user_name", name);
+        }
+        if (barangay) localStorage.setItem("prof_barangay", barangay);
+        if (contact) localStorage.setItem("prof_contact", contact);
+        if (email) localStorage.setItem("prof_email", email);
+
+        closeEditProfile();
+        loadProfilePage();
+        showToast("✅ Na-save na ang inyong profile!");
+      }
+
+      function handleLogout() {
+        if (confirm("Sigurado ka bang gusto mong mag-logout?")) {
+          sessionStorage.clear();
+          showToast("Nag-logout na. Redirect sa login...");
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1500);
+        }
+      }
+
+      // Override switchPage to load profile data when opening profile
+      const _origSwitchPage = switchPage;
+      switchPage = function (page) {
+        _origSwitchPage(page);
+        if (page === "profile") loadProfilePage();
+      };
+
+      // Load profile data on init
+      document.addEventListener("DOMContentLoaded", loadProfilePage);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MDRRMO Polangui — Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- ── TOPBAR ───────────────────────────────────────────── -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div>
+          <div class="logo">🛡️ MDRRMO <span>POLANGUI</span></div>
+          <div class="logo-sub">Disaster Response Admin System · Albay</div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="clock" id="clock">00:00:00</div>
+        <div class="admin-info">
+          <div class="admin-role">Administrator</div>
+          <div class="admin-name" id="admin-display-name">Admin</div>
+        </div>
+        <div class="avatar" id="admin-avatar">AD</div>
+        <button class="logout-btn" onclick="logout()">Log out</button>
+      </div>
+    </header>
+
+    <!-- ── NAV ──────────────────────────────────────────────── -->
+    <nav class="nav">
+      <button
+        class="nav-btn active"
+        data-page="dashboard"
+        onclick="switchPage('dashboard', this)"
+      >
+        📊 Dashboard & Demographics
+      </button>
+      <button class="nav-btn" data-page="map" onclick="switchPage('map', this)">
+        🗺️ Typhoon Map & Municipal Data
+      </button>
+      <button
+        class="nav-btn"
+        data-page="reports"
+        onclick="switchPage('reports', this)"
+      >
+        📁 Incident Reports
+      </button>
+      <button
+        class="nav-btn"
+        data-page="chatbot"
+        onclick="switchPage('chatbot', this)"
+      >
+        🤖 Chatbot Logs
+      </button>
+      <button
+        class="nav-btn"
+        data-page="settings"
+        onclick="switchPage('settings', this)"
+      >
+        ⚙️ Settings
+      </button>
+    </nav>
+
+    <!-- ── MAIN ─────────────────────────────────────────────── -->
+    <main class="main">
+      <!-- PAGE 1: DASHBOARD -->
+      <div id="page-dashboard" class="page active">
+        <div class="stats-row" id="stats-row">
+          <div class="loading" style="grid-column: 1/-1">
+            <div class="spinner"></div>
+            Loading stats…
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Disaster Reports Overview</span>
+              <div class="toggle-group">
+                <button
+                  class="toggle-btn active"
+                  onclick="switchChart('reports', 'month', this)"
+                >
+                  By Month
+                </button>
+                <button
+                  class="toggle-btn"
+                  onclick="switchChart('reports', 'year', this)"
+                >
+                  By Year
+                </button>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <div class="chart-title">Number of Reports</div>
+              <div class="bar-chart" id="chart-reports"></div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Affected Residents</span>
+              <div class="toggle-group">
+                <button
+                  class="toggle-btn active"
+                  onclick="switchChart('affected', 'month', this)"
+                >
+                  By Month
+                </button>
+                <button
+                  class="toggle-btn"
+                  onclick="switchChart('affected', 'year', this)"
+                >
+                  By Year
+                </button>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <div class="chart-title">Estimated Affected Residents</div>
+              <div class="bar-chart" id="chart-affected"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🌊 Flood-Prone Barangays</span>
+              <span class="badge-count" id="flood-count">— barangays</span>
+            </div>
+            <div id="flood-table-wrap">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading…
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">📡 Recent Incident Reports</span>
+              <button
+                class="btn-ghost"
+                onclick="
+                  switchPage(
+                    'reports',
+                    document.querySelector('[data-page=reports]'),
+                  )
+                "
+              >
+                View All →
+              </button>
+            </div>
+            <div class="report-list" id="recent-reports-list">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading…
+              </div>
+            </div>
+
+            <hr class="divider" />
+
+            <div class="card-header" style="margin-bottom: 0.75rem">
+              <span class="card-title">📊 Typhoon Events by Year</span>
+            </div>
+            <div id="year-table-wrap">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading…
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /page-dashboard -->
+
+      <!-- PAGE 2: MAP & MUNICIPAL -->
+      <div id="page-map" class="page">
+        <div class="grid-map">
+          <div class="card" style="min-width: 0">
+            <div class="card-header">
+              <span class="card-title"
+                >🗺️ Typhoon Track Monitor — Polangui, Albay</span
+              >
+              <span class="live-dot">● LIVE</span>
+            </div>
+            <div class="map-notice">
+              <div class="map-note-icon">🌀</div>
+              <div>
+                <strong>Windy.com Real-Time Typhoon Tracker</strong>
+                Monitor typhoon movement and check if Polangui is on the
+                projected track. Coordinates locked to:
+                <strong>13.2924° N, 123.4853° E</strong>.
+              </div>
+            </div>
+            <div class="map-frame-wrap">
+              <iframe
+                title="Windy Typhoon Tracker"
+                src="https://embed.windy.com/embed2.html?lat=13.292&lon=123.485&zoom=8&level=surface&overlay=wind&product=ecmwf&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
+                frameborder="0"
+                style="width: 100%; height: 900px; display: block"
+              ></iframe>
+            </div>
+            <div class="map-legend">
+              <span class="legend-item"
+                ><span style="color: #22c55e">●</span> Safe — Not on track</span
+              >
+              <span class="legend-item"
+                ><span style="color: #f59e0b">●</span> Watch — Within 300
+                km</span
+              >
+              <span class="legend-item"
+                ><span style="color: #ef4444">●</span> Warning — Direct hit
+                possible</span
+              >
+              <span class="legend-item"
+                >📍 Polangui: 13.2924°N, 123.4853°E</span
+              >
+            </div>
+          </div>
+
+          <div class="side-col">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">🏛️ Municipal Profile</span>
+                <span class="badge badge-high">High Risk</span>
+              </div>
+              <div class="muni-grid" id="muni-profile">
+                <div class="loading">
+                  <div class="spinner"></div>
+                  Loading…
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">📞 MDRRMO Contact</span>
+              </div>
+              <div class="muni-grid" id="muni-contact">
+                <div class="loading">
+                  <div class="spinner"></div>
+                  Loading…
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">🚨 Typhoon Signal Status</span>
+              </div>
+              <div class="alert-levels" id="alert-levels">
+                <div class="loading">
+                  <div class="spinner"></div>
+                  Loading…
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /page-map -->
+
+      <!-- PAGE 3: REPORTS -->
+      <div id="page-reports" class="page">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📁 All Incident Reports</span>
+            <div style="display: flex; gap: 0.5rem; align-items: center">
+              <select
+                id="filter-status"
+                class="filter-select"
+                onchange="loadAllReports()"
+              >
+                <option value="">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="reviewed">Reviewed</option>
+                <option value="resolved">Resolved</option>
+              </select>
+              <select
+                id="filter-type"
+                class="filter-select"
+                onchange="loadAllReports()"
+              >
+                <option value="">All Types</option>
+                <option value="Flood">Flood</option>
+                <option value="Wind Damage">Wind Damage</option>
+                <option value="Missing Person">Missing Person</option>
+                <option value="Road Block">Road Block</option>
+                <option value="Power Outage">Power Outage</option>
+                <option value="Other">Other</option>
+              </select>
+              <button class="btn-ghost" onclick="loadAllReports()">
+                🔄 Refresh
+              </button>
+            </div>
+          </div>
+          <div id="all-reports-wrap">
+            <div class="loading">
+              <div class="spinner"></div>
+              Loading reports…
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 4: CHATBOT LOGS -->
+      <div id="page-chatbot" class="page">
+        <div class="placeholder-card">
+          <div class="ph-icon">💬</div>
+          <div class="ph-title">Chatbot Interaction Logs</div>
+          <div class="ph-desc">
+            Resident conversations with DRES-Bot will be logged here for review.
+            Connected to
+            <code style="color: var(--accent2); font-size: 0.8rem"
+              >/api/admin/chatbot-logs</code
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 5: SETTINGS -->
+      <div id="page-settings" class="page">
+        <div class="placeholder-card">
+          <div class="ph-icon">⚙️</div>
+          <div class="ph-title">System Settings</div>
+          <div class="ph-desc">
+            Manage user accounts, alert thresholds, barangay data, and
+            notification configurations. Connected to
+            <code style="color: var(--accent2); font-size: 0.8rem"
+              >/api/admin/settings</code
+            >
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      const API = "";
+
+      // ── FALLBACK DATA ──────────────────────────────────────────────────────
+      const FALLBACK = {
+        stats: [
+          {
+            icon: "🌀",
+            label: "Active Typhoon Alerts",
+            value: "0",
+            sub: "No active alerts",
+            color: "#ef4444",
+          },
+          {
+            icon: "📋",
+            label: "Total Reports (2025)",
+            value: "0",
+            sub: "This year",
+            color: "#3b82f6",
+          },
+          {
+            icon: "🏘️",
+            label: "Affected Barangays",
+            value: "0",
+            sub: "With submitted reports",
+            color: "#f59e0b",
+          },
+          {
+            icon: "⏳",
+            label: "Pending Reports",
+            value: "0",
+            sub: "Awaiting review",
+            color: "#8b5cf6",
+          },
+          {
+            icon: "✅",
+            label: "Resolved Incidents",
+            value: "0",
+            sub: "0% resolution rate",
+            color: "#22c55e",
+          },
+        ],
+        byMonth: [
+          { label: "Jan", reports: 0, affected: 0 },
+          { label: "Feb", reports: 0, affected: 0 },
+          { label: "Mar", reports: 0, affected: 0 },
+          { label: "Apr", reports: 0, affected: 0 },
+          { label: "May", reports: 0, affected: 0 },
+          { label: "Jun", reports: 0, affected: 0 },
+          { label: "Jul", reports: 0, affected: 0 },
+          { label: "Aug", reports: 0, affected: 0 },
+          { label: "Sep", reports: 0, affected: 0 },
+          { label: "Oct", reports: 0, affected: 0 },
+          { label: "Nov", reports: 0, affected: 0 },
+          { label: "Dec", reports: 0, affected: 0 },
+        ],
+        byYear: [
+          { label: "2022", reports: 0, affected: 0, typhoons: 0 },
+          { label: "2023", reports: 0, affected: 0, typhoons: 0 },
+          { label: "2024", reports: 0, affected: 0, typhoons: 0 },
+          { label: "2025", reports: 0, affected: 0, typhoons: 0 },
+        ],
+        floodBarangays: [
+          {
+            name: "Barangay Magpanambo",
+            risk: "High",
+            households: 312,
+            lastFlooded: "2024",
+          },
+          {
+            name: "Barangay Oas",
+            risk: "High",
+            households: 278,
+            lastFlooded: "2023",
+          },
+          {
+            name: "Barangay San Francisco",
+            risk: "High",
+            households: 195,
+            lastFlooded: "2024",
+          },
+          {
+            name: "Barangay Tinago",
+            risk: "Medium",
+            households: 243,
+            lastFlooded: "2023",
+          },
+          {
+            name: "Barangay Salvacion",
+            risk: "Medium",
+            households: 187,
+            lastFlooded: "2022",
+          },
+          {
+            name: "Barangay Paulba",
+            risk: "Medium",
+            households: 156,
+            lastFlooded: "2023",
+          },
+          {
+            name: "Barangay Cotmon",
+            risk: "Low",
+            households: 134,
+            lastFlooded: "2021",
+          },
+          {
+            name: "Barangay Tambo",
+            risk: "Low",
+            households: 98,
+            lastFlooded: "2021",
+          },
+        ],
+        recentReports: [],
+        municipal: {
+          profile: [
+            ["Municipality", "Polangui"],
+            ["Province", "Albay"],
+            ["Population", "118,657"],
+            ["Land Area", "239.83 km²"],
+            ["No. of Barangays", "44"],
+            ["Households", "24,890"],
+            ["Elevation Range", "40–1,550 m"],
+            ["Main River", "Polangui River"],
+            ["Disaster Risk", "High"],
+          ],
+          contact: [
+            ["Office Head", "—"],
+            ["Contact No.", "(052) 486-0160"],
+            ["Office", "Municipal DRRMO Polangui"],
+            ["Email", "mdrrmo@polangui.gov.ph"],
+            ["Operating Hours", "24/7 during alerts"],
+          ],
+        },
+        alertLevels: [
+          {
+            level: "Signal #1",
+            desc: "Moderate winds (30–60 km/h)",
+            active: false,
+          },
+          {
+            level: "Signal #2",
+            desc: "Strong winds (61–120 km/h)",
+            active: false,
+          },
+          {
+            level: "Signal #3",
+            desc: "Very strong winds (121–170 km/h)",
+            active: false,
+          },
+          {
+            level: "Signal #4",
+            desc: "Extreme winds (171–220 km/h)",
+            active: false,
+          },
+        ],
+      };
+
+      let chartData = {
+        reports: { month: [], year: [] },
+        affected: { month: [], year: [] },
+      };
+
+      // ── CLOCK ──────────────────────────────────────────────────────────────
+      function updateClock() {
+        document.getElementById("clock").textContent =
+          new Date().toLocaleTimeString();
+      }
+      setInterval(updateClock, 1000);
+      updateClock();
+
+      // ── PAGE SWITCH ────────────────────────────────────────────────────────
+      function switchPage(pageId, btn) {
+        document
+          .querySelectorAll(".page")
+          .forEach((p) => p.classList.remove("active"));
+        document
+          .querySelectorAll(".nav-btn")
+          .forEach((b) => b.classList.remove("active"));
+        document.getElementById("page-" + pageId).classList.add("active");
+        if (btn) btn.classList.add("active");
+        if (pageId === "reports") loadAllReports();
+      }
+
+      // ── AUTH ───────────────────────────────────────────────────────────────
+      function loadAdminInfo() {
+        const name = sessionStorage.getItem("admin_name") || "Admin User";
+        const initials = name
+          .split(" ")
+          .map((w) => w[0])
+          .join("")
+          .toUpperCase()
+          .slice(0, 2);
+        document.getElementById("admin-display-name").textContent = name;
+        document.getElementById("admin-avatar").textContent = initials;
+      }
+
+      function logout() {
+        fetch(`${API}/api/auth/logout`, { method: "POST" })
+          .catch(() => {})
+          .finally(() => {
+            sessionStorage.clear();
+            window.location.href = "/index.html";
+          });
+      }
+
+      // ── FETCH HELPER ───────────────────────────────────────────────────────
+      async function apiFetch(endpoint) {
+        try {
+          const res = await fetch(API + endpoint, {
+            headers: {
+              Authorization:
+                "Bearer " + (sessionStorage.getItem("token") || ""),
+            },
+          });
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return await res.json();
+        } catch (e) {
+          console.warn("API fetch failed for", endpoint, "— using fallback");
+          return null;
+        }
+      }
+
+      // ── RENDER: STAT CARDS ─────────────────────────────────────────────────
+      function renderStats(stats) {
+        document.getElementById("stats-row").innerHTML = stats
+          .map(
+            (s) => `
+          <div class="stat-card" style="border-left-color:${s.color}">
+            <div class="stat-icon">${s.icon}</div>
+            <div>
+              <div class="stat-value">${s.value}</div>
+              <div class="stat-label">${s.label}</div>
+              <div class="stat-sub">${s.sub}</div>
+            </div>
+          </div>`,
+          )
+          .join("");
+      }
+
+      // ── RENDER: BAR CHART ──────────────────────────────────────────────────
+      function renderBarChart(containerId, data, valueKey, gradient) {
+        const el = document.getElementById(containerId);
+        if (!el || !data.length) return;
+        const max = Math.max(...data.map((d) => d[valueKey]), 1);
+        el.innerHTML = data
+          .map(
+            (d) => `
+          <div class="bar-col">
+            <div class="bar-track">
+              <div class="bar-fill" style="height:${Math.max((d[valueKey] / max) * 100, 2)}%;background:${gradient}"></div>
+            </div>
+            <div class="bar-label">${d.label}</div>
+          </div>`,
+          )
+          .join("");
+      }
+
+      function switchChart(chartId, mode, btn) {
+        btn
+          .closest(".toggle-group")
+          .querySelectorAll(".toggle-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        if (chartId === "reports") {
+          renderBarChart(
+            "chart-reports",
+            chartData.reports[mode],
+            "reports",
+            "linear-gradient(to top,#1d4ed8,#60a5fa)",
+          );
+        } else {
+          renderBarChart(
+            "chart-affected",
+            chartData.affected[mode],
+            "affected",
+            "linear-gradient(to top,#b91c1c,#fca5a5)",
+          );
+        }
+      }
+
+      // ── RENDER: FLOOD TABLE ────────────────────────────────────────────────
+      function renderFloodTable(barangays) {
+        document.getElementById("flood-count").textContent =
+          barangays.length + " barangays";
+        const riskClass = {
+          High: "badge-high",
+          Medium: "badge-medium",
+          Low: "badge-low",
+        };
+        document.getElementById("flood-table-wrap").innerHTML = `
+          <table class="data-table">
+            <thead><tr><th>Barangay</th><th>Risk</th><th>Households</th><th>Last Flooded</th></tr></thead>
+            <tbody>${barangays
+              .map(
+                (b) => `
+              <tr>
+                <td>${b.name}</td>
+                <td><span class="badge ${riskClass[b.risk]}">${b.risk}</span></td>
+                <td>${Number(b.households).toLocaleString()}</td>
+                <td>${b.lastFlooded}</td>
+              </tr>`,
+              )
+              .join("")}
+            </tbody>
+          </table>`;
+      }
+
+      // ── RENDER: RECENT REPORTS ─────────────────────────────────────────────
+      function renderRecentReports(reports) {
+        const stClass = {
+          Pending: "badge-monitoring",
+          Reviewed: "badge-active",
+          Resolved: "badge-resolved",
+          Active: "badge-active",
+          Monitoring: "badge-monitoring",
+        };
+
+        if (!reports || !reports.length) {
+          document.getElementById("recent-reports-list").innerHTML =
+            `<div style="padding:1rem;color:var(--text-muted);font-size:.85rem;text-align:center">
+              Walang reports pa. Mag-submit ng report sa resident app.
+            </div>`;
+          return;
+        }
+
+        document.getElementById("recent-reports-list").innerHTML = reports
+          .map(
+            (r) => `
+          <div class="report-item">
+            <div class="report-left">
+              <span class="report-id">${r.id}</span>
+              <span class="report-brgy">${r.barangay} — ${r.type}</span>
+            </div>
+            <div class="report-right">
+              <span class="badge ${stClass[r.status] || "badge-monitoring"}">${r.status}</span>
+              <span class="report-time">${r.time}</span>
+            </div>
+          </div>`,
+          )
+          .join("");
+      }
+
+      // ── RENDER: YEAR TABLE ─────────────────────────────────────────────────
+      function renderYearTable(data) {
+        document.getElementById("year-table-wrap").innerHTML = `
+          <table class="data-table">
+            <thead><tr><th>Year</th><th>Typhoons</th><th>Reports</th><th>Affected</th></tr></thead>
+            <tbody>${data
+              .map(
+                (y) => `
+              <tr>
+                <td>${y.label}</td>
+                <td>🌀 ${y.typhoons}</td>
+                <td>${y.reports}</td>
+                <td>${Number(y.affected).toLocaleString()}</td>
+              </tr>`,
+              )
+              .join("")}
+            </tbody>
+          </table>`;
+      }
+
+      // ── RENDER: MUNICIPAL ──────────────────────────────────────────────────
+      function renderMunicipal(data) {
+        document.getElementById("muni-profile").innerHTML = data.profile
+          .map(
+            ([k, v]) =>
+              `<div class="muni-row"><span class="muni-key">${k}</span><span class="muni-val">${v}</span></div>`,
+          )
+          .join("");
+        document.getElementById("muni-contact").innerHTML = data.contact
+          .map(
+            ([k, v]) =>
+              `<div class="muni-row"><span class="muni-key">${k}</span><span class="muni-val">${v}</span></div>`,
+          )
+          .join("");
+      }
+
+      // ── RENDER: ALERT LEVELS ───────────────────────────────────────────────
+      function renderAlertLevels(levels) {
+        document.getElementById("alert-levels").innerHTML = levels
+          .map(
+            (a) => `
+          <div class="alert-row${a.active ? " alert-active" : ""}">
+            <div>
+              <span class="alert-level-name">${a.level}</span>
+              <span class="alert-level-desc">${a.desc}</span>
+            </div>
+            ${a.active ? '<span class="alert-badge">ACTIVE</span>' : ""}
+          </div>`,
+          )
+          .join("");
+      }
+
+      // ── ALL REPORTS PAGE ───────────────────────────────────────────────────
+      async function loadAllReports() {
+        const status = document.getElementById("filter-status")?.value || "";
+        const type = document.getElementById("filter-type")?.value || "";
+        const wrap = document.getElementById("all-reports-wrap");
+        wrap.innerHTML = `<div class="loading"><div class="spinner"></div>Loading reports…</div>`;
+
+        let url = "/api/admin/reports?limit=100";
+        if (status) url += `&status=${status}`;
+        if (type) url += `&report_type=${encodeURIComponent(type)}`;
+
+        const res = await apiFetch(url);
+        const reports = res?.data || [];
+
+        if (!reports.length) {
+          wrap.innerHTML = `<div style="padding:2rem;text-align:center;color:var(--text-muted)">
+            Walang reports na nahanap. Mag-submit ng report sa resident app.
+          </div>`;
+          return;
+        }
+
+        const stClass = {
+          Pending: "badge-monitoring",
+          Reviewed: "badge-active",
+          Resolved: "badge-resolved",
+        };
+        wrap.innerHTML = `
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Barangay</th><th>Type</th>
+                <th>Severity</th><th>Status</th><th>Submitted</th><th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${reports
+                .map(
+                  (r) => `
+                <tr>
+                  <td><span class="report-id">${r.id}</span></td>
+                  <td>${r.barangay}</td>
+                  <td>${r.type}</td>
+                  <td>${r.severity || "—"}</td>
+                  <td><span class="badge ${stClass[r.status] || "badge-monitoring"}">${r.status}</span></td>
+                  <td style="font-size:.78rem">${r.created_at}</td>
+                  <td>
+                    <select class="filter-select" onchange="updateStatus('${r.id}', this.value)" style="font-size:.75rem;padding:2px 4px">
+                      <option value="">Update…</option>
+                      <option value="pending"  ${r.status === "Pending" ? "selected" : ""}>Pending</option>
+                      <option value="reviewed" ${r.status === "Reviewed" ? "selected" : ""}>Reviewed</option>
+                      <option value="resolved" ${r.status === "Resolved" ? "selected" : ""}>Resolved</option>
+                    </select>
+                  </td>
+                </tr>`,
+                )
+                .join("")}
+            </tbody>
+          </table>`;
+      }
+
+      async function updateStatus(reportId, newStatus) {
+        if (!newStatus) return;
+        // Extract numeric ID from "RPT-0001" format
+        const numId = reportId.replace("RPT-", "").replace(/^0+/, "") || "0";
+        try {
+          const res = await fetch(`${API}/api/reports/${numId}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus }),
+          });
+          if (res.ok) {
+            loadAllReports();
+            loadDashboard();
+          }
+        } catch (e) {
+          console.error("Status update failed", e);
+        }
+      }
+
+      // ── MAIN LOADERS ───────────────────────────────────────────────────────
+      async function loadDashboard() {
+        const [statsRes, monthRes, yearRes, floodRes, reportsRes] =
+          await Promise.all([
+            apiFetch("/api/admin/stats"),
+            apiFetch("/api/admin/disasters/monthly"),
+            apiFetch("/api/admin/disasters/yearly"),
+            apiFetch("/api/admin/flood-barangays"),
+            apiFetch("/api/admin/reports/recent"),
+          ]);
+
+        renderStats(statsRes?.data || FALLBACK.stats);
+
+        const byMonth = monthRes?.data || FALLBACK.byMonth;
+        const byYear = yearRes?.data || FALLBACK.byYear;
+        chartData.reports.month = byMonth;
+        chartData.reports.year = byYear;
+        chartData.affected.month = byMonth;
+        chartData.affected.year = byYear;
+
+        renderBarChart(
+          "chart-reports",
+          byMonth,
+          "reports",
+          "linear-gradient(to top,#1d4ed8,#60a5fa)",
+        );
+        renderBarChart(
+          "chart-affected",
+          byMonth,
+          "affected",
+          "linear-gradient(to top,#b91c1c,#fca5a5)",
+        );
+        renderFloodTable(floodRes?.data || FALLBACK.floodBarangays);
+        renderRecentReports(reportsRes?.data || FALLBACK.recentReports);
+        renderYearTable(byYear);
+      }
+
+      async function loadMapPage() {
+        const [muniRes, alertRes] = await Promise.all([
+          apiFetch("/api/admin/municipal"),
+          apiFetch("/api/admin/alert-levels"),
+        ]);
+        renderMunicipal(muniRes?.data || FALLBACK.municipal);
+        renderAlertLevels(alertRes?.data || FALLBACK.alertLevels);
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        loadAdminInfo();
+        loadDashboard();
+        loadMapPage();
+      });
+    </script>
+  </body>
+</html>
