@@ -312,34 +312,419 @@
 
       <!-- PAGE 4: CHATBOT LOGS -->
       <div id="page-chatbot" class="page">
-        <div class="placeholder-card">
-          <div class="ph-icon">💬</div>
-          <div class="ph-title">Chatbot Interaction Logs</div>
-          <div class="ph-desc">
-            Resident conversations with DRES-Bot will be logged here for review.
-            Connected to
-            <code style="color: var(--accent2); font-size: 0.8rem"
-              >/api/admin/chatbot-logs</code
+        <div class="card" style="margin-bottom: 1rem">
+          <div class="card-header">
+            <span class="card-title">💬 DRES-Bot Interaction Logs</span>
+            <div style="display: flex; gap: 0.5rem; align-items: center">
+              <input
+                type="number"
+                id="filter-uid"
+                class="filter-select"
+                placeholder="Filter by User ID"
+                style="width: 140px"
+                oninput="loadChatLogs()"
+              />
+              <button class="btn-ghost" onclick="loadChatLogs()">
+                🔄 Refresh
+              </button>
+            </div>
+          </div>
+          <!-- Stats row -->
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              margin-bottom: 1rem;
+              flex-wrap: wrap;
+            "
+            id="chat-stats-row"
+          >
+            <div
+              class="stat-card"
+              style="border-left-color: #3b82f6; flex: 1; min-width: 140px"
             >
+              <div class="stat-icon">💬</div>
+              <div>
+                <div class="stat-value" id="cs-total">—</div>
+                <div class="stat-label">Total Conversations</div>
+              </div>
+            </div>
+            <div
+              class="stat-card"
+              style="border-left-color: #22c55e; flex: 1; min-width: 140px"
+            >
+              <div class="stat-icon">👥</div>
+              <div>
+                <div class="stat-value" id="cs-users">—</div>
+                <div class="stat-label">Unique Users</div>
+              </div>
+            </div>
+          </div>
+          <div id="chat-logs-wrap">
+            <div class="loading">
+              <div class="spinner"></div>
+              Loading chat logs…
+            </div>
           </div>
         </div>
       </div>
 
       <!-- PAGE 5: SETTINGS -->
       <div id="page-settings" class="page">
-        <div class="placeholder-card">
-          <div class="ph-icon">⚙️</div>
-          <div class="ph-title">System Settings</div>
-          <div class="ph-desc">
-            Manage user accounts, alert thresholds, barangay data, and
-            notification configurations. Connected to
-            <code style="color: var(--accent2); font-size: 0.8rem"
-              >/api/admin/settings</code
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 1rem;
+          "
+        >
+          <!-- Signal Level Control -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🚨 Typhoon Signal Level</span>
+            </div>
+            <p
+              style="
+                font-size: 0.82rem;
+                color: var(--text-muted);
+                margin-bottom: 1rem;
+              "
             >
+              Set the current typhoon signal level displayed to all residents.
+            </p>
+            <div
+              style="display: flex; flex-direction: column; gap: 0.5rem"
+              id="signal-btns"
+            >
+              <button
+                class="settings-signal-btn"
+                data-level="0"
+                onclick="setSignalLevel(this)"
+              >
+                ⚪ No Active Signal
+              </button>
+              <button
+                class="settings-signal-btn"
+                data-level="1"
+                onclick="setSignalLevel(this)"
+              >
+                🟡 Signal #1 — Moderate winds (30–60 km/h)
+              </button>
+              <button
+                class="settings-signal-btn"
+                data-level="2"
+                onclick="setSignalLevel(this)"
+              >
+                🟠 Signal #2 — Strong winds (61–120 km/h)
+              </button>
+              <button
+                class="settings-signal-btn"
+                data-level="3"
+                onclick="setSignalLevel(this)"
+              >
+                🔴 Signal #3 — Very strong winds (121–170 km/h)
+              </button>
+              <button
+                class="settings-signal-btn"
+                data-level="4"
+                onclick="setSignalLevel(this)"
+              >
+                🟣 Signal #4 — Extreme winds (171–220 km/h)
+              </button>
+            </div>
+            <div
+              id="signal-saved"
+              style="
+                margin-top: 0.75rem;
+                font-size: 0.8rem;
+                color: #22c55e;
+                display: none;
+              "
+            >
+              ✅ Signal level updated!
+            </div>
+          </div>
+
+          <!-- User Accounts -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">👥 Registered Residents</span>
+              <button class="btn-ghost" onclick="loadUsers()">
+                🔄 Refresh
+              </button>
+            </div>
+            <div id="users-wrap">
+              <div class="loading">
+                <div class="spinner"></div>
+                Loading users…
+              </div>
+            </div>
+          </div>
+
+          <!-- MDRRMO Contact Settings -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">📞 MDRRMO Contact Info</span>
+            </div>
+            <p
+              style="
+                font-size: 0.82rem;
+                color: var(--text-muted);
+                margin-bottom: 1rem;
+              "
+            >
+              Update the contact details shown to residents in DRES-Bot and the
+              app.
+            </p>
+            <div class="form-group-s">
+              <label class="form-label-s">Office Head</label>
+              <input
+                class="form-input-s"
+                id="s-head"
+                placeholder="e.g. Juan dela Cruz"
+              />
+            </div>
+            <div class="form-group-s">
+              <label class="form-label-s">Contact Number</label>
+              <input
+                class="form-input-s"
+                id="s-contact"
+                placeholder="(052) 486-0160"
+              />
+            </div>
+            <div class="form-group-s">
+              <label class="form-label-s">Email</label>
+              <input
+                class="form-input-s"
+                id="s-email"
+                placeholder="mdrrmo@polangui.gov.ph"
+              />
+            </div>
+            <div class="form-group-s">
+              <label class="form-label-s">Operating Hours</label>
+              <input
+                class="form-input-s"
+                id="s-hours"
+                placeholder="24/7 during alerts"
+              />
+            </div>
+            <button class="submit-btn-s" onclick="saveContact()">
+              💾 Save Contact Info
+            </button>
+            <div
+              id="contact-saved"
+              style="
+                margin-top: 0.6rem;
+                font-size: 0.8rem;
+                color: #22c55e;
+                display: none;
+              "
+            >
+              ✅ Saved!
+            </div>
+          </div>
+
+          <!-- Evacuation Centers -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">🏫 Evacuation Centers</span>
+            </div>
+            <p
+              style="
+                font-size: 0.82rem;
+                color: var(--text-muted);
+                margin-bottom: 0.75rem;
+              "
+            >
+              These are shown to residents when they ask DRES-Bot about
+              evacuation sites.
+            </p>
+            <div
+              id="evacuation-list"
+              style="
+                font-size: 0.83rem;
+                line-height: 1.8;
+                color: var(--text-muted);
+              "
+            >
+              🏫 Polangui Central School — Poblacion<br />
+              🏛️ Polangui Municipal Gym — Poblacion<br />
+              🏫 Agos Elementary School — Agos<br />
+              🏫 Ason National High School — Ason<br />
+              🏫 Cotmon Elementary School — Cotmon<br />
+              🏫 Burabod Elementary School — Burabod
+            </div>
+            <p
+              style="
+                font-size: 0.75rem;
+                color: var(--text-muted);
+                margin-top: 0.75rem;
+                opacity: 0.7;
+              "
+            >
+              * To update evacuation centers, edit the CHATBOT_KB in
+              dashboard.js.
+            </p>
           </div>
         </div>
       </div>
     </main>
+
+    <style>
+      /* ── SETTINGS FORM ── */
+      .form-group-s {
+        margin-bottom: 0.75rem;
+      }
+      .form-label-s {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.3rem;
+      }
+      .form-input-s {
+        width: 100%;
+        padding: 0.55rem 0.75rem;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 8px;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.85rem;
+        outline: none;
+      }
+      .form-input-s:focus {
+        border-color: var(--accent);
+      }
+      .submit-btn-s {
+        margin-top: 0.5rem;
+        padding: 0.55rem 1.1rem;
+        background: var(--accent);
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-family: inherit;
+        font-size: 0.83rem;
+        font-weight: 600;
+        cursor: pointer;
+      }
+      .submit-btn-s:hover {
+        opacity: 0.85;
+      }
+
+      /* ── SIGNAL BUTTONS ── */
+      .settings-signal-btn {
+        width: 100%;
+        padding: 0.65rem 0.9rem;
+        text-align: left;
+        background: var(--surface);
+        border: 1.5px solid var(--border);
+        border-radius: 9px;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.83rem;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+      }
+      .settings-signal-btn:hover {
+        border-color: var(--accent);
+        background: rgba(59, 130, 246, 0.08);
+      }
+      .settings-signal-btn.active {
+        border-color: var(--accent);
+        background: rgba(59, 130, 246, 0.15);
+        font-weight: 700;
+      }
+
+      /* ── CHAT LOG ITEMS ── */
+      .chat-log-item {
+        border: 1px solid var(--border);
+        border-radius: 10px;
+        padding: 0.85rem 1rem;
+        margin-bottom: 0.6rem;
+        background: rgba(255, 255, 255, 0.02);
+      }
+      .cli-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      .cli-uid {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: var(--accent);
+        background: rgba(59, 130, 246, 0.12);
+        padding: 2px 8px;
+        border-radius: 20px;
+      }
+      .cli-time {
+        font-size: 0.72rem;
+        color: var(--text-muted);
+      }
+      .cli-q {
+        font-size: 0.83rem;
+        color: var(--text);
+        margin-bottom: 0.35rem;
+      }
+      .cli-q strong {
+        color: var(--text-muted);
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        display: block;
+        margin-bottom: 0.15rem;
+      }
+      .cli-a {
+        font-size: 0.8rem;
+        color: var(--text-muted);
+        line-height: 1.5;
+        border-left: 2px solid var(--border);
+        padding-left: 0.6rem;
+      }
+
+      /* ── USER TABLE ── */
+      .user-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.55rem 0;
+        border-bottom: 1px solid var(--border);
+        gap: 0.5rem;
+      }
+      .user-row:last-child {
+        border-bottom: none;
+      }
+      .ur-name {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text);
+      }
+      .ur-email {
+        font-size: 0.75rem;
+        color: var(--text-muted);
+      }
+      .ur-badge {
+        font-size: 0.72rem;
+        padding: 2px 8px;
+        border-radius: 20px;
+        font-weight: 600;
+      }
+      .ur-resident {
+        background: rgba(59, 130, 246, 0.15);
+        color: #60a5fa;
+      }
+      .ur-mdrrmo {
+        background: rgba(220, 38, 38, 0.15);
+        color: #f87171;
+      }
+    </style>
 
     <script>
       const API = "";
@@ -859,6 +1244,146 @@
         renderMunicipal(muniRes?.data || FALLBACK.municipal);
         renderAlertLevels(alertRes?.data || FALLBACK.alertLevels);
       }
+
+      // ── CHATBOT LOGS ────────────────────────────────────────────────────────
+      async function loadChatLogs() {
+        const uid = document.getElementById("filter-uid")?.value || "";
+        const wrap = document.getElementById("chat-logs-wrap");
+        wrap.innerHTML = `<div class="loading"><div class="spinner"></div>Loading…</div>`;
+
+        let url = "/api/admin/chatbot-logs?limit=50";
+        if (uid) url += `&user_id=${uid}`;
+
+        // Load stats
+        const statsRes = await apiFetch("/api/admin/chatbot-stats");
+        if (statsRes?.data) {
+          document.getElementById("cs-total").textContent =
+            statsRes.data.total_conversations;
+          document.getElementById("cs-users").textContent =
+            statsRes.data.unique_users;
+        }
+
+        const res = await apiFetch(url);
+        const logs = res?.data || [];
+
+        if (!logs.length) {
+          wrap.innerHTML = `<div style="padding:2rem;text-align:center;color:var(--text-muted)">
+            Walang chat logs pa. Mag-chat sa resident app para lumabas dito.
+          </div>`;
+          return;
+        }
+
+        wrap.innerHTML = logs
+          .map(
+            (l) => `
+          <div class="chat-log-item">
+            <div class="cli-header">
+              <span class="cli-uid">User #${l.user_id}</span>
+              <span class="cli-time">${l.created_at ? new Date(l.created_at).toLocaleString("en-PH") : "—"}</span>
+            </div>
+            <div class="cli-q"><strong>Resident asked:</strong>${escHtml(l.message)}</div>
+            <div class="cli-a">${escHtml(l.response?.replace(/<[^>]+>/g, "") || "—").slice(0, 200)}${(l.response?.length || 0) > 200 ? "…" : ""}</div>
+          </div>`,
+          )
+          .join("");
+      }
+
+      function escHtml(str) {
+        return (str || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+      }
+
+      // ── SETTINGS: SIGNAL LEVEL ───────────────────────────────────────────────
+      function setSignalLevel(btn) {
+        document
+          .querySelectorAll(".settings-signal-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        const level = btn.dataset.level;
+        localStorage.setItem("dres_signal_level", level);
+        document.getElementById("signal-saved").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("signal-saved").style.display = "none";
+        }, 2000);
+      }
+
+      function loadSignalLevel() {
+        const saved = localStorage.getItem("dres_signal_level") || "0";
+        const btn = document.querySelector(
+          `.settings-signal-btn[data-level="${saved}"]`,
+        );
+        if (btn) btn.classList.add("active");
+      }
+
+      // ── SETTINGS: CONTACT INFO ───────────────────────────────────────────────
+      function saveContact() {
+        localStorage.setItem(
+          "dres_contact",
+          JSON.stringify({
+            head: document.getElementById("s-head").value,
+            contact: document.getElementById("s-contact").value,
+            email: document.getElementById("s-email").value,
+            hours: document.getElementById("s-hours").value,
+          }),
+        );
+        document.getElementById("contact-saved").style.display = "block";
+        setTimeout(() => {
+          document.getElementById("contact-saved").style.display = "none";
+        }, 2000);
+      }
+
+      function loadContactSettings() {
+        try {
+          const d = JSON.parse(localStorage.getItem("dres_contact") || "{}");
+          if (d.head) document.getElementById("s-head").value = d.head;
+          if (d.contact) document.getElementById("s-contact").value = d.contact;
+          if (d.email) document.getElementById("s-email").value = d.email;
+          if (d.hours) document.getElementById("s-hours").value = d.hours;
+        } catch (e) {}
+      }
+
+      // ── SETTINGS: USER LIST ──────────────────────────────────────────────────
+      async function loadUsers() {
+        const wrap = document.getElementById("users-wrap");
+        wrap.innerHTML = `<div class="loading"><div class="spinner"></div>Loading…</div>`;
+
+        const res = await apiFetch("/api/admin/users");
+        const users = res?.data || [];
+
+        if (!users.length) {
+          wrap.innerHTML = `<div style="padding:1rem;text-align:center;color:var(--text-muted);font-size:.83rem">
+            Walang registered users pa.
+          </div>`;
+          return;
+        }
+
+        wrap.innerHTML = users
+          .map(
+            (u) => `
+          <div class="user-row">
+            <div>
+              <div class="ur-name">${u.name || "—"}</div>
+              <div class="ur-email">${u.email} · ${u.barangay || "No barangay"}</div>
+            </div>
+            <span class="ur-badge ${u.role === "mdrrmo" ? "ur-mdrrmo" : "ur-resident"}">${u.role}</span>
+          </div>`,
+          )
+          .join("");
+      }
+
+      // Update switchPage to load data for chatbot/settings
+      const _origSwitch = switchPage;
+      switchPage = function (pageId, btn) {
+        _origSwitch(pageId, btn);
+        if (pageId === "chatbot") loadChatLogs();
+        if (pageId === "settings") {
+          loadUsers();
+          loadSignalLevel();
+          loadContactSettings();
+        }
+      };
 
       document.addEventListener("DOMContentLoaded", () => {
         loadAdminInfo();

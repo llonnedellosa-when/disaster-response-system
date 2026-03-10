@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>DRES Polangui — Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --primary: #dc2626;
+        --primary-d: #b91c1c;
+        --bg: #0f172a;
+        --bg2: #1e293b;
+        --surface: #1e293b;
+        --border: #334155;
+        --text: #f1f5f9;
+        --text-muted: #94a3b8;
+        --success: #22c55e;
+        --danger: #ef4444;
+      }
+
+      html,
+      body {
+        height: 100%;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        overflow-x: hidden;
+      }
+
+      /* ── BACKGROUND ── */
+      .bg-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background:
+          radial-gradient(
+            ellipse 80% 60% at 20% 10%,
+            rgba(220, 38, 38, 0.18) 0%,
+            transparent 60%
+          ),
+          radial-gradient(
+            ellipse 60% 50% at 80% 90%,
+            rgba(220, 38, 38, 0.1) 0%,
+            transparent 60%
+          ),
+          linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
+      }
+      .bg-grid {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 32px 32px;
+      }
+
+      /* ── SHELL ── */
+      .shell {
+        position: relative;
+        z-index: 1;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+      }
+
+      /* ── CARD ── */
+      .auth-card {
+        width: 100%;
+        max-width: 420px;
+        background: rgba(30, 41, 59, 0.85);
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        padding: 2rem 1.75rem;
+        backdrop-filter: blur(20px);
+        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+        animation: slideUp 0.4s ease;
+      }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ── LOGO ── */
+      .logo-block {
+        text-align: center;
+        margin-bottom: 1.75rem;
+      }
+      .logo-icon {
+        font-size: 2.5rem;
+        display: block;
+        margin-bottom: 0.5rem;
+        filter: drop-shadow(0 0 16px rgba(220, 38, 38, 0.5));
+      }
+      .logo-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: var(--text);
+      }
+      .logo-title span {
+        color: var(--primary);
+      }
+      .logo-sub {
+        font-size: 0.78rem;
+        color: var(--text-muted);
+        margin-top: 0.25rem;
+      }
+
+      /* ── TABS ── */
+      .tabs {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        background: rgba(15, 23, 42, 0.6);
+        border-radius: 10px;
+        padding: 4px;
+        margin-bottom: 1.5rem;
+        gap: 4px;
+      }
+      .tab-btn {
+        padding: 0.55rem;
+        border: none;
+        border-radius: 7px;
+        font-family: inherit;
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          color 0.2s;
+        background: transparent;
+        color: var(--text-muted);
+      }
+      .tab-btn.active {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      /* ── FORM PANEL ── */
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
+
+      .form-group {
+        margin-bottom: 1rem;
+      }
+      .form-label {
+        display: block;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: var(--text-muted);
+        margin-bottom: 0.4rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+      .form-input,
+      .form-select {
+        width: 100%;
+        padding: 0.7rem 0.9rem;
+        background: rgba(15, 23, 42, 0.7);
+        border: 1.5px solid var(--border);
+        border-radius: 10px;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.9rem;
+        outline: none;
+        transition:
+          border-color 0.2s,
+          box-shadow 0.2s;
+      }
+      .form-input:focus,
+      .form-select:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+      }
+      .form-input::placeholder {
+        color: var(--text-muted);
+        opacity: 0.7;
+      }
+      .form-select option {
+        background: var(--bg2);
+      }
+
+      /* ── PASSWORD TOGGLE ── */
+      .pw-wrap {
+        position: relative;
+      }
+      .pw-wrap .form-input {
+        padding-right: 2.75rem;
+      }
+      .pw-eye {
+        position: absolute;
+        right: 0.75rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-muted);
+        cursor: pointer;
+        font-size: 1rem;
+        padding: 2px;
+      }
+
+      /* ── SUBMIT ── */
+      .submit-btn {
+        width: 100%;
+        padding: 0.8rem;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-family: inherit;
+        font-size: 0.95rem;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        transition:
+          background 0.2s,
+          transform 0.1s,
+          box-shadow 0.2s;
+        box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3);
+      }
+      .submit-btn:hover {
+        background: var(--primary-d);
+        box-shadow: 0 6px 24px rgba(220, 38, 38, 0.4);
+      }
+      .submit-btn:active {
+        transform: scale(0.98);
+      }
+      .submit-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      /* ── ALERT ── */
+      .alert {
+        padding: 0.75rem 1rem;
+        border-radius: 9px;
+        font-size: 0.83rem;
+        font-weight: 500;
+        margin-bottom: 1rem;
+        display: none;
+      }
+      .alert.show {
+        display: block;
+      }
+      .alert.error {
+        background: rgba(239, 68, 68, 0.15);
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        color: #fca5a5;
+      }
+      .alert.success {
+        background: rgba(34, 197, 94, 0.15);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        color: #86efac;
+      }
+
+      /* ── DIVIDER ── */
+      .divider {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 1.25rem 0;
+        color: var(--text-muted);
+        font-size: 0.78rem;
+      }
+      .divider::before,
+      .divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: var(--border);
+      }
+
+      /* ── ADMIN LINK ── */
+      .admin-link {
+        text-align: center;
+        margin-top: 1.25rem;
+        font-size: 0.78rem;
+        color: var(--text-muted);
+      }
+      .admin-link a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .admin-link a:hover {
+        text-decoration: underline;
+      }
+
+      /* ── FOOTER ── */
+      .auth-footer {
+        text-align: center;
+        margin-top: 1.5rem;
+        font-size: 0.72rem;
+        color: var(--text-muted);
+        opacity: 0.7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="bg-layer"></div>
+    <div class="bg-grid"></div>
+
+    <div class="shell">
+      <div class="auth-card">
+        <div class="logo-block">
+          <span class="logo-icon">🛡️</span>
+          <div class="logo-title">DRES <span>Polangui</span></div>
+          <div class="logo-sub">
+            Disaster Response & Emergency System · Albay
+          </div>
+        </div>
+
+        <!-- TABS -->
+        <div class="tabs">
+          <button class="tab-btn active" onclick="switchTab('login')">
+            🔑 Login
+          </button>
+          <button class="tab-btn" onclick="switchTab('register')">
+            📝 Register
+          </button>
+        </div>
+
+        <!-- ALERT -->
+        <div class="alert" id="authAlert"></div>
+
+        <!-- LOGIN PANEL -->
+        <div class="panel active" id="panel-login">
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input
+              class="form-input"
+              id="loginEmail"
+              type="email"
+              placeholder="your@email.com"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="pw-wrap">
+              <input
+                class="form-input"
+                id="loginPassword"
+                type="password"
+                placeholder="••••••••"
+                onkeypress="if (event.key === 'Enter') doLogin();"
+              />
+              <button
+                class="pw-eye"
+                onclick="togglePw('loginPassword', this)"
+                type="button"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+          <button class="submit-btn" id="loginBtn" onclick="doLogin()">
+            🔑 Mag-login / Login
+          </button>
+        </div>
+
+        <!-- REGISTER PANEL -->
+        <div class="panel" id="panel-register">
+          <div class="form-group">
+            <label class="form-label"
+              >Full Name <span style="color: var(--primary)">*</span></label
+            >
+            <input
+              class="form-input"
+              id="regName"
+              type="text"
+              placeholder="Juan dela Cruz"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label"
+              >Email Address <span style="color: var(--primary)">*</span></label
+            >
+            <input
+              class="form-input"
+              id="regEmail"
+              type="email"
+              placeholder="your@email.com"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Barangay</label>
+            <select class="form-select" id="regBarangay">
+              <option value="">— Piliin ang inyong barangay —</option>
+              <option>Agos</option>
+              <option>Alod</option>
+              <option>Ason</option>
+              <option>Bagumbayan</option>
+              <option>Barcelonita</option>
+              <option>Binatagan</option>
+              <option>Burabod</option>
+              <option>Cagmanaba</option>
+              <option>Cotmon</option>
+              <option>Cuyaoyao</option>
+              <option>Delos Reyes</option>
+              <option>Francia</option>
+              <option>Magpanambo</option>
+              <option>Magurang</option>
+              <option>Napo</option>
+              <option>Oas</option>
+              <option>Paulba</option>
+              <option>Paulog</option>
+              <option>Pinamaniquian</option>
+              <option>Poblacion</option>
+              <option>Quirino</option>
+              <option>Salvacion</option>
+              <option>San Francisco</option>
+              <option>San Isidro</option>
+              <option>San Jose</option>
+              <option>San Miguel</option>
+              <option>San Roque</option>
+              <option>San Vicente</option>
+              <option>Santa Cruz</option>
+              <option>Santa Misericordia</option>
+              <option>Santo Cristo</option>
+              <option>Tambo</option>
+              <option>Tinago</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label"
+              >Password <span style="color: var(--primary)">*</span></label
+            >
+            <div class="pw-wrap">
+              <input
+                class="form-input"
+                id="regPassword"
+                type="password"
+                placeholder="Min. 6 characters"
+              />
+              <button
+                class="pw-eye"
+                onclick="togglePw('regPassword', this)"
+                type="button"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label"
+              >Confirm Password
+              <span style="color: var(--primary)">*</span></label
+            >
+            <div class="pw-wrap">
+              <input
+                class="form-input"
+                id="regConfirm"
+                type="password"
+                placeholder="Repeat password"
+                onkeypress="if (event.key === 'Enter') doRegister();"
+              />
+              <button
+                class="pw-eye"
+                onclick="togglePw('regConfirm', this)"
+                type="button"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+          <button class="submit-btn" id="registerBtn" onclick="doRegister()">
+            📝 Mag-register / Register
+          </button>
+        </div>
+
+        <div class="divider">or</div>
+        <div class="admin-link">
+          MDRRMO Admin?
+          <a href="/admin/dashboard.html">Admin Dashboard →</a>
+        </div>
+
+        <div class="auth-footer">
+          DRES Polangui · Polangui, Albay · Disaster Response System
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const API = "";
+
+      function switchTab(tab) {
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((b, i) =>
+            b.classList.toggle(
+              "active",
+              (i === 0 && tab === "login") || (i === 1 && tab === "register"),
+            ),
+          );
+        document
+          .getElementById("panel-login")
+          .classList.toggle("active", tab === "login");
+        document
+          .getElementById("panel-register")
+          .classList.toggle("active", tab === "register");
+        hideAlert();
+      }
+
+      function togglePw(id, btn) {
+        const inp = document.getElementById(id);
+        if (inp.type === "password") {
+          inp.type = "text";
+          btn.textContent = "🙈";
+        } else {
+          inp.type = "password";
+          btn.textContent = "👁️";
+        }
+      }
+
+      function showAlert(msg, type = "error") {
+        const el = document.getElementById("authAlert");
+        el.textContent = msg;
+        el.className = `alert show ${type}`;
+      }
+      function hideAlert() {
+        document.getElementById("authAlert").className = "alert";
+      }
+
+      async function doLogin() {
+        const email = document.getElementById("loginEmail").value.trim();
+        const password = document.getElementById("loginPassword").value;
+        if (!email || !password) {
+          showAlert("⚠️ Ilagay ang email at password.");
+          return;
+        }
+
+        const btn = document.getElementById("loginBtn");
+        btn.disabled = true;
+        btn.textContent = "⏳ Logging in...";
+        hideAlert();
+
+        try {
+          const res = await fetch(`${API}/api/auth/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password }),
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            showAlert("❌ " + (data.detail || "Invalid email or password."));
+            return;
+          }
+
+          const u = data.data;
+          sessionStorage.setItem("user_id", u.user_id);
+          sessionStorage.setItem("user_name", u.name);
+          sessionStorage.setItem("user_email", u.email);
+          sessionStorage.setItem("token", u.token);
+          sessionStorage.setItem("role", u.role);
+
+          showAlert(
+            "✅ Welcome back, " + u.name + "! Redirecting...",
+            "success",
+          );
+          setTimeout(() => {
+            window.location.href = "/resident/dashboard.html";
+          }, 1200);
+        } catch (e) {
+          showAlert(
+            "❌ Hindi ma-reach ang server. Siguraduhing tumatakbo ang backend.",
+          );
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "🔑 Mag-login / Login";
+        }
+      }
+
+      async function doRegister() {
+        const name = document.getElementById("regName").value.trim();
+        const email = document.getElementById("regEmail").value.trim();
+        const barangay = document.getElementById("regBarangay").value;
+        const password = document.getElementById("regPassword").value;
+        const confirm = document.getElementById("regConfirm").value;
+
+        if (!name) {
+          showAlert("⚠️ Ilagay ang inyong pangalan.");
+          return;
+        }
+        if (!email) {
+          showAlert("⚠️ Ilagay ang email address.");
+          return;
+        }
+        if (!password) {
+          showAlert("⚠️ Pumili ng password.");
+          return;
+        }
+        if (password.length < 6) {
+          showAlert("⚠️ Password ay dapat 6 characters man lang.");
+          return;
+        }
+        if (password !== confirm) {
+          showAlert("⚠️ Hindi magkapareho ang passwords.");
+          return;
+        }
+
+        const btn = document.getElementById("registerBtn");
+        btn.disabled = true;
+        btn.textContent = "⏳ Registering...";
+        hideAlert();
+
+        try {
+          const res = await fetch(`${API}/api/auth/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, password, barangay }),
+          });
+          const data = await res.json();
+
+          if (!res.ok) {
+            showAlert("❌ " + (data.detail || "Registration failed."));
+            return;
+          }
+
+          showAlert("✅ Account created! Redirecting to login...", "success");
+          setTimeout(() => {
+            document.getElementById("regName").value = "";
+            document.getElementById("regEmail").value = "";
+            document.getElementById("regPassword").value = "";
+            document.getElementById("regConfirm").value = "";
+            switchTab("login");
+            document.getElementById("loginEmail").value = email;
+          }, 1500);
+        } catch (e) {
+          showAlert(
+            "❌ Hindi ma-reach ang server. Siguraduhing tumatakbo ang backend.",
+          );
+        } finally {
+          btn.disabled = false;
+          btn.textContent = "📝 Mag-register / Register";
+        }
+      }
+    </script>
+  </body>
+</html>

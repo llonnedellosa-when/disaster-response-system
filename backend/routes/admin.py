@@ -239,3 +239,23 @@ def get_all_reports(
             for r in reports
         ]
     }
+
+
+@router.get("/users")
+def get_all_users(db: Session = Depends(get_db)):
+    """Returns all registered residents for the Settings page."""
+    users = db.query(User).order_by(User.created_at.desc()).all()
+    return {
+        "status": "success",
+        "data": [
+            {
+                "id":         u.id,
+                "name":       u.name,
+                "email":      u.email,
+                "barangay":   u.barangay,
+                "role":       u.role,
+                "created_at": u.created_at.isoformat() if u.created_at else None,
+            }
+            for u in users
+        ]
+    }

@@ -365,8 +365,15 @@ async function sendChat() {
   removeTyping();
   appendMsg(reply, 'bot');
 
-  chatHistory.push({ role: 'user',  content: msg   });
-  chatHistory.push({ role: 'bot',   content: reply });
+  chatHistory.push({ role: 'user', content: msg   });
+  chatHistory.push({ role: 'bot',  content: reply });
+
+  // ── Log to admin chatbot logs (after reply is defined) ──────────────────────
+  fetch(`${API}/api/admin/chatbot-logs`, {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify({ user_id: USER_ID, message: msg, response: reply })
+  }).catch(() => {}); // silent fail — logging should never break the chat
 }
 
 // ── CHAT UI HELPERS ────────────────────────────────────────────────────────────
