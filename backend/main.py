@@ -40,3 +40,5 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 app.mount("/", StaticFiles(directory=os.path.join(BASE_DIR,
           "frontend"), html=True), name="frontend")
+
+app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
