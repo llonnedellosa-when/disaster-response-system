@@ -551,7 +551,6 @@
       </div>
     </div>
 
-    <!-- REPORT DETAIL MODAL -->
     <div class="modal-overlay" id="rptModal" onclick="closeModal()">
       <div class="modal" onclick="event.stopPropagation()">
         <button class="modal-x" onclick="closeModal()">✕ Close</button>
@@ -561,7 +560,7 @@
     </div>
 
     <script>
-      const API = "";
+      const API = "http://192.168.1.17:8000";
 
       const PAGE_META = {
         dashboard: ["Dashboard", "Overview & Demographics"],
@@ -993,7 +992,7 @@
           const src = `${API}/${clean}`;
           imgHtml = `
         <div class="rpt-photo">
-          <img src="${src}" alt="Incident photo"
+          <img.src = "${src}"; alt="Incident photo"
             onerror="this.closest('.rpt-photo').innerHTML='<div class=rpt-photo-err>⚠️ Image could not be loaded — check that the backend is serving uploads/</div>'" />
           <div class="rpt-photo-label">📷 ${clean.split("/").pop()}</div>
         </div>`;

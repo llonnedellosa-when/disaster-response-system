@@ -449,7 +449,7 @@ function removeExistingBanner() {
   if (el) el.remove();
 }
 
-// ── REPORT FORM ────────────────────────────────────────────────────────────────
+// REPORT FORM
 function selectType(btn) {
   document.querySelectorAll('#typeGrid .type-btn').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');

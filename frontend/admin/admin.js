@@ -1,4 +1,3 @@
-// ── REPLACE your existing renderRecentReports function with this ──────────────
 function renderRecentReports(reports) {
   const stClass = {
     // from API (capitalized by your backend)

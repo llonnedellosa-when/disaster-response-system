@@ -55,11 +55,8 @@ async def submit_report(
     image:            Optional[UploadFile] = File(None),
     db: Session = Depends(get_db)
 ):
-    """
-    Submit a new incident report from the resident app.
-    Accepts text, optional image upload, and optional voice transcript.
-    """
-    image_path = None
+
+    image_path = f"/uploads/images/{filename}"
 
     # Save image if provided
     if image and image.filename:

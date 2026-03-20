@@ -1,14 +1,3 @@
-"""
-ai_service.py — DRES Polangui AI Service
-─────────────────────────────────────────
-Image Analysis  : Google Cloud Vision API  (1,000 free/month)
-Decision Making : Groq API + LLaMA 3       (14,400 free/day)
-Chat            : Groq API + LLaMA 3       (replaces Gemini)
-
-Install dependencies:
-    pip install groq requests Pillow python-dotenv
-"""
-
 import os
 import io
 import json
