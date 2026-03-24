@@ -15,23 +15,23 @@ const CHATBOT_KB = [
   // Emergency Hotlines
   {
     keywords: ['emergency', 'hotline', 'number', 'contact', 'call', 'phone', 'numero', 'telepono', 'linya'],
-    response: `📞 <strong>Emergency Contact Numbers — Polangui, Albay</strong><br><br>
-🚨 <strong>Emergency Hotline:</strong> 911<br>
-🛡️ <strong>MDRRMO Polangui:</strong> (052) 486-0160<br>
-🚒 <strong>BFP (Fire Station):</strong> (052) 486-0117<br>
-👮 <strong>PNP Polangui Police:</strong> (052) 486-0116<br>
-🏥 <strong>Polangui General Hospital:</strong> (052) 486-0133<br>
-⚡ <strong>MERALCO:</strong> 16211<br>
-🌊 <strong>PAGASA (Weather):</strong> (02) 8284-0800<br><br>
+    response: ` <strong>Emergency Contact Numbers — Polangui, Albay</strong><br><br>
+ <strong>Emergency Hotline:</strong> 911<br>
+ <strong>MDRRMO Polangui:</strong> (052) 486-0160<br>
+ <strong>BFP (Fire Station):</strong> (052) 486-0117<br>
+ <strong>PNP Polangui Police:</strong> (052) 486-0116<br>
+ <strong>Polangui General Hospital:</strong> (052) 486-0133<br>
+ <strong>MERALCO:</strong> 16211<br>
+ <strong>PAGASA (Weather):</strong> (02) 8284-0800<br><br>
 <em>💡 Para sa agarang tulong, tawagan ang 911 o MDRRMO.</em>`
   },
   // MDRRMO specific
   {
     keywords: ['mdrrmo', 'disaster risk', 'municipal'],
-    response: `🛡️ <strong>MDRRMO — Polangui, Albay</strong><br><br>
-📞 <strong>Hotline:</strong> (052) 486-0160<br>
-📍 <strong>Address:</strong> Municipal Hall, Polangui, Albay<br>
-🕗 <strong>Hours:</strong> 24/7 sa panahon ng kalamidad<br><br>
+    response: ` <strong>MDRRMO — Polangui, Albay</strong><br><br>
+ <strong>Hotline:</strong> (052) 486-0160<br>
+ <strong>Address:</strong> Municipal Hall, Polangui, Albay<br>
+ <strong>Hours:</strong> 24/7 sa panahon ng kalamidad<br><br>
 Ang MDRRMO (Municipal Disaster Risk Reduction and Management Office) ang responsable sa disaster preparedness, response, at rehabilitation sa Polangui.<br><br>
 Maaari kang mag-report ng insidente direkta sa pamamagitan ng <strong>🚨 Report button</strong> sa app na ito.`
   },
@@ -39,18 +39,17 @@ Maaari kang mag-report ng insidente direkta sa pamamagitan ng <strong>🚨 Repor
   {
     keywords: ['police', 'pulis', 'pnp', 'patroller'],
     response: `👮 <strong>PNP Polangui Police Station</strong><br><br>
-📞 <strong>Direktang Linya:</strong> (052) 486-0116<br>
-🚨 <strong>Emergency:</strong> 911<br>
-📍 <strong>Address:</strong> Poblacion, Polangui, Albay<br><br>
+ <strong>Direktang Linya:</strong> (052) 486-0116<br>
+ <strong>Emergency:</strong> 911<br>
+ <strong>Address:</strong> Poblacion, Polangui, Albay<br><br>
 Para sa krimen, pagkawala ng tao, o anumang sitwasyong nangangailangan ng pulis, tumawag agad sa 911.`
   },
   // Fire
   {
     keywords: ['fire', 'sunog', 'bfp', 'fire station', 'firetruck'],
     response: `🚒 <strong>BFP — Bureau of Fire Protection, Polangui</strong><br><br>
-📞 <strong>Fire Station:</strong> (052) 486-0117<br>
-🚨 <strong>Emergency:</strong> 911<br><br>
-⚠️ <strong>Kung may sunog:</strong><br>
+ <strong>Fire Station:</strong> (052) 486-0117<br>🚨 <strong>Emergency:</strong> 911<br><br>
+ <strong>Kung may sunog:</strong><br>
 1. Lumabas agad sa gusali — huwag kumuha ng gamit<br>
 2. Tumawag sa 911 o BFP<br>
 3. Huwag gumamit ng elevator<br>
@@ -60,9 +59,9 @@ Para sa krimen, pagkawala ng tao, o anumang sitwasyong nangangailangan ng pulis,
   // Hospital / Medical
   {
     keywords: ['hospital', 'ospital', 'medical', 'doctor', 'ambulance', 'injured', 'sugatan', 'sakit', 'sick'],
-    response: `🏥 <strong>Medical Emergency — Polangui</strong><br><br>
-🚑 <strong>Polangui General Hospital:</strong> (052) 486-0133<br>
-🚨 <strong>Emergency/Ambulance:</strong> 911<br><br>
+    response: ` <strong>Medical Emergency — Polangui</strong><br><br>
+<strong>Polangui General Hospital:</strong> (052) 486-0133<br>
+ <strong>Emergency/Ambulance:</strong> 911<br><br>
 <strong>Para sa medikal na emergency:</strong><br>
 1. Tumawag sa 911 para sa ambulance<br>
 2. Huwag ilipat ang injured person maliban kung kailangan<br>
@@ -73,152 +72,152 @@ Para sa krimen, pagkawala ng tao, o anumang sitwasyong nangangailangan ng pulis,
   {
     keywords: ['evacuation', 'evacuation center', 'shelter', 'kanlungan', 'saan', 'likas', 'ligtas na lugar', 'safe place'],
     response: `🏫 <strong>Evacuation Centers — Polangui, Albay</strong><br><br>
-📍 <strong>Primary Evacuation Centers:</strong><br>
-🏫 Polangui Central School — Poblacion<br>
-🏛️ Polangui Municipal Gym — Poblacion<br>
-🏫 Agos Elementary School — Agos<br>
-🏫 Ason National High School — Ason<br>
-🏫 Cotmon Elementary School — Cotmon<br>
-🏫 Burabod Elementary School — Burabod<br><br>
-📌 <strong>Panuto:</strong> Pumunta sa pinakamalapit na evacuation center sa inyong barangay.<br><br>
-📞 Para malaman ang status ng evacuation center, tumawag sa <strong>MDRRMO: (052) 486-0160</strong>`
+ <strong>Primary Evacuation Centers:</strong><br>
+ Polangui Central School — Poblacion<br>
+ Polangui Municipal Gym — Poblacion<br>
+ Agos Elementary School — Agos<br>
+ Ason National High School — Ason<br>
+ Cotmon Elementary School — Cotmon<br>
+ Burabod Elementary School — Burabod<br><br>
+ <strong>Panuto:</strong> Pumunta sa pinakamalapit na evacuation center sa inyong barangay.<br><br>
+ Para malaman ang status ng evacuation center, tumawag sa <strong>MDRRMO: (052) 486-0160</strong>`
   },
   // Signal levels
   {
     keywords: ['signal', 'signal level', 'signal number', 'anong signal', 'typhoon signal', 'storm signal', 'bagyo'],
-    response: `⚠️ <strong>PAGASA Typhoon Signal Levels</strong><br><br>
-🟡 <strong>Signal #1</strong> — Winds 30–60 kph expected within 36 hours. Mag-monitor ng balita.<br>
-🟠 <strong>Signal #2</strong> — Winds 61–120 kph expected within 24 hours. Mag-ingat; i-secure ang bahay.<br>
-🔴 <strong>Signal #3</strong> — Winds 121–170 kph expected within 18 hours. Mag-evacuate kung kinakailangan.<br>
-🟣 <strong>Signal #4</strong> — Winds 171–220 kph expected within 12 hours. Emergency na kondisyon.<br>
-⚫ <strong>Signal #5</strong> — Winds >220 kph. Katastrophikong pinsala. Sumunod sa MDRRMO instructions.<br><br>
-📻 Para sa pinakabagong signal update, pakinggan ang radyo o bisitahin ang <strong>bagong.pagasa.dost.gov.ph</strong><br>
-📞 MDRRMO: (052) 486-0160`
+    response: ` <strong>PAGASA Typhoon Signal Levels</strong><br><br>
+ <strong>Signal #1</strong> — Winds 30–60 kph expected within 36 hours. Mag-monitor ng balita.<br>
+<strong>Signal #2</strong> — Winds 61–120 kph expected within 24 hours. Mag-ingat; i-secure ang bahay.<br>
+ <strong>Signal #3</strong> — Winds 121–170 kph expected within 18 hours. Mag-evacuate kung kinakailangan.<br>
+<strong>Signal #4</strong> — Winds 171–220 kph expected within 12 hours. Emergency na kondisyon.<br>
+<strong>Signal #5</strong> — Winds >220 kph. Katastrophikong pinsala. Sumunod sa MDRRMO instructions.<br><br>
+ Para sa pinakabagong signal update, pakinggan ang radyo o bisitahin ang <strong>bagong.pagasa.dost.gov.ph</strong><br>
+ MDRRMO: (052) 486-0160`
   },
   // Before typhoon
   {
     keywords: ['bago', 'before', 'prepare', 'paghahanda', 'preparation', 'checklist', 'bago dumating', 'before typhoon'],
-    response: `✅ <strong>Paghahanda Bago Dumating ang Bagyo</strong><br><br>
-🔦 Mag-imbak ng flashlight at extra batteries<br>
-🥫 Mag-ipon ng de-lata at pagkain para 3–7 araw<br>
-💧 Mag-imbak ng malinis na tubig (min. 3 litro/araw/tao)<br>
-📱 I-charge ang cellphone at powerbank<br>
-💊 I-handa ang gamot at first aid kit<br>
-📋 I-check ang Go Bag: ID, documents, pera, gamot<br>
-🏠 I-secure ang bubong, pinto, at bintana<br>
-🌳 Putulin ang mga sanga ng puno na malapit sa bahay<br>
-📡 I-monitor ang PAGASA updates<br>
-📞 Alamin ang MDRRMO hotline: <strong>(052) 486-0160</strong><br>
-🏫 Alamin ang pinakamalapit na evacuation center`
+    response: ` <strong>Paghahanda Bago Dumating ang Bagyo</strong><br><br>
+ Mag-imbak ng flashlight at extra batteries<br>
+ Mag-ipon ng de-lata at pagkain para 3–7 araw<br>
+ Mag-imbak ng malinis na tubig (min. 3 litro/araw/tao)<br>
+ I-charge ang cellphone at powerbank<br>
+ I-handa ang gamot at first aid kit<br>
+ I-check ang Go Bag: ID, documents, pera, gamot<br>
+ I-secure ang bubong, pinto, at bintana<br>
+ Putulin ang mga sanga ng puno na malapit sa bahay<br>
+ I-monitor ang PAGASA updates<br>
+ Alamin ang MDRRMO hotline: <strong>(052) 486-0160</strong><br>
+ Alamin ang pinakamalapit na evacuation center`
   },
   // During typhoon
   {
     keywords: ['during', 'habang', 'nasa bagyo', 'habang bagyo', 'during typhoon', 'during storm'],
     response: `🌀 <strong>Habang May Bagyo — Dapat Gawin</strong><br><br>
-🏠 Manatili sa loob ng bahay — huwag lumabas maliban kung emergency<br>
+ Manatili sa loob ng bahay — huwag lumabas maliban kung emergency<br>
 🪟 Lumayo sa mga bintana at pinto<br>
-📻 Makinig sa radyo para sa updates<br>
-🕯️ Huwag gumamit ng kandila — gamitin ang flashlight<br>
-⚡ I-unplug ang mga electronics<br>
-💧 Huwag tumawid sa baha — kahit mababa<br>
-📞 Kung may emergency: tumawag sa <strong>911</strong> o <strong>MDRRMO (052) 486-0160</strong><br>
-📋 Gamitin ang app na ito para mag-report ng insidente`
+ Makinig sa radyo para sa updates<br>
+ Huwag gumamit ng kandila — gamitin ang flashlight<br>
+ I-unplug ang mga electronics<br>
+ Huwag tumawid sa baha — kahit mababa<br>
+  Kung may emergency: tumawag sa <strong>911</strong> o <strong>MDRRMO (052) 486-0160</strong><br>
+ Gamitin ang app na ito para mag-report ng insidente`
   },
   // After typhoon
   {
     keywords: ['after', 'pagkatapos', 'after typhoon', 'recovery', 'tapos na', 'lipas na'],
-    response: `🌤️ <strong>Pagkatapos ng Bagyo — Dapat Gawin</strong><br><br>
-🚶 Mag-ingat sa labasan — maaaring may debris at baha pa<br>
-⚡ Huwag hawakan ang fallen power lines — tumawag sa MERALCO: <strong>16211</strong><br>
-🏠 I-check ang bahay para sa structural damage bago pumasok<br>
-💧 Huwag uminom ng tubig mula sa gripo hanggang malinis na<br>
-🐍 Mag-ingat sa mga ahas at insects na maaaring lumabas pagkatapos ng baha<br>
-📋 I-report ang damage sa MDRRMO o gamitin ang app na ito<br>
-📞 MDRRMO: <strong>(052) 486-0160</strong><br>
-📸 Kumuha ng litrato ng damage para sa report`
+    response: ` <strong>Pagkatapos ng Bagyo — Dapat Gawin</strong><br><br>
+ Mag-ingat sa labasan — maaaring may debris at baha pa<br>
+ Huwag hawakan ang fallen power lines — tumawag sa MERALCO: <strong>16211</strong><br>
+ I-check ang bahay para sa structural damage bago pumasok<br>
+ Huwag uminom ng tubig mula sa gripo hanggang malinis na<br>
+ Mag-ingat sa mga ahas at insects na maaaring lumabas pagkatapos ng baha<br>
+ I-report ang damage sa MDRRMO o gamitin ang app na ito<br>
+ MDRRMO: <strong>(052) 486-0160</strong><br>
+ Kumuha ng litrato ng damage para sa report`
   },
   // Flood
   {
     keywords: ['flood', 'baha', 'tubig', 'bumabaha', 'flooded', 'nagbabaha'],
-    response: `🌊 <strong>Paano Haharapin ang Baha</strong><br><br>
-⛔ <strong>HUWAG</strong> tumawid sa baha — kahit tuhod lang ang lalim<br>
-⛔ <strong>HUWAG</strong> mag-drive sa bahang daan<br>
-⛔ <strong>HUWAG</strong> lumapit sa ilog o estero<br><br>
-✅ <strong>DAPAT GAWIN:</strong><br>
+    response: ` <strong>Paano Haharapin ang Baha</strong><br><br>
+ <strong>HUWAG</strong> tumawid sa baha — kahit tuhod lang ang lalim<br>
+ <strong>HUWAG</strong> mag-drive sa bahang daan<br>
+ <strong>HUWAG</strong> lumapit sa ilog o estero<br><br>
+ <strong>DAPAT GAWIN:</strong><br>
 1. Pumunta sa mas mataas na lugar<br>
 2. Dalhin ang Go Bag at mahahalagang gamit<br>
 3. I-turn off ang kuryente bago umalis<br>
 4. Pumunta sa evacuation center<br>
 5. I-report ang baha sa app o tumawag sa MDRRMO<br><br>
-📞 MDRRMO: <strong>(052) 486-0160</strong> | Emergency: <strong>911</strong>`
+MDRRMO: <strong>(052) 486-0160</strong> | Emergency: <strong>911</strong>`
   },
   // How to report / submit report
   {
     keywords: ['report', 'mag-report', 'i-report', 'submit', 'how to report', 'paano mag-report', 'incident'],
     response: `📋 <strong>Paano Mag-submit ng Incident Report</strong><br><br>
-1️⃣ I-tap ang <strong>🚨 Report button</strong> sa ibaba ng screen<br>
+1️⃣ I-tap ang <strong> Report button</strong> sa ibaba ng screen<br>
 2️⃣ Piliin ang <strong>Uri ng Insidente</strong> (Flood, Wind Damage, atbp.)<br>
 3️⃣ Piliin ang inyong <strong>Barangay</strong><br>
 4️⃣ Piliin ang <strong>Severity Level</strong><br>
 5️⃣ Ilagay ang <strong>Paglalarawan</strong> ng nangyari<br>
 6️⃣ Mag-attach ng <strong>Larawan</strong> (optional)<br>
-7️⃣ I-tap ang 📍 para idagdag ang lokasyon (optional)<br>
-8️⃣ I-tap ang <strong>🚨 I-submit ang Report</strong><br><br>
+7️⃣ I-tap ang  para idagdag ang lokasyon (optional)<br>
+8️⃣ I-tap ang <strong> I-submit ang Report</strong><br><br>
 Ang inyong report ay matatanggap ng <strong>MDRRMO Polangui</strong> para sa agarang aksyon.`
   },
   // Missing person
   {
     keywords: ['missing', 'nawawala', 'nawala', 'missing person', 'lost person', 'hinahanap'],
-    response: `🔍 <strong>Missing Person — Dapat Gawin</strong><br><br>
+    response: ` <strong>Missing Person — Dapat Gawin</strong><br><br>
 1. Mag-report agad sa <strong>PNP Polangui: (052) 486-0116</strong><br>
 2. Tumawag sa <strong>911</strong> kung emergency<br>
 3. Mag-submit ng <strong>Missing Person report</strong> sa app na ito<br>
 4. I-provide ang detalye: pangalan, edad, huling nakitang lugar, damit<br>
 5. Mag-share ng photo sa MDRRMO at PNP<br><br>
-📞 PNP Polangui: <strong>(052) 486-0116</strong><br>
-📞 MDRRMO: <strong>(052) 486-0160</strong><br>
-🚨 Emergency: <strong>911</strong>`
+PNP Polangui: <strong>(052) 486-0116</strong><br>
+ MDRRMO: <strong>(052) 486-0160</strong><br>
+ Emergency: <strong>911</strong>`
   },
   // Power outage
   {
     keywords: ['power', 'kuryente', 'electricity', 'outage', 'blackout', 'walang kuryente', 'meralco'],
     response: `⚡ <strong>Power Outage — Paano Haharapin</strong><br><br>
-📞 <strong>MERALCO Hotline:</strong> 16211<br>
-📞 <strong>MERALCO Area:</strong> 1-800-10-MERALCO (1-800-10-637-2526)<br><br>
-✅ <strong>Dapat Gawin:</strong><br>
+ <strong>MERALCO Hotline:</strong> 16211<br>
+ <strong>MERALCO Area:</strong> 1-800-10-MERALCO (1-800-10-637-2526)<br><br>
+ <strong>Dapat Gawin:</strong><br>
 • Gumamit ng flashlight — iwasan ang kandila<br>
 • I-unplug ang mga appliances para maiwasan ang power surge<br>
 • I-save ang battery ng cellphone<br>
 • I-report sa MERALCO ang downed power lines<br><br>
-⚠️ <strong>HUWAG</strong> lumapit sa fallen power lines — ito ay mapanganib.<br>
+ <strong>HUWAG</strong> lumapit sa fallen power lines — ito ay mapanganib.<br>
 Tumawag sa MERALCO o MDRRMO agad kung may downed lines.`
   },
   // About DRES / app
   {
     keywords: ['about', 'ano ito', 'what is', 'dres', 'app', 'system', 'anong app'],
-    response: `🛡️ <strong>Tungkol sa DRES Polangui</strong><br><br>
+    response: ` <strong>Tungkol sa DRES Polangui</strong><br><br>
 Ang <strong>DRES (Disaster Response and Emergency System)</strong> ay isang Web at Mobile-Based na sistema para sa Polangui, Albay.<br><br>
-📋 <strong>Mga Pangunahing Feature:</strong><br>
-• 🚨 Mag-submit ng incident reports (text, larawan, lokasyon)<br>
-• 🤖 DRES-Bot para sa disaster guidance<br>
-• 📋 Suriin ang status ng inyong mga report<br>
-• 💡 Safety tips at preparedness guides<br><br>
+ <strong>Mga Pangunahing Feature:</strong><br>
+•  Mag-submit ng incident reports (text, larawan, lokasyon)<br>
+•  DRES-Bot para sa disaster guidance<br>
+•  Suriin ang status ng inyong mga report<br>
+•  Safety tips at preparedness guides<br><br>
 Ang sistema ay direktang konektado sa <strong>MDRRMO ng Polangui</strong> para sa mas mabilis na emergency response.<br><br>
-📞 MDRRMO: <strong>(052) 486-0160</strong>`
+ MDRRMO: <strong>(052) 486-0160</strong>`
   },
   // Go bag
   {
     keywords: ['go bag', 'emergency kit', 'survival kit', 'bag', 'dala', 'dalhin'],
-    response: `🎒 <strong>Go Bag Checklist</strong><br><br>
-📋 <strong>Mahahalagang Dokumento:</strong><br>
+    response: ` <strong>Go Bag Checklist</strong><br><br>
+ <strong>Mahahalagang Dokumento:</strong><br>
 • PhilSys ID / Valid ID (copy)<br>
 • Birth Certificate (copy)<br>
 • Insurance documents<br><br>
-💊 <strong>Gamot at Kalusugan:</strong><br>
+ <strong>Gamot at Kalusugan:</strong><br>
 • Maintenance medicines (7 days supply)<br>
 • First aid kit<br>
 • Face masks at hand sanitizer<br><br>
-🍞 <strong>Pagkain at Tubig:</strong><br>
+ <strong>Pagkain at Tubig:</strong><br>
 • Ready-to-eat food (3 days)<br>
 • Bottled water (1 liter per person)<br><br>
 🔦 <strong>Kagamitan:</strong><br>
@@ -233,11 +232,11 @@ Ang sistema ay direktang konektado sa <strong>MDRRMO ng Polangui</strong> para s
     keywords: ['hello', 'hi', 'kumusta', 'kamusta', 'magandang', 'good morning', 'good afternoon', 'good evening', 'hey'],
     response: `👋 Kumusta! Ako si <strong>DRES-Bot</strong>, ang inyong assistant para sa disaster preparedness sa Polangui, Albay.<br><br>
 Maaari akong tumulong sa:<br>
-• 📞 Emergency contact numbers<br>
-• 🏫 Evacuation center locations<br>
-• 🌀 Typhoon safety guidance<br>
-• 📋 Paano mag-submit ng report<br>
-• 🎒 Go bag checklist<br><br>
+•  Emergency contact numbers<br>
+•  Evacuation center locations<br>
+•  Typhoon safety guidance<br>
+•  Paano mag-submit ng report<br>
+•  Go bag checklist<br><br>
 <em>Ano ang maaari kitang matulungan ngayon?</em>`
   },
   // Thank you
@@ -266,13 +265,13 @@ function getRuleBotResponse(msg) {
   // Default fallback response
   return `🤔 Paumanhin, hindi ko pa masagot ang tanong na iyon.<br><br>
 Maaari akong tumulong sa mga sumusunod — i-tap o i-type ang keyword:<br>
-📞 <strong>"emergency numbers"</strong> — mga hotline<br>
-🏫 <strong>"evacuation center"</strong> — mga lugar ng likas<br>
-🌀 <strong>"signal level"</strong> — typhoon signal info<br>
-✅ <strong>"bago ang bagyo"</strong> — preparation checklist<br>
-📋 <strong>"mag-report"</strong> — paano mag-submit ng report<br>
-🎒 <strong>"go bag"</strong> — emergency kit checklist<br><br>
-Para sa direktang tulong: 📞 <strong>MDRRMO: (052) 486-0160</strong> | 🚨 <strong>911</strong>`;
+<strong>"emergency numbers"</strong> — mga hotline<br>
+<strong>"evacuation center"</strong> — mga lugar ng likas<br>
+<strong>"signal level"</strong> — typhoon signal info<br>
+ <strong>"bago ang bagyo"</strong> — preparation checklist<br>
+ <strong>"mag-report"</strong> — paano mag-submit ng report<br>
+ <strong>"go bag"</strong> — emergency kit checklist<br><br>
+Para sa direktang tulong:  <strong>MDRRMO: (052) 486-0160</strong> | 🚨 <strong>911</strong>`;
 }
 
 // ── INIT ───────────────────────────────────────────────────────────────────────
@@ -376,6 +375,37 @@ async function sendChat() {
   }).catch(() => {}); // silent fail — logging should never break the chat
 }
 
+//Situational Awareness Engine
+function processInput(userText) {
+  const situation = detectSituation(userText);
+  const response = getResponse(situation);
+  return response;
+}
+
+//COMPREHENSION
+function detectSituation(text) {
+  text = text.toLowerCase();
+
+  let type = "unknown";
+  let severity = "low";
+
+  if (text.includes("baha") || text.includes("flood")) {
+    type = "flood";
+  } else if (text.includes("sunog") || text.includes("fire")) {
+    type = "fire";
+  } else if (text.includes("bagyo") || text.includes("typhoon")) {
+    type = "typhoon";
+  }
+
+  // severity detection
+  if (text.includes("malalim") || text.includes("mataas") || text.includes("grabe")) {
+    severity = "high";
+  }
+
+  return { type, severity };
+}
+
+
 // ── CHAT UI HELPERS ────────────────────────────────────────────────────────────
 function appendMsg(text, type) {
   const container = document.getElementById('chatMessages');
@@ -404,6 +434,27 @@ function removeTyping() {
   if (el) el.remove();
 }
 
+function getResponse(situation) {
+  const { type, severity } = situation;
+
+  if (type === "flood") {
+    if (severity === "high") {
+      return "⚠️ Mataas ang baha! Lumikas agad sa evacuation center at iwasan ang mababang lugar.";
+    }
+    return "🌊 May baha. Manatiling alerto at ihanda ang emergency kit.";
+  }
+
+  if (type === "fire") {
+    return "🔥 May sunog! Lumayo agad sa lugar at tumawag sa BFP (911 o local hotline).";
+  }
+
+  if (type === "typhoon") {
+    return "🌀 May bagyo. I-secure ang bahay at maghanda ng go bag.";
+  }
+
+  return "🤖 Pasensya, hindi ko pa matukoy ang sitwasyon. Pwede mo bang linawin?";
+}
+
 // ── EMERGENCY BANNERS ──────────────────────────────────────────────────────────
 function showEmergencyBanner() {
   removeExistingBanner();
@@ -413,7 +464,7 @@ function showEmergencyBanner() {
   banner.innerHTML  = `
     <div class="eb-pulse"></div>
     <div class="eb-content">
-      <div class="eb-title">🚨 EMERGENCY DETECTED</div>
+      <div class="eb-title"> EMERGENCY DETECTED</div>
       <div class="eb-sub">Naipadala na ang inyong sitwasyon sa MDRRMO Polangui</div>
       <div class="eb-actions">
         <a href="tel:911"           class="eb-btn eb-btn-red">📞 Call 911</a>
@@ -433,7 +484,7 @@ function showHighAlertBanner() {
   banner.className = 'emergency-banner high';
   banner.innerHTML = `
     <div class="eb-content">
-      <div class="eb-title">⚠️ HIGH RISK SITUATION</div>
+      <div class="eb-title"> HIGH RISK SITUATION</div>
       <div class="eb-sub">Report automatically sent to MDRRMO for monitoring</div>
       <div class="eb-actions">
         <a href="tel:+63524860160" class="eb-btn eb-btn-orange">📞 MDRRMO: (052) 486-0160</a>
@@ -485,7 +536,7 @@ function getLocation() {
     pos => {
       document.getElementById('rptLat').value = pos.coords.latitude.toFixed(6);
       document.getElementById('rptLng').value = pos.coords.longitude.toFixed(6);
-      showToast('✅ Nakuha na ang lokasyon!');
+      showToast(' Nakuha na ang lokasyon!');
     },
     () => showToast('Hindi ma-access ang lokasyon. I-allow ang location permission.')
   );
@@ -495,13 +546,13 @@ async function submitReport() {
   const barangay = document.getElementById('rptBarangay').value;
   const desc     = document.getElementById('rptDesc').value.trim();
 
-  if (!selectedReportType) { showToast('⚠️ Piliin ang uri ng insidente.'); return; }
-  if (!barangay)            { showToast('⚠️ Piliin ang inyong barangay.'); return; }
-  if (!desc)                { showToast('⚠️ Ilagay ang paglalarawan ng insidente.'); return; }
+  if (!selectedReportType) { showToast(' Piliin ang uri ng insidente.'); return; }
+  if (!barangay)            { showToast(' Piliin ang inyong barangay.'); return; }
+  if (!desc)                { showToast(' Ilagay ang paglalarawan ng insidente.'); return; }
 
   const btn = document.getElementById('submitBtn');
   btn.disabled    = true;
-  btn.textContent = '⏳ Isinusumite...';
+  btn.textContent = ' Isinusumite...';
 
   const fd = new FormData();
   fd.append('user_id',     USER_ID);
@@ -523,7 +574,7 @@ async function submitReport() {
     const data = await res.json();
 
     if (data.status === 'success') {
-      showToast('✅ Na-submit na ang inyong report sa MDRRMO!', 3500);
+      showToast('Na-submit na ang inyong report sa MDRRMO!', 3500);
       resetReportForm();
       setTimeout(() => switchPage('myreports'), 1500);
     } else {
@@ -646,3 +697,88 @@ function showToast(msg, duration = 2500) {
   t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), duration);
 }
+
+      // ── PROFILE PAGE ────────────────────────────────────────────────────────
+      function loadProfilePage() {
+        const name =
+          sessionStorage.getItem("user_name") ||
+          localStorage.getItem("prof_name") ||
+          "Resident";
+        const barangay = localStorage.getItem("prof_barangay") || "—";
+        const contact = localStorage.getItem("prof_contact") || "—";
+        const email = localStorage.getItem("prof_email") || "—";
+
+        document.getElementById("profileAvatar").textContent = name
+          .charAt(0)
+          .toUpperCase();
+        document.getElementById("profileName").textContent = name;
+        document.getElementById("piName").textContent = name;
+        document.getElementById("piBarangay").textContent = barangay;
+        document.getElementById("piContact").textContent = contact;
+        document.getElementById("piEmail").textContent = email;
+
+        // Report stats from allReports
+        document.getElementById("prof-total").textContent = allReports.length;
+        document.getElementById("prof-pending").textContent = allReports.filter(
+          (r) => (r.status || "").toLowerCase() === "pending",
+        ).length;
+        document.getElementById("prof-resolved").textContent =
+          allReports.filter(
+            (r) => (r.status || "").toLowerCase() === "resolved",
+          ).length;
+      }
+
+      function openEditProfile() {
+        document.getElementById("editName").value =
+          localStorage.getItem("prof_name") || "";
+        document.getElementById("editBarangay").value =
+          localStorage.getItem("prof_barangay") || "";
+        document.getElementById("editContact").value =
+          localStorage.getItem("prof_contact") || "";
+        document.getElementById("editEmail").value =
+          localStorage.getItem("prof_email") || "";
+        document.getElementById("editProfileOverlay").classList.add("open");
+      }
+
+      function closeEditProfile() {
+        document.getElementById("editProfileOverlay").classList.remove("open");
+      }
+
+      function saveProfile() {
+        const name = document.getElementById("editName").value.trim();
+        const barangay = document.getElementById("editBarangay").value;
+        const contact = document.getElementById("editContact").value.trim();
+        const email = document.getElementById("editEmail").value.trim();
+
+        if (name) {
+          localStorage.setItem("prof_name", name);
+          sessionStorage.setItem("user_name", name);
+        }
+        if (barangay) localStorage.setItem("prof_barangay", barangay);
+        if (contact) localStorage.setItem("prof_contact", contact);
+        if (email) localStorage.setItem("prof_email", email);
+
+        closeEditProfile();
+        loadProfilePage();
+        showToast("✅ Na-save na ang inyong profile!");
+      }
+
+      function handleLogout() {
+        if (confirm("Sigurado ka bang gusto mong mag-logout?")) {
+          sessionStorage.clear();
+          showToast("Nag-logout na. Redirect sa login...");
+          setTimeout(() => {
+            window.location.href = "index.html";
+          }, 1500);
+        }
+      }
+
+      // Override switchPage to load profile data when opening profile
+      const _origSwitchPage = switchPage;
+      switchPage = function (page) {
+        _origSwitchPage(page);
+        if (page === "profile") loadProfilePage();
+      };
+
+      // Load profile data on init
+      document.addEventListener("DOMContentLoaded", loadProfilePage);

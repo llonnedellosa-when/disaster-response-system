@@ -1,4 +1,4 @@
-      const API = "http://192.168.1.17:8000";
+      const API = `${window.location.protocol}//${window.location.hostname}:8000`;
 
       const PAGE_META = {
         dashboard: ["Dashboard", "Overview & Demographics"],
