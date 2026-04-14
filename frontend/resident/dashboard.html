@@ -26,7 +26,7 @@
           </div>
         </div>
         <div class="topbar-right">
-          <div class="alert-chip" id="alertChip">⚠️ SIGNAL #2</div>
+          <div class="alert-chip" id="alertChip">SIGNAL #2</div>
           <div class="topbar-avatar" id="userAvatar">U</div>
         </div>
       </div>
@@ -45,12 +45,12 @@
             </div>
             <div class="quick-grid">
               <button class="quick-card" onclick="switchPage('report')">
-                <span class="qc-icon">🚨</span>
+                <span class="qc-icon"></span>
                 <span class="qc-label">I-report / Report</span>
                 <span class="qc-sub">Submit an incident</span>
               </button>
               <button class="quick-card" onclick="switchPage('chat')">
-                <span class="qc-icon">💬</span>
+                <span class="qc-icon"></span>
                 <span class="qc-label">Ask DRES-Bot</span>
                 <span class="qc-sub">Disaster guidance</span>
               </button>
@@ -72,13 +72,13 @@
                   )
                 "
               >
-                <span class="qc-icon">📞</span>
+                <span class="qc-icon"></span>
                 <span class="qc-label">Emergency Nos.</span>
                 <span class="qc-sub">Mga emergency contact</span>
               </button>
             </div>
             <div class="card" style="margin-bottom: 0.75rem">
-              <div class="card-title">📊 My Reports Summary</div>
+              <div class="card-title">My Reports Summary</div>
               <div class="summary-row">
                 <div class="summary-box">
                   <div class="summary-val" id="home-total">0</div>
@@ -95,31 +95,31 @@
               </div>
             </div>
             <div class="card">
-              <div class="card-title">💡 Safety Tips / Payo sa Kaligtasan</div>
+              <div class="card-title">Safety Tips / Payo sa Kaligtasan</div>
               <div class="tips-list">
                 <div class="tip-item">
-                  <span class="tip-icon">🔦</span>
+                  <span class="tip-icon"></span>
                   <span
                     >Mag-imbak ng flashlight, de-lata, at tubig para sa 3 araw
                     bago dumating ang bagyo.</span
                   >
                 </div>
                 <div class="tip-item">
-                  <span class="tip-icon">📱</span>
+                  <span class="tip-icon"></span>
                   <span
                     >I-charge ang inyong cellphone at powerbank bago tumaas ang
                     signal ng bagyo.</span
                   >
                 </div>
                 <div class="tip-item">
-                  <span class="tip-icon">🏠</span>
+                  <span class="tip-icon"></span>
                   <span
                     >Alamin ang pinakamalapit na evacuation center sa inyong
                     barangay ngayon.</span
                   >
                 </div>
                 <div class="tip-item">
-                  <span class="tip-icon">📋</span>
+                  <span class="tip-icon"></span>
                   <span
                     >I-report agad ang anumang flood, damage, o missing person
                     sa pamamagitan ng app na ito.</span
@@ -137,13 +137,13 @@
               class="cq-btn"
               onclick="quickChat('Ano ang gagawin bago dumating ang bagyo?')"
             >
-              🌀 Bago ang Bagyo
+              Bago ang Bagyo
             </button>
             <button
               class="cq-btn"
               onclick="quickChat('Saan ang mga evacuation center sa Polangui?')"
             >
-              🏫 Evacuation
+              Evacuation
             </button>
             <button
               class="cq-btn"
@@ -163,16 +163,16 @@
                 quickChat('Anong signal level ang kasalukuyan sa Polangui?')
               "
             >
-              ⚠️ Signal Level
+              Signal Level
             </button>
           </div>
           <div class="chat-messages" id="chatMessages">
             <div class="msg msg-bot">
-              👋 Kumusta! Ako si <strong>DRES-Bot</strong>, ang inyong assistant
+              Kumusta! Ako si <strong>DRES-Bot</strong>, ang inyong assistant
               para sa disaster preparedness at emergency response sa Polangui,
               Albay.<br /><br />
               Maaari akong tumulong sa:<br />
-              &bull; 🌀 Typhoon &amp; flood safety guidance<br />
+              &bull; Typhoon &amp; flood safety guidance<br />
               &bull; 📞 Emergency hotlines &amp; contacts<br />
               &bull; 🏫 Evacuation center locations<br />
               &bull; 🎒 Go bag &amp; preparation checklist<br />
@@ -206,7 +206,7 @@
         <div class="page" id="page-report">
           <div class="page-pad">
             <div class="report-header">
-              <h2>🚨 I-submit ang Report</h2>
+              <h2>I-submit ang Report</h2>
               <p>Iulat ang insidente sa MDRRMO ng Polangui</p>
             </div>
             <div class="card">
@@ -220,7 +220,7 @@
                     data-type="Flood"
                     onclick="selectType(this)"
                   >
-                    <span class="tb-icon">🌊</span
+                    <span class="tb-icon"></span
                     ><span class="tb-label">Flood / Baha</span>
                   </button>
                   <button
@@ -228,7 +228,7 @@
                     data-type="Wind Damage"
                     onclick="selectType(this)"
                   >
-                    <span class="tb-icon">💨</span
+                    <span class="tb-icon"></span
                     ><span class="tb-label">Wind Damage</span>
                   </button>
                   <button
@@ -236,7 +236,7 @@
                     data-type="Missing Person"
                     onclick="selectType(this)"
                   >
-                    <span class="tb-icon">🔍</span
+                    <span class="tb-icon"></span
                     ><span class="tb-label">Missing Person</span>
                   </button>
                   <button
@@ -252,7 +252,7 @@
                     data-type="Power Outage"
                     onclick="selectType(this)"
                   >
-                    <span class="tb-icon">⚡</span
+                    <span class="tb-icon"></span
                     ><span class="tb-label">Power Outage</span>
                   </button>
                   <button
@@ -260,7 +260,7 @@
                     data-type="Other"
                     onclick="selectType(this)"
                   >
-                    <span class="tb-icon">📝</span
+                    <span class="tb-icon"></span
                     ><span class="tb-label">Iba pa / Other</span>
                   </button>
                 </div>
@@ -360,7 +360,7 @@
                   class="image-upload-box"
                   onclick="document.getElementById('rptImage').click()"
                 >
-                  <div class="iu-icon">📷</div>
+                  <div class="iu-icon"></div>
                   <div class="iu-text">
                     <strong>Mag-upload ng larawan</strong><br />Pindutin para
                     pumili ng larawan
@@ -384,7 +384,7 @@
                     readonly
                   />
                   <button class="loc-btn" onclick="getLocation()">
-                    📍 Kuhanin
+                    Kuhanin
                   </button>
                 </div>
               </div>
@@ -393,7 +393,7 @@
                 id="submitBtn"
                 onclick="submitReport()"
               >
-                🚨 I-submit ang Report
+                I-submit ang Report
               </button>
             </div>
           </div>
@@ -417,24 +417,24 @@
                 class="filter-chip"
                 onclick="filterReports('pending', this)"
               >
-                ⏳ Pending
+                Pending
               </button>
               <button
                 class="filter-chip"
                 onclick="filterReports('reviewed', this)"
               >
-                🔵 Reviewed
+                Reviewed
               </button>
               <button
                 class="filter-chip"
                 onclick="filterReports('resolved', this)"
               >
-                ✅ Resolved
+                Resolved
               </button>
             </div>
             <div id="reportsList">
               <div class="empty-state">
-                <div class="es-icon">⏳</div>
+                <div class="es-icon"></div>
                 <div class="es-title">Loading...</div>
               </div>
             </div>

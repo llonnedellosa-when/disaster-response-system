@@ -11,35 +11,35 @@
       const FALLBACK = {
         stats: [
           {
-            icon: "🌀",
+            icon: '<i class="bi bi-tornado"></i>',
             label: "Active Typhoon Alerts",
             value: "0",
             sub: "No active alerts",
             color: "#ef4444",
           },
           {
-            icon: "📋",
+            icon: '<i class="bi bi-clipboard"></i>',
             label: "Total Reports (2025)",
             value: "0",
             sub: "This year",
             color: "#3b82f6",
           },
           {
-            icon: "🏘️",
+            icon: '<i class="bi bi-houses"></i>',
             label: "Affected Barangays",
             value: "0",
             sub: "With submitted reports",
             color: "#f59e0b",
           },
           {
-            icon: "⏳",
+            icon: '<i class="bi bi-hourglass"></i>',
             label: "Pending Reports",
             value: "0",
             sub: "Awaiting review",
             color: "#8b5cf6",
           },
           {
-            icon: "✅",
+            icon: '<i class="bi bi-check-circle"></i>',
             label: "Resolved Incidents",
             value: "0",
             sub: "0% resolution rate",
@@ -156,12 +156,12 @@
       };
 
       const TYPE_ICONS = {
-        Flood: "🌊",
-        "Wind Damage": "💨",
-        "Missing Person": "🔍",
-        "Road Block": "🚧",
-        "Power Outage": "⚡",
-        Other: "📝",
+        Flood: '<i class="bi bi-water"></i>',
+        "Wind Damage": '<i class="bi bi-wind"></i>',
+        "Missing Person": '<i class="bi bi-person-dash"></i>',
+        "Road Block": '<i class="bi bi-sign-stop"></i>',
+        "Power Outage": '<i class="bi bi-lightning"></i>',
+        Other: '<i class="bi bi-file-earmark"></i>',
       };
       const SEV_COLOR = {
         critical: "#ef4444",
