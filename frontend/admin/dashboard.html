@@ -10,6 +10,7 @@
       href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="style.css" />
@@ -30,14 +31,20 @@
             data-page="dashboard"
             onclick="switchPage('dashboard', this)"
           >
-            <span class="icon"></span> Dashboard
+            <span class="icon"> 
+              <i class="fa-solid fa-chart-bar" style="color: rgb(116, 192, 252);">
+              </i> 
+            </span> 
+            Dashboard
           </button>
           <button
             class="nav-btn"
             data-page="map"
             onclick="switchPage('map', this)"
           >
-            <span class="icon"></span> Typhoon Map
+            <span class="icon">
+              <i class="fa-solid fa-earth-asia" style="color: rgb(116, 192, 252);"></i>
+            </span> Typhoon Map
           </button>
           <div class="sb-section" style="margin-top: 0.4rem">
             Reports & Logs
@@ -47,7 +54,9 @@
             data-page="reports"
             onclick="switchPage('reports', this)"
           >
-            <span class="icon"></span> Incident Reports
+            <span class="icon">
+              <i class="fa-regular fa-newspaper" style="color: rgb(116, 192, 252);"></i>
+            </span> Incident Reports
             <span class="nb-badge" id="pending-badge">0</span>
           </button>
           <button
@@ -55,7 +64,9 @@
             data-page="chatbot"
             onclick="switchPage('chatbot', this)"
           >
-            <span class="icon"></span> Chatbot Logs
+            <span class="icon">
+              <i class="fa-regular fa-comment-dots" style="color: rgb(116, 192, 252);"></i>
+            </span> Chatbot Logs
           </button>
           <div class="sb-section" style="margin-top: 0.4rem">System</div>
           <button
@@ -63,13 +74,17 @@
             data-page="settings"
             onclick="switchPage('settings', this)"
           >
-            <span class="icon"></span> Settings
+            <span class="icon">
+              <i class="fa-solid fa-gear" style="color: rgb(116, 192, 252);"></i>
+            </span> Settings
           </button>
           <button
             class="nav-btn"
             onclick="window.open('/api/admin/summary-report', '_blank')"
           >
-            <span class="icon"></span> Generate Report
+            <span class="icon">
+              <i class="fa-solid fa-file-circle-plus" style="color: rgb(116, 192, 252);"></i>
+            </span> Generate Report
           </button>
         </nav>
 
@@ -114,7 +129,7 @@
             <div class="grid-2">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">Disaster Reports Overview</span>
+                  <span class="card-title">  <i class="fa-solid fa-file-lines" style="color: rgb(116, 192, 252);"></i> Disaster Reports Overview</span>
                   <div class="toggle-group">
                     <button
                       class="toggle-btn active"
@@ -137,7 +152,9 @@
               </div>
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">Affected Residents</span>
+                  <span class="card-title">
+                    <i class="fa-solid fa-chart-column" style="color: rgb(116, 192, 252);"></i>
+                    Affected Residents</span>
                   <div class="toggle-group">
                     <button
                       class="toggle-btn active"
@@ -162,7 +179,9 @@
             <div class="grid-2">
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">Flood-Prone Barangays</span>
+                  <span class="card-title">
+                    <i class="fa-solid fa-house-flood-water" style="color: rgb(116, 192, 252);"></i>
+                    Flood-Prone Barangays</span>
                   <span class="badge-count" id="flood-count">—</span>
                 </div>
                 <div id="flood-table-wrap">
@@ -174,7 +193,9 @@
               </div>
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">📡 Recent Incident Reports</span>
+                  <span class="card-title">
+                    <i class="fa-solid fa-newspaper" style="color: rgb(116, 192, 252);"></i>
+                    Recent Incident Reports</span>
                   <button
                     class="btn-ghost"
                     onclick="
