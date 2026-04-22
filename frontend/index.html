@@ -13,318 +13,7 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
-    <style>
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-
-      :root {
-        --primary: #dc2626;
-        --primary-d: #b91c1c;
-        --bg: #0f172a;
-        --bg2: #1e293b;
-        --surface: #1e293b;
-        --border: #334155;
-        --text: #f1f5f9;
-        --text-muted: #94a3b8;
-        --success: #22c55e;
-        --danger: #ef4444;
-      }
-
-      html,
-      body {
-        height: 100%;
-        font-family: "Plus Jakarta Sans", sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        overflow-x: hidden;
-      }
-
-      /* ── BACKGROUND ── */
-      .bg-layer {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        background:
-          radial-gradient(
-            ellipse 80% 60% at 20% 10%,
-            rgba(220, 38, 38, 0.18) 0%,
-            transparent 60%
-          ),
-          radial-gradient(
-            ellipse 60% 50% at 80% 90%,
-            rgba(220, 38, 38, 0.1) 0%,
-            transparent 60%
-          ),
-          linear-gradient(160deg, #0f172a 0%, #1e293b 100%);
-      }
-      .bg-grid {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-        background-size: 32px 32px;
-      }
-
-      /* ── SHELL ── */
-      .shell {
-        position: relative;
-        z-index: 1;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem;
-      }
-
-      /* ── CARD ── */
-      .auth-card {
-        width: 100%;
-        max-width: 420px;
-        background: rgba(30, 41, 59, 0.85);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        padding: 2rem 1.75rem;
-        backdrop-filter: blur(20px);
-        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
-        animation: slideUp 0.4s ease;
-      }
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(24px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      /* ── LOGO ── */
-      .logo-block {
-        text-align: center;
-        margin-bottom: 1.75rem;
-      }
-      .logo-icon {
-        font-size: 2.5rem;
-        display: block;
-        margin-bottom: 0.5rem;
-        filter: drop-shadow(0 0 16px rgba(220, 38, 38, 0.5));
-      }
-      .logo-title {
-        font-size: 1.4rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        color: var(--text);
-      }
-      .logo-title span {
-        color: var(--primary);
-      }
-      .logo-sub {
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        margin-top: 0.25rem;
-      }
-
-      /* ── TABS ── */
-      .tabs {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        background: rgba(15, 23, 42, 0.6);
-        border-radius: 10px;
-        padding: 4px;
-        margin-bottom: 1.5rem;
-        gap: 4px;
-      }
-      .tab-btn {
-        padding: 0.55rem;
-        border: none;
-        border-radius: 7px;
-        font-family: inherit;
-        font-size: 0.85rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition:
-          background 0.2s,
-          color 0.2s;
-        background: transparent;
-        color: var(--text-muted);
-      }
-      .tab-btn.active {
-        background: var(--primary);
-        color: #fff;
-      }
-
-      /* ── FORM PANEL ── */
-      .panel {
-        display: none;
-      }
-      .panel.active {
-        display: block;
-      }
-
-      .form-group {
-        margin-bottom: 1rem;
-      }
-      .form-label {
-        display: block;
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--text-muted);
-        margin-bottom: 0.4rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-      .form-input,
-      .form-select {
-        width: 100%;
-        padding: 0.7rem 0.9rem;
-        background: rgba(15, 23, 42, 0.7);
-        border: 1.5px solid var(--border);
-        border-radius: 10px;
-        color: var(--text);
-        font-family: inherit;
-        font-size: 0.9rem;
-        outline: none;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s;
-      }
-      .form-input:focus,
-      .form-select:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
-      }
-      .form-input::placeholder {
-        color: var(--text-muted);
-        opacity: 0.7;
-      }
-      .form-select option {
-        background: var(--bg2);
-      }
-
-      /* ── PASSWORD TOGGLE ── */
-      .pw-wrap {
-        position: relative;
-      }
-      .pw-wrap .form-input {
-        padding-right: 2.75rem;
-      }
-      .pw-eye {
-        position: absolute;
-        right: 0.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: var(--text-muted);
-        cursor: pointer;
-        font-size: 1rem;
-        padding: 2px;
-      }
-
-      /* ── SUBMIT ── */
-      .submit-btn {
-        width: 100%;
-        padding: 0.8rem;
-        background: var(--primary);
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        font-family: inherit;
-        font-size: 0.95rem;
-        font-weight: 700;
-        cursor: pointer;
-        margin-top: 0.5rem;
-        transition:
-          background 0.2s,
-          transform 0.1s,
-          box-shadow 0.2s;
-        box-shadow: 0 4px 16px rgba(220, 38, 38, 0.3);
-      }
-      .submit-btn:hover {
-        background: var(--primary-d);
-        box-shadow: 0 6px 24px rgba(220, 38, 38, 0.4);
-      }
-      .submit-btn:active {
-        transform: scale(0.98);
-      }
-      .submit-btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
-
-      /* ── ALERT ── */
-      .alert {
-        padding: 0.75rem 1rem;
-        border-radius: 9px;
-        font-size: 0.83rem;
-        font-weight: 500;
-        margin-bottom: 1rem;
-        display: none;
-      }
-      .alert.show {
-        display: block;
-      }
-      .alert.error {
-        background: rgba(239, 68, 68, 0.15);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        color: #fca5a5;
-      }
-      .alert.success {
-        background: rgba(34, 197, 94, 0.15);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        color: #86efac;
-      }
-
-      /* ── DIVIDER ── */
-      .divider {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin: 1.25rem 0;
-        color: var(--text-muted);
-        font-size: 0.78rem;
-      }
-      .divider::before,
-      .divider::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-      }
-
-      /* ── ADMIN LINK ── */
-      .admin-link {
-        text-align: center;
-        margin-top: 1.25rem;
-        font-size: 0.78rem;
-        color: var(--text-muted);
-      }
-      .admin-link a {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 600;
-      }
-      .admin-link a:hover {
-        text-decoration: underline;
-      }
-
-      /* ── FOOTER ── */
-      .auth-footer {
-        text-align: center;
-        margin-top: 1.5rem;
-        font-size: 0.72rem;
-        color: var(--text-muted);
-        opacity: 0.7;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="bg-layer"></div>
@@ -343,10 +32,11 @@
         <!-- TABS -->
         <div class="tabs">
           <button class="tab-btn active" onclick="switchTab('login')">
-            🔑 Login
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
           </button>
           <button class="tab-btn" onclick="switchTab('register')">
-            📝 Register
+            <i class="fa-solid fa-person-circle-plus"></i>
+            Register
           </button>
         </div>
 
@@ -379,12 +69,12 @@
                 onclick="togglePw('loginPassword', this)"
                 type="button"
               >
-                👁️
+                <i class="fa-solid fa-eye-slash"></i>
               </button>
             </div>
           </div>
           <button class="submit-btn" id="loginBtn" onclick="doLogin()">
-            🔑 Mag-login / Login
+            <i class="fa-solid fa-arrow-right-to-bracket"></i> Mag-login / Login
           </button>
         </div>
 
@@ -462,7 +152,7 @@
                 onclick="togglePw('regPassword', this)"
                 type="button"
               >
-                👁️
+                <i class="fa-solid fa-eye"></i>
               </button>
             </div>
           </div>
@@ -484,7 +174,7 @@
                 onclick="togglePw('regConfirm', this)"
                 type="button"
               >
-                👁️
+                <i class="fa-solid fa-eye"></i>
               </button>
             </div>
           </div>
@@ -527,19 +217,20 @@
       }
 
       function togglePw(id, btn) {
-        const inp = document.getElementById(id);
-        if (inp.type === "password") {
-          inp.type = "text";
-          btn.textContent = "🙈";
-        } else {
-          inp.type = "password";
-          btn.textContent = "👁️";
-        }
-      }
+  const inp = document.getElementById(id);
+  const icon = btn.querySelector("i");
+  if (inp.type === "password") {
+    inp.type = "text";
+    icon.className = "fa-solid fa-eye";
+  } else {
+    inp.type = "password";
+    icon.className = "fa-solid fa-eye-slash";
+  }
+}
 
       function showAlert(msg, type = "error") {
         const el = document.getElementById("authAlert");
-        el.textContent = msg;
+        el.innerHTML = msg;
         el.className = `alert show ${type}`;
       }
       function hideAlert() {
@@ -550,13 +241,13 @@
         const email = document.getElementById("loginEmail").value.trim();
         const password = document.getElementById("loginPassword").value;
         if (!email || !password) {
-          showAlert("⚠️ Ilagay ang email at password.");
+          showAlert( '<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Ilagay ang email at password.');
           return;
         }
 
         const btn = document.getElementById("loginBtn");
         btn.disabled = true;
-        btn.textContent = "⏳ Logging in...";
+        btn.textContent = '<i class="fa-solid fa-spinner fa-spin fa-spin-reverse" style="color: rgb(203, 226, 255);"></i> Logging in...';
         hideAlert();
 
         try {
@@ -568,7 +259,7 @@
           const data = await res.json();
 
           if (!res.ok) {
-            showAlert("❌ " + (data.detail || "Invalid email or password."));
+            showAlert('<i class="fa-regular fa-circle-xmark" style="color: rgb(255, 7, 7);"></i>' + (data.detail || "Invalid email or password."));
             return;
           }
 
@@ -580,7 +271,7 @@
           sessionStorage.setItem("role", u.role);
 
           showAlert(
-            "✅ Welcome back, " + u.name + "! Redirecting...",
+            '<i class="fa-solid fa-circle-check" style="color: rgb(0, 214, 10);"></i> Welcome back, ' + u.name + "! Redirecting...",
             "success",
           );
           setTimeout(() => {
@@ -604,23 +295,23 @@
         const confirm = document.getElementById("regConfirm").value;
 
         if (!name) {
-          showAlert("⚠️ Ilagay ang inyong pangalan.");
+          showAlert('<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Ilagay ang inyong pangalan.');
           return;
         }
         if (!email) {
-          showAlert("⚠️ Ilagay ang email address.");
+          showAlert('<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Ilagay ang email address.');
           return;
         }
         if (!password) {
-          showAlert("⚠️ Pumili ng password.");
+          showAlert('<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Pumili ng password.');
           return;
         }
         if (password.length < 6) {
-          showAlert("⚠️ Password ay dapat 6 characters man lang.");
+          showAlert('<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Password ay dapat 6 characters man lang.');
           return;
         }
         if (password !== confirm) {
-          showAlert("⚠️ Hindi magkapareho ang passwords.");
+          showAlert('<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Hindi magkapareho ang passwords.');
           return;
         }
 
@@ -642,7 +333,7 @@
             return;
           }
 
-          showAlert("✅ Account created! Redirecting to login...", "success");
+          showAlert('<i class="fa-solid fa-circle-check" style="color: rgb(0, 214, 10);"></i> Account created! Redirecting to login...', "success");
           setTimeout(() => {
             document.getElementById("regName").value = "";
             document.getElementById("regEmail").value = "";
