@@ -35,15 +35,15 @@ def get_stats(db: Session = Depends(get_db)):
     ).count()
 
     stats = [
-        {"icon": "🌀", "label": "Active Typhoon Alerts",         "value": "0",
+        {"icon": '<i class="fa-solid fa-hurricane" style="color: rgb(255, 0, 0);"></i>', "label": "Active Typhoon Alerts",         "value": "0",
             "sub": "No active alerts",        "color": "#ef4444"},
-        {"icon": "📋", "label": f"Total Reports ({current_year})", "value": str(
+        {"icon": '<i class="fa-regular fa-clipboard" style="color: rgb(26, 108, 255);"></i>', "label": f"Total Reports ({current_year})", "value": str(
             total_reports),     "sub": "This year",               "color": "#3b82f6"},
-        {"icon": "🏘️", "label": "Affected Barangays",            "value": str(
+        {"icon": '<i class="fa-solid fa-house-circle-exclamation" style="color: rgb(210, 127, 16);"></i>', "label": "Affected Barangays",            "value": str(
             affected_barangays), "sub": "With submitted reports",  "color": "#f59e0b"},
-        {"icon": "⏳", "label": "Pending Reports",                "value": str(
-            pending),            "sub": "Awaiting review",         "color": "#8b5cf6"},
-        {"icon": "✅", "label": "Resolved Incidents",             "value": str(
+        {"icon": '<i class="fa-solid fa-hourglass-half" style="color: rgb(135, 11, 196);"></i>', "label": "Pending Reports",                "value": str(
+            pending),            "sub": "Awaiting review",         "color": "#d83cff"},
+        {"icon": '<i class="fa-solid fa-clipboard-check" style="color: rgb(59, 214, 17);"></i>', "label": "Resolved Incidents",             "value": str(
             resolved),           "sub": f"{rate}% resolution rate", "color": "#22c55e"},
     ]
     return ok(stats)
