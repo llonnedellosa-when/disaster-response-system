@@ -96,14 +96,14 @@ async def generate_summary_report():
   .rh-logo{{font-size:1.3rem;font-weight:700;letter-spacing:.5px}}
   .rh-logo span{{color:#60a5fa}}
   .rh-meta{{text-align:right;font-size:.78rem;color:#7a8fa8;line-height:1.7}}
-  .rh-title{{margin-top:1rem;font-size:1.5rem;font-weight:600;color:#e8edf5}}
+  .rh-title{{margin-top:1rem;font-size:1.5rem;font-weight:600;color:##001483}}
   .rh-sub{{font-size:.82rem;color:#7a8fa8;margin-top:.25rem}}
-  .section{{background:#d2e7ff;border:1px solid #d2e7ff;border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:1rem}}
+  .section{{background:#001aff3;border:1px solid #d2e7ff;border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:1rem}}
   .section-title{{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#7a8fa8;margin-bottom:.85rem}}
   .kpi-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.75rem}}
-  .kpi{{background:#111827;border:1px solid #263347;border-radius:9px;padding:.75rem 1rem;text-align:center}}
+  .kpi{{background:#ffffff;border:1px solid #708aff;border-radius:9px;padding:.75rem 1rem;text-align:center}}
   .kpi-val{{font-size:1.6rem;font-weight:700;font-family:'IBM Plex Sans',sans-serif;line-height:1}}
-  .kpi-label{{font-size:.68rem;color:#7a8fa8;margin-top:.3rem;text-transform:uppercase;letter-spacing:.5px}}
+  .kpi-label{{font-size:.68rem;color:#000000;margin-top:.3rem;text-transform:uppercase;letter-spacing:.5px}}
   table{{width:100%;border-collapse:collapse;font-size:.82rem}}
   th{{text-align:left;padding:.45rem .5rem;border-bottom:2px solid #263347;color:#7a8fa8;font-size:.7rem;text-transform:uppercase;letter-spacing:.5px}}
   .print-btn{{display:flex;gap:.75rem;margin-bottom:1.5rem;flex-wrap:wrap}}
@@ -112,7 +112,7 @@ async def generate_summary_report():
   .pbtn-blue:hover{{opacity:.85}}
   .pbtn-ghost{{background:transparent;border:1px solid #263347;color:#7a8fa8}}
   .pbtn-ghost:hover{{border-color:#3b82f6;color:#60a5fa}}
-  .recommendation{{background:#0f1e32;border-left:3px solid #3b82f6;border-radius:0 8px 8px 0;padding:.65rem .9rem;margin-bottom:.55rem;font-size:.83rem;line-height:1.5}}
+  .recommendation{{background:#ffffff;border-left:3px solid #3b82f6;border-radius:0 8px 8px 0;padding:.65rem .9rem;margin-bottom:.55rem;font-size:.83rem;line-height:1.5}}
   @media print{{
     body{{background:#fff;color:#111;padding:1rem}}
     .print-btn{{display:none}}
