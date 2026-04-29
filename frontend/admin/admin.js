@@ -398,7 +398,7 @@
         </div>
         <div class="rpt-desc">${r.description || "—"}</div>
         <div class="rpt-meta">
-          <span class="rpt-loc">📍 ${r.barangay} · <span style="font-size:.68rem">${r.created_at || ""}</span></span>
+          <span class="rpt-loc"> <i class="fa-solid fa-map-pin" style="color: rgb(225, 11, 11);"></i> ${r.barangay} · <span style="font-size:.68rem">${r.created_at || ""}</span></span>
           <div class="rpt-acts">
             ${r.image_path ? '<span class="img-chip">📷 Photo</span>' : ""}
             <span class="badge ${sc[r.status] || "b-pending"}">${r.status}</span>
