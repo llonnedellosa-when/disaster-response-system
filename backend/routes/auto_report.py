@@ -89,7 +89,7 @@ async def generate_summary_report():
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   *{{box-sizing:border-box;margin:0;padding:0}}
-  body{{font-family:'IBM Plex Sans',sans-serif;background:#0b1120;color:#e8edf5;padding:2rem;min-height:100vh}}
+  body{{font-family:'IBM Plex Sans',sans-serif;background:#ffffff;color:#111827;padding:2rem;min-height:100vh}}
   .report-wrap{{max-width:860px;margin:0 auto}}
   .report-header{{border-bottom:2px solid #3b82f6;padding-bottom:1.25rem;margin-bottom:1.75rem}}
   .rh-top{{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1rem}}
@@ -98,7 +98,7 @@ async def generate_summary_report():
   .rh-meta{{text-align:right;font-size:.78rem;color:#7a8fa8;line-height:1.7}}
   .rh-title{{margin-top:1rem;font-size:1.5rem;font-weight:600;color:#e8edf5}}
   .rh-sub{{font-size:.82rem;color:#7a8fa8;margin-top:.25rem}}
-  .section{{background:#1a2235;border:1px solid #263347;border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:1rem}}
+  .section{{background:#d2e7ff;border:1px solid #d2e7ff;border-radius:12px;padding:1.1rem 1.25rem;margin-bottom:1rem}}
   .section-title{{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.8px;color:#7a8fa8;margin-bottom:.85rem}}
   .kpi-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.75rem}}
   .kpi{{background:#111827;border:1px solid #263347;border-radius:9px;padding:.75rem 1rem;text-align:center}}
