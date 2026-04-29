@@ -8,14 +8,14 @@
       }
 
       :root {
-        --primary: #405dfc;
+        --primary: #001483;
         --primary-d: #1540ff;
-        --bg: #0f172a;
-        --bg2: #1e293b;
+        --bg: #ffffff;
+        --bg2: #ffffff;
         --surface: #1e293b;
-        --border: #3b77d1;
-        --text: #f1f5f9;
-        --text-muted: #444b55;
+        --border: hsla(216, 100%, 87%, 0.568);
+        --text: #000000;
+        --text-muted: #5a626e;
         --success: #22c55e;
         --danger: #ef4444;
       }
@@ -29,7 +29,7 @@
         overflow-x: hidden;
       }
 
-      /* ── BACKGROUND ── */
+      /*── BACKGROUND ── */
       .bg-layer {
         position: fixed;
         inset: 0;
@@ -37,12 +37,12 @@
         background:
           radial-gradient(
             ellipse 80% 60% at 20% 10%,
-            rgb(46, 178, 255) 0%,
+            rgb(187, 230, 255) 0%,
             transparent 60%
           ),
           radial-gradient(
             ellipse 60% 50% at 80% 90%,
-            rgb(46, 178, 255) 0%,
+            rgb(187, 230, 255) 0%,
             transparent 60%
           ),
           linear-gradient(160deg, #ebf1ff 0%, #ebf1ff 100%);
@@ -52,10 +52,12 @@
         inset: 0;
         z-index: 0;
         background-image:
-          linear-gradient(rgba(44, 19, 155, 0.11) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(44, 19, 155, 0.11) 1px, transparent 1px);
+          linear-gradient(rgba(255, 255, 255, 0.24) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.24) 1px, transparent 1px);
         background-size: 32px 32px;
       }
+
+
 
       /* ── SHELL ── */
       .shell {
@@ -72,12 +74,12 @@
       .auth-card {
         width: 100%;
         max-width: 420px;
-        background: rgba(24, 96, 230, 0.158);
+        background: rgb(103, 163, 252);
         border: 1px solid var(--border);
         border-radius: 20px;
         padding: 2rem 1.75rem;
         backdrop-filter: blur(20px);
-        box-shadow: 0 24px 64px rgba(0, 0, 0, 0.50);
+        box-shadow: 0 24px 64px rgba(0, 1, 2, 0.205);
         animation: slideUp 0.4s ease;
       }
       @keyframes slideUp {
@@ -106,7 +108,7 @@
         font-size: 1.4rem;
         font-weight: 800;
         letter-spacing: -0.5px;
-        color: var(--text);
+        color: #fa4f00;
       }
       .logo-title span {
         color: var(--primary);
@@ -121,7 +123,7 @@
       .tabs {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        background: rgb(34, 26, 21);
+        background: rgba(252, 199, 168, 0.829);
         border-radius: 10px;
         padding: 4px;
         margin-bottom: 1.5rem;
@@ -170,8 +172,8 @@
       .form-select {
         width: 100%;
         padding: 0.7rem 0.9rem;
-        background: rgba(133, 137, 184, 0.685);
-        border: 1.5px solid var(--border);
+        background: rgba(255, 231, 217, 0.87);
+        border: none;
         border-radius: 10px;
         color: var(--text);
         font-family: inherit;

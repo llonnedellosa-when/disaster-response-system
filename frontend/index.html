@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+
     <div class="bg-layer"></div>
     <div class="bg-grid"></div>
 
@@ -128,7 +129,7 @@
               <option>Pintor</option>
               <option>Pinagdapugan</option>
               <option>Ponso</option>
-              <optio>Quinale</optio>
+              <option>Quinale</option>
               <option>San Roque</option>
               <option>Santicon</option>
               <option>Sugcad</option>
@@ -179,7 +180,7 @@
             </div>
           </div>
           <button class="submit-btn" id="registerBtn" onclick="doRegister()">
-            📝 Mag-register / Register
+            <i class="fa-solid fa-user-plus"></i> Mag-register / Register
           </button>
         </div>
 
@@ -194,6 +195,7 @@
         </div>
       </div>
     </div>
+
 
     <script>
       const API = "";
@@ -279,11 +281,11 @@
           }, 1200);
         } catch (e) {
           showAlert(
-            "❌ Hindi ma-reach ang server. Siguraduhing tumatakbo ang backend.",
+            '<i class="fa-solid fa-xmark" style="color: rgb(225, 11, 11);"></i> Hindi ma-reach ang server. Siguraduhing tumatakbo ang backend.',
           );
         } finally {
           btn.disabled = false;
-          btn.textContent = "🔑 Mag-login / Login";
+          btn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> Mag-login / Login';
         }
       }
 
@@ -317,7 +319,7 @@
 
         const btn = document.getElementById("registerBtn");
         btn.disabled = true;
-        btn.textContent = "⏳ Registering...";
+        btn.innerHTML = '<i class="fa-solid fa-spinner" style="color: rgb(116, 192, 252);"></i> Registering...';
         hideAlert();
 
         try {
@@ -348,7 +350,7 @@
           );
         } finally {
           btn.disabled = false;
-          btn.textContent = "📝 Mag-register / Register";
+          btn.innerHTML = '<i class="fa-solid fa-user-plus" style="color: rgb(116, 192, 252);"></i> Mag-register / Register';
         }
       }
     </script>

@@ -15,9 +15,9 @@
   --border: #e5e7eb;
   --text: #111827;
   --muted: #6b7280;
-  --accent: #2563eb;
+  --accent: #001483;
   --accent2: #1e40af;
-  --danger: #ef4444;
+  --danger: #ef7544;
   --warn: #f59e0b;
   --success: #22c55e;
   --purple: #8b5cf6;
@@ -277,6 +277,7 @@
         font-weight: 700;
         font-family: Arial, sans-serif;
         letter-spacing: 0.3px;
+        color: #001483;
       }
       .card:hover {
   transform: translateY(-2px);
@@ -306,6 +307,11 @@
       .stat-icon {
         font-size: 1.4rem;
       }
+
+      .icon {
+        color: #001483;
+      }
+
       .stat-value {
         font-size: 1.45rem;
         font-weight: 700;
@@ -397,7 +403,7 @@
       }
       .toggle-btn.active {
         background: var(--accent);
-        color: #000;
+        color: #ffffff;
         border-color: var(--accent);
       }
 
