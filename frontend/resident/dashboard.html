@@ -48,7 +48,7 @@
             <div class="quick-grid">
               <button class="quick-card" onclick="switchPage('report')">
                 <span class="qc-icon"><i class="fa-regular fa-file-lines" style="color: rgb(186, 204, 255);"></i></span>
-                <span class="qc-label">I-report / Report</span>
+                <span class="qc-label">Report</span>
                 <span class="qc-sub">Submit an incident</span>
               </button>
               <button class="quick-card" onclick="switchPage('chat')">
@@ -308,7 +308,7 @@
                 </select>
               </div>
               <div class="form-group">
-                <label class="form-label">Kalubhaan / Severity</label>
+                <label class="form-label">Severity</label>
                 <div class="severity-row" id="sevRow">
                   <button
                     class="sev-btn"
@@ -414,7 +414,7 @@
                 class="filter-chip active"
                 onclick="filterReports('all', this)"
               >
-                Lahat / All
+                All
               </button>
               <button
                 class="filter-chip"
@@ -472,7 +472,7 @@
                 <span class="pi-val" id="piEmail">—</span>
               </div>
               <button class="profile-edit-btn" onclick="openEditProfile()">
-                ✏️ I-edit ang Profile
+                Edit Profile
               </button>
             </div>
 
@@ -513,7 +513,7 @@
             <div class="card">
               <div class="card-title">⚙️ Account</div>
               <button class="profile-logout-btn" onclick="handleLogout()">
-                🚪 Mag-logout / Logout
+                  Logout
               </button>
             </div>
           </div>
@@ -579,7 +579,7 @@
     >
       <div class="modal" onclick="event.stopPropagation()">
         <div class="modal-handle"></div>
-        <div class="modal-title">✏️ I-edit ang Profile</div>
+        <div class="modal-title">Edit</div>
         <div style="padding: 0 0.25rem">
           <div class="form-group">
             <label class="form-label">Full Name</label>
@@ -651,11 +651,11 @@
             onclick="saveProfile()"
             style="margin-top: 0.5rem"
           >
-            💾 I-save ang Profile
+            Save
           </button>
         </div>
         <button class="modal-close" onclick="closeEditProfile()">
-          Isara / Close
+          Close
         </button>
       </div>
     </div>
