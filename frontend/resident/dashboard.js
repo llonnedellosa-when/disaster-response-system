@@ -309,7 +309,7 @@ function toggleVoice() {
     recognition.start();
     isRecording = true;
     document.getElementById('voiceBtn').classList.add('recording');
-    showToast('🎤 Nakikinig... / Listening...');
+    showToast('Nakikinig... / Listening...');
   } else {
     recognition.stop();
     isRecording = false;

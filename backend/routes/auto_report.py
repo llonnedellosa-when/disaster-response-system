@@ -35,21 +35,31 @@ async def generate_summary_report():
         by_sev = Counter((r.severity or "unset").lower() for r in reports)
 
         # Critical/high reports (last 10)
-        critical = [r for r in reports if (
-            r.severity or "").lower() in ("critical", "high")]
+        critical = [
+            r for r in reports if (r.severity or "").lower() in ("critical", "high")
+        ]
         critical.sort(key=lambda r: r.created_at, reverse=True)
 
         # Format helpers
-        def pct(n): return f"{round(n/total*100)}%" if total else "0%"
-        def fmt(dt): return dt.strftime("%b %d, %Y %H:%M") if dt else "—"
+        def pct(n):
+            return f"{round(n/total*100)}%" if total else "0%"
+
+        def fmt(dt):
+            return dt.strftime("%b %d, %Y %H:%M") if dt else "—"
 
         def row(label, val):
             return f'<tr><td style="color:#7a8fa8;padding:.45rem .5rem;border-bottom:1px solid #263347">{label}</td><td style="padding:.45rem .5rem;border-bottom:1px solid #263347;font-weight:600">{val}</td></tr>'
 
         def type_rows():
             out = ""
-            icons = {"Flood": "🌊", "Wind Damage": "💨", "Missing Person": "🔍",
-                     "Road Block": "🚧", "Power Outage": "⚡", "Other": "📝"}
+            icons = {
+                "Flood": "🌊",
+                "Wind Damage": "💨",
+                "Missing Person": "🔍",
+                "Road Block": "🚧",
+                "Power Outage": "⚡",
+                "Other": "📝",
+            }
             for t, c in by_type.most_common():
                 icon = icons.get(t, "📝")
                 out += f'<tr><td style="padding:.4rem .5rem;border-bottom:1px solid #263347">{icon} {t}</td><td style="padding:.4rem .5rem;border-bottom:1px solid #263347;font-weight:600">{c}</td><td style="padding:.4rem .5rem;border-bottom:1px solid #263347;color:#7a8fa8">{pct(c)}</td></tr>'
@@ -68,13 +78,13 @@ async def generate_summary_report():
             for r in critical[:15]:
                 sev = (r.severity or "—").upper()
                 sc = "#ef4444" if sev == "CRITICAL" else "#f59e0b"
-                out += f'''<tr>
+                out += f"""<tr>
                   <td style="padding:.4rem .5rem;border-bottom:1px solid #263347;font-family:monospace;font-size:.75rem;color:#60a5fa">RPT-{str(r.id).zfill(4)}</td>
                   <td style="padding:.4rem .5rem;border-bottom:1px solid #263347">{r.barangay or "—"}</td>
                   <td style="padding:.4rem .5rem;border-bottom:1px solid #263347">{r.report_type or "—"}</td>
                   <td style="padding:.4rem .5rem;border-bottom:1px solid #263347"><span style="background:{sc}20;border:1px solid {sc};color:{sc};padding:1px 8px;border-radius:20px;font-size:.72rem;font-weight:700">{sev}</span></td>
                   <td style="padding:.4rem .5rem;border-bottom:1px solid #263347;font-size:.75rem;color:#7a8fa8">{fmt(r.created_at)}</td>
-                </tr>'''
+                </tr>"""
             return out
 
         now = datetime.now().strftime("%B %d, %Y — %I:%M %p")
@@ -87,6 +97,7 @@ async def generate_summary_report():
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>MDRRMO Incident Summary Report — {today}</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
 <style>
   *{{box-sizing:border-box;margin:0;padding:0}}
   body{{font-family:'IBM Plex Sans',sans-serif;background:#ffffff;color:#111827;padding:2rem;min-height:100vh}}
@@ -123,6 +134,7 @@ async def generate_summary_report():
     .recommendation{{background:#f0f4ff;border-left-color:#2563eb}}
   }}
 </style>
+
 </head>
 <body>
 <div class="report-wrap">

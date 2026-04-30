@@ -12,6 +12,7 @@
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="dashboard.css" />
   </head>
   <body>
@@ -46,12 +47,12 @@
             </div>
             <div class="quick-grid">
               <button class="quick-card" onclick="switchPage('report')">
-                <span class="qc-icon"></span>
+                <span class="qc-icon"><i class="fa-regular fa-file-lines" style="color: rgb(186, 204, 255);"></i></span>
                 <span class="qc-label">I-report / Report</span>
                 <span class="qc-sub">Submit an incident</span>
               </button>
               <button class="quick-card" onclick="switchPage('chat')">
-                <span class="qc-icon"></span>
+                <span class="qc-icon"><i class="fa-regular fa-comment-dots" style="color: rgb(186, 204, 255);"></i></span>
                 <span class="qc-label">Ask DRES-Bot</span>
                 <span class="qc-sub">Disaster guidance</span>
               </button>
@@ -61,7 +62,7 @@
                   quickChat('Saan ang mga evacuation center sa Polangui?')
                 "
               >
-                <span class="qc-icon">🏫</span>
+                <span class="qc-icon"><i class="fa-solid fa-house-chimney-medical" style="color: rgb(186, 204, 255);"></i></span>
                 <span class="qc-label">Evacuation</span>
                 <span class="qc-sub">Mga evacuation center</span>
               </button>
@@ -73,7 +74,7 @@
                   )
                 "
               >
-                <span class="qc-icon"></span>
+                <span class="qc-icon"><i class="fa-solid fa-phone" style="color: rgb(186, 204, 255);"></i></span>
                 <span class="qc-label">Emergency Nos.</span>
                 <span class="qc-sub">Mga emergency contact</span>
               </button>
@@ -192,7 +193,7 @@
               onclick="toggleVoice()"
               title="Voice input"
             >
-              🎤
+              <i class="fa-solid fa-microphone" style="color: rgb(0, 20, 131);"></i>
             </button>
             <input
               type="text"
@@ -405,7 +406,7 @@
         <div class="page" id="page-myreports">
           <div class="page-pad">
             <div class="myreports-header">
-              <h2>📋 Aking Mga Report</h2>
+              <h2>Aking Mga Report</h2>
               <span id="reportCount">Loading...</span>
             </div>
             <div class="filter-row">
@@ -527,10 +528,10 @@
           id="nav-home"
           onclick="switchPage('home')"
         >
-          <span class="nav-icon">🏠</span><span class="nav-label">Home</span>
+          <span class="nav-icon"><i class="fa-solid fa-house-user" style="color: rgb(0, 20, 131);"></i> </span><span class="nav-label">Home</span>
         </button>
         <button class="nav-item" id="nav-chat" onclick="switchPage('chat')">
-          <span class="nav-icon">💬</span
+          <span class="nav-icon"><i class="fa-regular fa-comment-dots" style="color: rgb(0, 20, 131);"></i></span
           ><span class="nav-label">DRES-Bot</span>
         </button>
         <button class="nav-fab" id="nav-report" onclick="switchPage('report')">
@@ -542,7 +543,7 @@
           id="nav-myreports"
           onclick="switchPage('myreports')"
         >
-          <span class="nav-icon">📋</span
+          <span class="nav-icon"><i class="fa-regular fa-file-lines" style="color: rgb(0, 20, 131);"></i></span
           ><span class="nav-label">My Reports</span>
         </button>
         <button
@@ -550,7 +551,7 @@
           id="nav-profile"
           onclick="switchPage('profile')"
         >
-          <span class="nav-icon">👤</span><span class="nav-label">Profile</span>
+          <span class="nav-icon"><i class="fa-solid fa-user" style="color: rgb(0, 20, 131);"></i></span><span class="nav-label">Profile</span>
         </button>
       </nav>
     </div>
