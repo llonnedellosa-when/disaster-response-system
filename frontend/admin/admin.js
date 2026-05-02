@@ -359,55 +359,78 @@
       }
 
       // ── ALL REPORTS ──────────────────────────────────────────
-      async function loadAllReports() {
-        const status = document.getElementById("filter-status")?.value || "";
-        const type = document.getElementById("filter-type")?.value || "";
-        const wrap = document.getElementById("all-reports-wrap");
-        wrap.innerHTML = `<div class="loading"><div class="spinner"></div>Loading…</div>`;
+async function loadAllReports() {
+  const status = document.getElementById("filter-status")?.value || "";
+  const type = document.getElementById("filter-type")?.value || "";
+  const wrap = document.getElementById("all-reports-wrap");
 
-        let url = "/api/admin/reports?limit=100";
-        if (status) url += `&status=${status}`;
-        if (type) url += `&report_type=${encodeURIComponent(type)}`;
+  wrap.innerHTML = `<div class="loading"><div class="spinner"></div>Loading…</div>`;
 
-        const res = await apiFetch(url);
-        const reports = res?.data || [];
+  let url = "/api/admin/reports?limit=100";
+  if (status) url += `&status=${status}`;
+  if (type) url += `&report_type=${encodeURIComponent(type)}`;
 
-        // Pending badge
-        const pc = reports.filter((r) => r.status === "Pending").length;
-        const badge = document.getElementById("pending-badge");
-        badge.textContent = pc;
-        badge.style.display = pc > 0 ? "inline" : "none";
+  const res = await apiFetch(url);
 
-        if (!reports.length) {
-          wrap.innerHTML = `<div style="padding:2rem;text-align:center;color:var(--muted)">Walang reports na nahanap.</div>`;
-          return;
-        }
+  // ✅ FIXED: handle both array and {data: []}
+  const reports = Array.isArray(res) ? res : (res?.data || []);
 
-        const sc = {
-          Pending: "b-pending",
-          Reviewed: "b-reviewed",
-          Resolved: "b-resolved",
-        };
-        wrap.innerHTML = reports
-          .map(
-            (r) => `
+  console.log("API RESPONSE:", res);
+  console.log("REPORTS ARRAY:", reports);
+
+  // Pending badge
+  const pc = reports.filter(r => (r.status || "").toLowerCase() === "pending").length;
+  const badge = document.getElementById("pending-badge");
+  badge.textContent = pc;
+  badge.style.display = pc > 0 ? "inline" : "none";
+
+  if (!reports.length) {
+    wrap.innerHTML = `<div style="padding:2rem;text-align:center;color:var(--muted)">Walang reports na nahanap.</div>`;
+    return;
+  }
+
+  wrap.innerHTML = reports.map((r) => {
+
+    // ✅ FLEXIBLE FIELD MAPPING (ito yung pinaka fix)
+    const id = r.id || r.report_id || "—";
+    const type = r.type || r.report_type || "Other";
+    const barangay = r.barangay || r.barangay_name || "Unknown";
+    const desc = r.description || r.details || "—";
+    const image = r.image_path || r.image || null;
+    const created = r.created_at || r.date || "";
+    const status = (r.status || "pending").toLowerCase();
+
+    const statusClass =
+      status === "pending" ? "b-pending" :
+      status === "reviewed" ? "b-reviewed" :
+      status === "resolved" ? "b-resolved" :
+      "b-pending";
+
+    return `
       <div class="rpt-card" onclick='openModal(${JSON.stringify(r).replace(/'/g, "&#39;")})'>
         <div class="rpt-top">
-          <span class="rpt-type">${TYPE_ICONS[r.type] || "📝"} ${r.type}</span>
-          <span class="rpt-id">${r.id}</span>
+          <span class="rpt-type">${TYPE_ICONS[type] || "📝"} ${type}</span>
+          <span class="rpt-id">${id}</span>
         </div>
-        <div class="rpt-desc">${r.description || "—"}</div>
+
+        <div class="rpt-desc">${desc}</div>
+
         <div class="rpt-meta">
-          <span class="rpt-loc"> <i class="fa-solid fa-map-pin" style="color: rgb(225, 11, 11);"></i> ${r.barangay} · <span style="font-size:.68rem">${r.created_at || ""}</span></span>
+          <span class="rpt-loc">
+            <i class="fa-solid fa-map-pin" style="color:red;"></i>
+            ${barangay}
+            <span style="font-size:.68rem">${created}</span>
+          </span>
+
           <div class="rpt-acts">
-            ${r.image_path ? '<span class="img-chip">📷 Photo</span>' : ""}
-            <span class="badge ${sc[r.status] || "b-pending"}">${r.status}</span>
+            ${image ? '<span class="img-chip">📷 Photo</span>' : ""}
+            <span class="badge ${statusClass}">${status}</span>
           </div>
         </div>
-      </div>`,
-          )
-          .join("");
-      }
+      </div>
+    `;
+  }).join("");
+}
 
       // ── MODAL ────────────────────────────────────────────────
       function openModal(r) {
