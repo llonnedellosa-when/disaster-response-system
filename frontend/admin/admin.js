@@ -366,8 +366,8 @@ async function loadAllReports() {
 
   wrap.innerHTML = `<div class="loading"><div class="spinner"></div>Loading…</div>`;
 
-  let url = "/api/admin/reports?limit=100";
-  if (status) url += `&status=${status}`;
+  let url = "/api/reports/?limit=100";
+  if (status) url += `&status=${status.toLowerCase()}`;
   if (type) url += `&report_type=${encodeURIComponent(type)}`;
 
   const res = await apiFetch(url);
@@ -448,8 +448,8 @@ async function loadAllReports() {
         // Image section — tries to load from backend /uploads path
         let imgHtml = "";
         if (r.image_path) {
-          const clean = r.image_path.replace(/\\/g, "/");
-          const src = `${API}/${clean}`;
+          const clean = r.image_path.replace(/\\/g, "/").replace(/^uploads\//, "");
+          const src = `${API}/uploads/${clean}`;
 
           imgHtml = `
             <div class="rpt-photo">
@@ -620,7 +620,7 @@ async function loadAllReports() {
           apiFetch("/api/admin/disasters/monthly"),
           apiFetch("/api/admin/disasters/yearly"),
           apiFetch("/api/admin/flood-barangays"),
-          apiFetch("/api/admin/reports/recent"),
+          apiFetch("/api/reports/admin/recent")
         ]);
         renderStats(sR?.data || FALLBACK.stats);
         const bm = mR?.data || FALLBACK.byMonth,
