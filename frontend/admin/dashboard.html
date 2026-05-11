@@ -2,23 +2,17 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MDRRMO Polangui — Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>MDRRMO Polangui — Command Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
     />
     <link
       rel="stylesheet"
@@ -27,205 +21,221 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="layout">
-      <!-- SIDEBAR -->
+    <div class="layout" id="layout">
+      <!-- ═══════════════════ SIDEBAR ═══════════════════ -->
       <aside class="sidebar" id="sidebar">
         <div class="sb-brand">
-          <div class="sb-logo">MDRRMO <span>POLANGUI</span></div>
-          <div class="sb-sub">Disaster Response Admin System · Albay</div>
+          <div class="sb-emblem">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div class="sb-brand-text">
+            <div class="sb-logo">MDRRMO</div>
+            <div class="sb-sub">Polangui · Albay</div>
+          </div>
+        </div>
+
+        <div class="sb-alert-strip" id="sb-alert-strip">
+          <span class="pulse-dot"></span>
+          <span id="sb-alert-text">No Active Typhoon</span>
         </div>
 
         <nav class="sb-nav">
-          <div class="sb-section">Main</div>
+          <div class="sb-section-label">COMMAND</div>
           <button
             class="nav-btn active"
             data-page="dashboard"
             onclick="switchPage('dashboard', this)"
           >
-            <span class="icon">
-              <i class="fa-solid fa-chart-bar"> </i>
-            </span>
-            Dashboard
+            <i class="fa-solid fa-chart-line"></i><span>Dashboard</span>
           </button>
           <button
             class="nav-btn"
             data-page="map"
             onclick="switchPage('map', this)"
           >
-            <span class="icon">
-              <i class="fa-solid fa-earth-asia"></i>
-            </span>
-            Typhoon Map
+            <i class="fa-solid fa-satellite-dish"></i
+            ><span>Typhoon Tracker</span>
           </button>
-          <div class="sb-section" style="margin-top: 0.4rem">
-            Reports & Logs
-          </div>
+
+          <div class="sb-section-label">OPERATIONS</div>
           <button
             class="nav-btn"
             data-page="reports"
             onclick="switchPage('reports', this)"
           >
-            <span class="icon">
-              <i class="fa-regular fa-newspaper"></i>
-            </span>
-            Incident Reports
-            <span class="nb-badge" id="pending-badge">0</span>
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <span>Incident Reports</span>
+            <span class="nb-badge" id="pending-badge" style="display: none"
+              >0</span
+            >
           </button>
           <button
             class="nav-btn"
             data-page="chatbot"
             onclick="switchPage('chatbot', this)"
           >
-            <span class="icon">
-              <i class="fa-regular fa-comment-dots"></i>
-            </span>
-            Chatbot Logs
+            <i class="fa-regular fa-comment-dots"></i><span>Chatbot Logs</span>
           </button>
-          <div class="sb-section" style="margin-top: 0.4rem">System</div>
+
+          <div class="sb-section-label">SYSTEM</div>
           <button
             class="nav-btn"
             data-page="settings"
             onclick="switchPage('settings', this)"
           >
-            <span class="icon">
-              <i class="fa-solid fa-gear"></i>
-            </span>
-            Settings
+            <i class="fa-solid fa-sliders"></i><span>Settings</span>
           </button>
           <button
             class="nav-btn"
             onclick="window.open('/api/admin/summary-report', '_blank')"
           >
-            <span class="icon">
-              <i class="fa-solid fa-file-circle-plus"></i>
-            </span>
-            Generate Report
+            <i class="fa-solid fa-file-arrow-down"></i
+            ><span>Export Report</span>
           </button>
         </nav>
 
         <div class="sb-footer">
           <div class="sb-user">
             <div class="sb-avatar" id="sb-avatar">AD</div>
-            <div>
+            <div class="sb-user-info">
               <div class="sb-name" id="sb-name">Admin User</div>
               <div class="sb-role">Administrator</div>
             </div>
           </div>
-          <button class="logout-btn" onclick="logout()">Log out</button>
+          <button class="logout-btn" onclick="logout()">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
         </div>
       </aside>
 
-      <!-- CONTENT -->
-      <div class="content">
+      <!-- ═══════════════════ CONTENT ═══════════════════ -->
+      <div class="content-wrapper">
+        <!-- TOPBAR -->
         <header class="topbar">
-          <button
-            class="hamburger"
-            onclick="
-              document.getElementById('sidebar').classList.toggle('open')
-            "
-          >
-            ☰
-          </button>
-          <div class="tb-title" id="tb-title">
-            Dashboard <span>Overview & Demographics</span>
+          <div class="tb-left">
+            <button
+              class="hamburger"
+              onclick="
+                document.getElementById('sidebar').classList.toggle('open')
+              "
+            >
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            <div class="tb-breadcrumb">
+              <span class="tb-page" id="tb-page">Dashboard</span>
+              <span class="tb-sep">/</span>
+              <span class="tb-sub" id="tb-sub">Overview & Analytics</span>
+            </div>
           </div>
-          <div class="clock" id="clock">00:00:00</div>
+          <div class="tb-right">
+            <div class="tb-signal-badge" id="tb-signal">
+              <span class="signal-dot"></span>
+              <span id="signal-label">No Signal</span>
+            </div>
+            <div class="tb-clock" id="clock">00:00:00</div>
+            <div class="tb-date" id="tb-date"></div>
+          </div>
         </header>
 
+        <!-- MAIN -->
         <main class="main">
-          <!-- PAGE 1: DASHBOARD -->
+          <!-- ─── PAGE: DASHBOARD ─────────────────────────── -->
           <div id="page-dashboard" class="page active">
-            <div class="stats-row" id="stats-row">
-              <div class="loading" style="grid-column: 1/-1">
-                <div class="spinner"></div>
-                Loading stats…
-              </div>
+            <div class="stats-grid" id="stats-row">
+              <div class="stat-skeleton"></div>
+              <div class="stat-skeleton"></div>
+              <div class="stat-skeleton"></div>
+              <div class="stat-skeleton"></div>
+              <div class="stat-skeleton"></div>
             </div>
-            <div class="grid-2">
+
+            <div class="dash-grid">
+              <!-- Chart: Reports -->
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">
-                    <i
-                      class="fa-solid fa-file-lines"
-                      style="color: #001483"
-                    ></i>
-                    Disaster Reports Overview</span
-                  >
+                  <div class="card-title-group">
+                    <i class="fa-solid fa-chart-column card-icon c-blue"></i>
+                    <span class="card-title">Disaster Reports</span>
+                  </div>
                   <div class="toggle-group">
                     <button
                       class="toggle-btn active"
                       onclick="switchChart('reports', 'month', this)"
                     >
-                      By Month
+                      Month
                     </button>
                     <button
                       class="toggle-btn"
                       onclick="switchChart('reports', 'year', this)"
                     >
-                      By Year
+                      Year
                     </button>
                   </div>
                 </div>
-                <div class="chart-wrap">
-                  <div class="chart-title">Number of Reports</div>
+                <div class="chart-area">
+                  <div class="chart-y-label">Number of Reports</div>
                   <div class="bar-chart" id="chart-reports"></div>
                 </div>
               </div>
+
+              <!-- Chart: Affected -->
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">
-                    <i
-                      class="fa-solid fa-chart-column"
-                      style="color: #001483"
-                    ></i>
-                    Affected Residents</span
-                  >
+                  <div class="card-title-group">
+                    <i class="fa-solid fa-people-group card-icon c-red"></i>
+                    <span class="card-title">Affected Residents</span>
+                  </div>
                   <div class="toggle-group">
                     <button
                       class="toggle-btn active"
                       onclick="switchChart('affected', 'month', this)"
                     >
-                      By Month
+                      Month
                     </button>
                     <button
                       class="toggle-btn"
                       onclick="switchChart('affected', 'year', this)"
                     >
-                      By Year
+                      Year
                     </button>
                   </div>
                 </div>
-                <div class="chart-wrap">
-                  <div class="chart-title">Estimated Affected Residents</div>
+                <div class="chart-area">
+                  <div class="chart-y-label">Estimated Count</div>
                   <div class="bar-chart" id="chart-affected"></div>
                 </div>
               </div>
-            </div>
-            <div class="grid-2">
+
+              <!-- Flood-prone Barangays -->
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">
+                  <div class="card-title-group">
                     <i
-                      class="fa-solid fa-house-flood-water"
-                      style="color: #001483"
+                      class="fa-solid fa-house-flood-water card-icon c-amber"
                     ></i>
-                    Flood-Prone Barangays</span
-                  >
-                  <span class="badge-count" id="flood-count">—</span>
+                    <span class="card-title">Flood-Prone Barangays</span>
+                  </div>
+                  <span class="chip" id="flood-count">—</span>
                 </div>
                 <div id="flood-table-wrap">
-                  <div class="loading">
-                    <div class="spinner"></div>
-                    Loading…
+                  <div class="skeleton-table">
+                    <div class="sk-row"></div>
+                    <div class="sk-row"></div>
+                    <div class="sk-row"></div>
+                    <div class="sk-row"></div>
                   </div>
                 </div>
               </div>
+
+              <!-- Recent Reports + Year Summary -->
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">
-                    <i class="fa-solid fa-newspaper" style="color: #001483"></i>
-                    Recent Incident Reports</span
-                  >
+                  <div class="card-title-group">
+                    <i
+                      class="fa-solid fa-clock-rotate-left card-icon c-purple"
+                    ></i>
+                    <span class="card-title">Recent Reports</span>
+                  </div>
                   <button
                     class="btn-ghost"
                     onclick="
@@ -235,386 +245,898 @@
                       )
                     "
                   >
-                    View All →
+                    View All
+                    <i
+                      class="fa-solid fa-arrow-right"
+                      style="font-size: 0.65rem"
+                    ></i>
                   </button>
                 </div>
                 <div id="recent-reports-list">
-                  <div class="loading">
-                    <div class="spinner"></div>
-                    Loading…
+                  <div class="skeleton-list">
+                    <div class="sk-item"></div>
+                    <div class="sk-item"></div>
+                    <div class="sk-item"></div>
                   </div>
                 </div>
-                <hr class="divider" />
-                <div class="card-header" style="margin-bottom: 0.65rem">
-                  <span class="card-title">Typhoon Events by Year</span>
+                <div class="section-divider"></div>
+                <div class="card-sub-header">
+                  <i
+                    class="fa-solid fa-calendar-days card-icon c-teal"
+                    style="font-size: 0.85rem"
+                  ></i>
+                  Typhoon Events by Year
                 </div>
-                <div id="year-table-wrap">
-                  <div class="loading">
-                    <div class="spinner"></div>
-                    Loading…
-                  </div>
-                </div>
+                <div id="year-table-wrap"></div>
               </div>
             </div>
           </div>
 
-          <!-- PAGE 2: MAP -->
+          <!-- ─── PAGE: MAP ───────────────────────────────── -->
           <div id="page-map" class="page">
-            <div class="grid-map">
-              <div class="card" style="min-width: 0">
+            <div class="map-layout">
+              <div class="card map-card">
                 <div class="card-header">
-                  <span class="card-title"
-                    >Typhoon Track Monitor — Polangui, Albay</span
-                  >
-                  <span class="live-dot">● LIVE</span>
-                </div>
-                <div class="map-notice">
-                  <span style="font-size: 1.3rem"></span>
-                  <div>
-                    <strong>Windy.com Real-Time Typhoon Tracker</strong> —
-                    Coordinates locked to
-                    <strong>13.2924°N, 123.4853°E</strong>.
-                  </div>
-                </div>
-                <div class="map-frame-wrap">
-                  <iframe
-                    title="Windy"
-                    src="https://embed.windy.com/embed2.html?lat=13.292&lon=123.485&zoom=8&level=surface&overlay=wind&product=ecmwf&menu=&message=&marker=true&calendar=now&pressure=&type=map&location=coordinates&detail=&metricWind=km%2Fh&metricTemp=%C2%B0C&radarRange=-1"
-                    frameborder="0"
-                    style="width: 100%; height: 480px; display: block"
-                  ></iframe>
-                </div>
-                <div class="map-legend">
-                  <span><span style="color: #22c55e">●</span> Safe</span>
-                  <span
-                    ><span style="color: #f59e0b">●</span> Watch — Within
-                    300km</span
-                  >
-                  <span
-                    ><span style="color: #ef4444">●</span> Warning — Direct
-                    hit</span
-                  >
-                  <span>13.2924°N, 123.4853°E</span>
-                </div>
-              </div>
-              <div style="display: flex; flex-direction: column; gap: 0.9rem">
-                <div class="card">
-                  <div class="card-header">
-                    <span class="card-title">Municipal Profile</span
-                    ><span class="badge b-high">High Risk</span>
-                  </div>
-                  <div id="muni-profile">
-                    <div class="loading">
-                      <div class="spinner"></div>
-                      Loading…
-                    </div>
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-header">
-                    <span class="card-title">
-                      <i class="fa-solid fa-phone-volume"></i> MDRRMO
-                      Contact</span
+                  <div class="card-title-group">
+                    <i class="fa-solid fa-map card-icon c-green"></i>
+                    <span class="card-title"
+                      >Polangui Barangay Map — Incident Monitor</span
                     >
                   </div>
-                  <div id="muni-contact">
-                    <div class="loading">
-                      <div class="spinner"></div>
-                      Loading…
+                  <span class="live-badge"
+                    ><span class="pulse-dot red"></span>LIVE</span
+                  >
+                </div>
+                <div class="map-coord-bar">
+                  <i class="fa-solid fa-location-dot"></i>
+                  Polangui, Albay &nbsp;·&nbsp;
+                  <strong>43 barangays</strong> &nbsp;·&nbsp; Click a barangay
+                  to select
+                </div>
+
+                <div
+                  class="map-frame-wrap"
+                  id="polangui-map-container"
+                  style="position: relative; padding: 0"
+                >
+                  <svg
+                    id="map-svg"
+                    width="100%"
+                    viewBox="0 0 680 480"
+                    role="img"
+                    style="
+                      display: block;
+                      background: #0f1e0f;
+                      border-radius: 8px;
+                    "
+                  >
+                    <title>Polangui, Albay Barangay Map</title>
+                    <desc>
+                      Interactive map of all barangays in Polangui with severity
+                      report indicators
+                    </desc>
+
+                    <!-- OUTER (green) barangays -->
+                    <g id="brgy-AGOS" onclick="selectBrgy('AGOS', 55, 225)">
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M18,195 L70,175 L90,200 L95,240 L80,265 L50,270 L20,250 Z"
+                      />
+                      <text class="brgy-label" x="55" y="225">AGOS</text>
+                    </g>
+                    <g
+                      id="brgy-COTONOGAN"
+                      onclick="selectBrgy('COTONOGAN', 100, 198)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M70,175 L115,170 L130,195 L120,215 L95,225 L90,200 Z"
+                      />
+                      <text class="brgy-label" x="100" y="198">COTONOGAN</text>
+                    </g>
+                    <g
+                      id="brgy-MAGPANAMBO"
+                      onclick="selectBrgy('MAGPANAMBO', 155, 169)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M115,155 L175,148 L195,165 L185,185 L160,190 L130,185 L115,170 Z"
+                      />
+                      <text class="brgy-label" x="155" y="169">MAGPANAMBO</text>
+                    </g>
+                    <g
+                      id="brgy-LAPURISIMA"
+                      onclick="selectBrgy('LAPURISIMA', 272, 151)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M230,138 L295,130 L315,148 L305,168 L280,172 L255,165 L235,152 Z"
+                      />
+                      <text class="brgy-label" x="272" y="151">LAPURISIMA</text>
+                    </g>
+                    <g
+                      id="brgy-LOURDES"
+                      onclick="selectBrgy('LOURDES', 363, 149)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M315,132 L395,125 L415,148 L400,168 L370,172 L345,162 L315,148 Z"
+                      />
+                      <text class="brgy-label" x="363" y="149">LOURDES</text>
+                    </g>
+                    <g
+                      id="brgy-LIDONG"
+                      onclick="selectBrgy('LIDONG', 458, 168)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M415,148 L480,145 L500,168 L488,185 L462,188 L440,178 L415,165 Z"
+                      />
+                      <text class="brgy-label" x="458" y="168">LIDONG</text>
+                    </g>
+                    <g
+                      id="brgy-ANOPOL"
+                      onclick="selectBrgy('ANOPOL', 524, 175)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M490,158 L545,155 L558,175 L545,192 L518,195 L500,180 Z"
+                      />
+                      <text class="brgy-label" x="524" y="175">ANOPOL</text>
+                    </g>
+                    <g
+                      id="brgy-MAYSUA"
+                      onclick="selectBrgy('MAYSUA', 588, 178)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M555,158 L620,155 L632,178 L618,198 L590,200 L560,190 L545,175 Z"
+                      />
+                      <text class="brgy-label" x="588" y="178">MAYSUA</text>
+                    </g>
+                    <g id="brgy-DANAO" onclick="selectBrgy('DANAO', 620, 147)">
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M585,132 L645,130 L658,152 L640,162 L615,160 L595,148 Z"
+                      />
+                      <text class="brgy-label" x="620" y="147">DANAO</text>
+                    </g>
+                    <g
+                      id="brgy-COTMON"
+                      onclick="selectBrgy('COTMON', 615, 232)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M575,205 L648,200 L660,230 L648,258 L618,262 L585,250 L572,228 Z"
+                      />
+                      <text class="brgy-label" x="615" y="232">COTMON</text>
+                    </g>
+                    <g
+                      id="brgy-BALINAD"
+                      onclick="selectBrgy('BALINAD', 582, 295)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M540,268 L620,265 L638,295 L620,318 L588,320 L555,308 L538,288 Z"
+                      />
+                      <text class="brgy-label" x="582" y="295">BALINAD</text>
+                    </g>
+                    <g id="brgy-NAPO" onclick="selectBrgy('NAPO', 565, 355)">
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M520,330 L600,328 L615,355 L600,375 L565,378 L535,368 L518,350 Z"
+                      />
+                      <text class="brgy-label" x="565" y="355">NAPO</text>
+                    </g>
+                    <g
+                      id="brgy-MATACON"
+                      onclick="selectBrgy('MATACON', 162, 267)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M118,248 L195,242 L208,262 L198,285 L168,290 L138,278 L115,262 Z"
+                      />
+                      <text class="brgy-label" x="162" y="267">MATACON</text>
+                    </g>
+                    <g
+                      id="brgy-BALANGIBANG"
+                      onclick="selectBrgy('BALANGIBANG', 244, 335)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M192,310 L280,305 L298,332 L288,358 L252,362 L218,348 L192,328 Z"
+                      />
+                      <text class="brgy-label" x="244" y="335">
+                        BALANGIBANG
+                      </text>
+                    </g>
+                    <g
+                      id="brgy-KINALE"
+                      onclick="selectBrgy('KINALE', 225, 392)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M188,370 L252,368 L265,392 L255,412 L225,415 L195,405 L185,385 Z"
+                      />
+                      <text class="brgy-label" x="225" y="392">KINALE</text>
+                    </g>
+                    <g
+                      id="brgy-ALOMON"
+                      onclick="selectBrgy('ALOMON', 238, 435)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M195,415 L270,412 L282,435 L270,455 L238,458 L205,445 Z"
+                      />
+                      <text class="brgy-label" x="238" y="435">ALOMON</text>
+                    </g>
+                    <g
+                      id="brgy-MAYNAGA"
+                      onclick="selectBrgy('MAYNAGA', 489, 217)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M455,198 L520,195 L532,215 L520,235 L492,238 L462,228 L448,212 Z"
+                      />
+                      <text class="brgy-label" x="489" y="217">MAYNAGA</text>
+                    </g>
+                    <g
+                      id="brgy-AMOGUIS"
+                      onclick="selectBrgy('AMOGUIS', 524, 219)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#3B6D11"
+                        d="M490,200 L548,198 L560,218 L548,235 L520,238 L500,228 Z"
+                      />
+                      <text
+                        class="brgy-label"
+                        x="524"
+                        y="219"
+                        style="font-size: 7px"
+                      >
+                        AMOGUIS
+                      </text>
+                    </g>
+
+                    <!-- INNER (dark blue) barangays -->
+                    <g
+                      id="brgy-STA-TERESITA"
+                      onclick="selectBrgy('STA. TERESITA', 218, 179)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M185,165 L240,160 L255,178 L242,198 L215,202 L190,192 Z"
+                      />
+                      <text class="brgy-label" x="218" y="179">
+                        STA.TERESITA
+                      </text>
+                    </g>
+                    <g
+                      id="brgy-SAN-ROQUE"
+                      onclick="selectBrgy('SAN ROQUE', 192, 228)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M145,208 L215,202 L238,222 L228,248 L198,252 L155,240 Z"
+                      />
+                      <text class="brgy-label" x="192" y="228">SAN ROQUE</text>
+                    </g>
+                    <g
+                      id="brgy-LA-MEDALLA"
+                      onclick="selectBrgy('LA MEDALLA', 294, 217)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M248,198 L325,195 L340,215 L328,235 L298,238 L262,228 Z"
+                      />
+                      <text class="brgy-label" x="294" y="217">LA MEDALLA</text>
+                    </g>
+                    <g
+                      id="brgy-SANTICON"
+                      onclick="selectBrgy('SANTICON', 220, 275)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M168,255 L258,250 L272,272 L258,295 L225,298 L175,285 Z"
+                      />
+                      <text class="brgy-label" x="220" y="275">SANTICON</text>
+                    </g>
+                    <g id="brgy-APAD" onclick="selectBrgy('APAD', 310, 273)">
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M262,252 L340,248 L355,270 L342,295 L308,298 L272,285 Z"
+                      />
+                      <text class="brgy-label" x="310" y="273">APAD</text>
+                    </g>
+                    <g
+                      id="brgy-KINUARTILAN"
+                      onclick="selectBrgy('KINUARTILAN', 373, 229)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M328,210 L405,205 L420,228 L408,250 L375,252 L340,240 Z"
+                      />
+                      <text class="brgy-label" x="373" y="229">
+                        KINUARTILAN
+                      </text>
+                    </g>
+                    <g
+                      id="brgy-LANIGAY"
+                      onclick="selectBrgy('LANIGAY', 362, 290)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M325,262 L392,258 L408,285 L395,315 L360,318 L325,305 Z"
+                      />
+                      <text class="brgy-label" x="362" y="290">LANIGAY</text>
+                    </g>
+                    <g id="brgy-GAMOT" onclick="selectBrgy('GAMOT', 432, 287)">
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M392,262 L460,258 L475,282 L462,308 L428,312 L395,298 Z"
+                      />
+                      <text class="brgy-label" x="432" y="287">GAMOT</text>
+                    </g>
+                    <g
+                      id="brgy-ITARAN"
+                      onclick="selectBrgy('ITARAN', 443, 249)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M408,228 L465,225 L480,248 L468,268 L435,270 L410,258 Z"
+                      />
+                      <text class="brgy-label" x="443" y="249">ITARAN</text>
+                    </g>
+                    <g
+                      id="brgy-PINAGDAPUGAN"
+                      onclick="selectBrgy('PINAGDAPUGAN', 513, 260)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M470,240 L548,238 L562,260 L548,285 L512,288 L478,275 Z"
+                      />
+                      <text class="brgy-label" x="513" y="260">
+                        PINAGDAPUGAN
+                      </text>
+                    </g>
+                    <g id="brgy-BUYO" onclick="selectBrgy('BUYO', 503, 297)">
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M468,275 L528,272 L542,295 L528,318 L495,320 L468,308 Z"
+                      />
+                      <text class="brgy-label" x="503" y="297">BUYO</text>
+                    </g>
+                    <g
+                      id="brgy-CEPRES"
+                      onclick="selectBrgy('CEPRES', 453, 320)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M415,298 L480,295 L495,318 L480,342 L448,345 L418,330 Z"
+                      />
+                      <text class="brgy-label" x="453" y="320">CEPRES</text>
+                    </g>
+                    <g
+                      id="brgy-BALABA"
+                      onclick="selectBrgy('BALABA', 530, 332)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M495,310 L558,308 L572,330 L558,355 L522,358 L495,342 Z"
+                      />
+                      <text class="brgy-label" x="530" y="332">BALABA</text>
+                    </g>
+                    <g
+                      id="brgy-PINTOR"
+                      onclick="selectBrgy('PINTOR', 420, 348)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M382,325 L445,322 L460,345 L445,368 L412,372 L382,358 Z"
+                      />
+                      <text class="brgy-label" x="420" y="348">PINTOR</text>
+                    </g>
+                    <g
+                      id="brgy-STA-CRUZ"
+                      onclick="selectBrgy('STA. CRUZ', 483, 348)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M445,325 L515,322 L528,345 L515,368 L480,372 L448,358 Z"
+                      />
+                      <text class="brgy-label" x="483" y="348">STA. CRUZ</text>
+                    </g>
+                    <g id="brgy-PONSO" onclick="selectBrgy('PONSO', 490, 393)">
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M450,368 L522,365 L535,390 L518,415 L482,418 L450,405 Z"
+                      />
+                      <text class="brgy-label" x="490" y="393">PONSO</text>
+                    </g>
+                    <g
+                      id="brgy-MENDEZ"
+                      onclick="selectBrgy('MENDEZ', 455, 432)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M412,408 L488,405 L502,432 L488,456 L448,458 L412,445 Z"
+                      />
+                      <text class="brgy-label" x="455" y="432">MENDEZ</text>
+                    </g>
+                    <g
+                      id="brgy-SUGCAD"
+                      onclick="selectBrgy('SUGCAD', 350, 337)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M308,315 L382,312 L396,335 L382,358 L348,360 L312,345 Z"
+                      />
+                      <text class="brgy-label" x="350" y="337">SUGCAD</text>
+                    </g>
+                    <g
+                      id="brgy-CENTRO-OCC"
+                      onclick="selectBrgy('CENTRO OCC.', 312, 382)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M272,362 L345,358 L360,382 L345,405 L308,408 L272,395 Z"
+                      />
+                      <text class="brgy-label" x="312" y="382">
+                        CENTRO OCC.
+                      </text>
+                    </g>
+                    <g
+                      id="brgy-CENTRO-OR"
+                      onclick="selectBrgy('CENTRO OR.', 378, 383)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M342,362 L408,358 L422,382 L408,405 L370,408 L342,395 Z"
+                      />
+                      <text class="brgy-label" x="378" y="383">CENTRO OR.</text>
+                    </g>
+                    <g
+                      id="brgy-UBALIW"
+                      onclick="selectBrgy('UBALIW', 308, 432)"
+                    >
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M272,408 L340,405 L355,428 L342,452 L305,455 L272,440 Z"
+                      />
+                      <text class="brgy-label" x="308" y="432">UBALIW</text>
+                    </g>
+                    <g id="brgy-QARON" onclick="selectBrgy('QARON', 380, 427)">
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M345,405 L410,402 L424,425 L412,448 L375,450 L345,438 Z"
+                      />
+                      <text class="brgy-label" x="380" y="427">QARON</text>
+                    </g>
+                    <g id="brgy-BASUD" onclick="selectBrgy('BASUD', 352, 460)">
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M310,445 L385,442 L398,465 L382,475 L312,475 Z"
+                      />
+                      <text class="brgy-label" x="352" y="460">BASUD</text>
+                    </g>
+                    <g id="brgy-ALNAY" onclick="selectBrgy('ALNAY', 420, 460)">
+                      <path
+                        class="brgy-path"
+                        fill="#1e3a5f"
+                        d="M382,445 L448,442 L460,465 L445,475 L382,475 Z"
+                      />
+                      <text class="brgy-label" x="420" y="460">ALNAY</text>
+                    </g>
+
+                    <!-- Severity dots layer -->
+                    <g id="dots-layer"></g>
+
+                    <!-- Legend box -->
+                    <rect
+                      x="18"
+                      y="390"
+                      width="130"
+                      height="72"
+                      rx="8"
+                      fill="rgba(0,0,0,0.55)"
+                      stroke="rgba(255,255,255,0.15)"
+                      stroke-width="0.5"
+                    />
+                    <text
+                      x="26"
+                      y="404"
+                      style="
+                        font-family: inherit;
+                        font-size: 8.5px;
+                        font-weight: 600;
+                        fill: #fff;
+                      "
+                    >
+                      Report severity
+                    </text>
+                    <circle cx="30" cy="418" r="5" fill="#E24B4A" />
+                    <text
+                      x="40"
+                      y="422"
+                      style="font-family: inherit; font-size: 8px; fill: #fff"
+                    >
+                      Critical
+                    </text>
+                    <circle cx="30" cy="435" r="5" fill="#EF9F27" />
+                    <text
+                      x="40"
+                      y="439"
+                      style="font-family: inherit; font-size: 8px; fill: #fff"
+                    >
+                      Moderate
+                    </text>
+                    <circle cx="30" cy="452" r="5" fill="#639922" />
+                    <text
+                      x="40"
+                      y="456"
+                      style="font-family: inherit; font-size: 8px; fill: #fff"
+                    >
+                      Minor
+                    </text>
+                  </svg>
+
+                  <!-- Tooltip -->
+                  <div
+                    id="map-tooltip"
+                    style="
+                      position: absolute;
+                      display: none;
+                      pointer-events: none;
+                      background: rgba(10, 20, 10, 0.92);
+                      color: #fff;
+                      border: 1px solid rgba(255, 255, 255, 0.15);
+                      border-radius: 8px;
+                      padding: 7px 12px;
+                      font-size: 12px;
+                      z-index: 10;
+                      line-height: 1.6;
+                      white-space: nowrap;
+                    "
+                  ></div>
+                </div>
+
+                <div class="map-legend">
+                  <span
+                    ><span class="legend-dot red"></span>Critical report</span
+                  >
+                  <span
+                    ><span class="legend-dot amber"></span>Moderate report</span
+                  >
+                  <span
+                    ><span class="legend-dot green"></span>Minor report</span
+                  >
+                </div>
+              </div>
+
+              <div class="map-sidebar">
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title-group">
+                      <i class="fa-solid fa-city card-icon c-blue"></i>
+                      <span class="card-title">Municipal Profile</span>
                     </div>
+                    <span class="risk-badge">High Risk</span>
                   </div>
+                  <div id="muni-profile"></div>
                 </div>
                 <div class="card">
                   <div class="card-header">
-                    <span class="card-title">Typhoon Signal Status</span>
-                  </div>
-                  <div id="alert-levels">
-                    <div class="loading">
-                      <div class="spinner"></div>
-                      Loading…
+                    <div class="card-title-group">
+                      <i class="fa-solid fa-phone-volume card-icon c-green"></i>
+                      <span class="card-title">MDRRMO Contact</span>
                     </div>
                   </div>
+                  <div id="muni-contact"></div>
+                </div>
+                <div class="card">
+                  <div class="card-header">
+                    <div class="card-title-group">
+                      <i class="fa-solid fa-bell card-icon c-red"></i>
+                      <span class="card-title">Signal Status</span>
+                    </div>
+                  </div>
+                  <div id="alert-levels"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- PAGE 3: REPORTS -->
-          <div id="page-reports" class="page">
-            <div class="card">
-              <div class="card-header">
-                <span class="card-title">📁 All Incident Reports</span>
-                <div
-                  style="
-                    display: flex;
-                    gap: 0.45rem;
-                    align-items: center;
-                    flex-wrap: wrap;
-                  "
-                >
-                  <select
-                    id="filter-status"
-                    class="fs"
-                    onchange="loadAllReports()"
-                  >
-                    <option value="">All Status</option>
-                    <option value="pending">Pending</option>
-                    <option value="reviewed">Reviewed</option>
-                    <option value="resolved">Resolved</option>
-                  </select>
-                  <select
-                    id="filter-type"
-                    class="fs"
-                    onchange="loadAllReports()"
-                  >
-                    <option value="">All Types</option>
-                    <option value="Flood">Flood</option>
-                    <option value="Wind Damage">Wind Damage</option>
-                    <option value="Missing Person">Missing Person</option>
-                    <option value="Road Block">Road Block</option>
-                    <option value="Power Outage">Power Outage</option>
-                    <option value="Other">Other</option>
-                  </select>
-                  <button class="btn-ghost" onclick="loadAllReports()">
-                    Refresh
-                  </button>
-                </div>
-              </div>
-              <div id="all-reports-wrap">
-                <div class="loading">
-                  <div class="spinner"></div>
-                  Loading…
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- PAGE 4: CHATBOT LOGS -->
+          <!-- ─── PAGE: CHATBOT ──────────────────────────── -->
           <div id="page-chatbot" class="page">
             <div class="card">
               <div class="card-header">
-                <span class="card-title">💬 DRES-Bot Interaction Logs</span>
-                <div style="display: flex; gap: 0.45rem; align-items: center">
+                <div class="card-title-group">
+                  <i class="fa-regular fa-comment-dots card-icon c-purple"></i>
+                  <span class="card-title">DRES-Bot Interaction Logs</span>
+                </div>
+                <div class="filter-row">
                   <input
                     type="number"
                     id="filter-uid"
-                    class="fs"
+                    class="filter-select"
                     placeholder="Filter by User ID"
-                    style="width: 130px"
+                    style="width: 140px"
                     oninput="loadChatLogs()"
                   />
-                  <button class="btn-ghost" onclick="loadChatLogs()">
-                    Refresh
+                  <button
+                    class="icon-btn"
+                    onclick="loadChatLogs()"
+                    title="Refresh"
+                  >
+                    <i class="fa-solid fa-rotate-right"></i>
                   </button>
                 </div>
               </div>
-              <div
-                style="
-                  display: flex;
-                  gap: 0.9rem;
-                  margin-bottom: 0.9rem;
-                  flex-wrap: wrap;
-                "
-              >
-                <div
-                  class="stat-card card"
-                  style="border-left-color: #3b82f6; flex: 1; min-width: 130px"
-                >
-                  <div class="stat-icon"><i class="bi bi-chat-dots"></i></div>
+
+              <div class="chat-stats-row">
+                <div class="chat-stat-card">
+                  <i class="fa-regular fa-comments"></i>
                   <div>
-                    <div class="stat-value" id="cs-total">—</div>
-                    <div class="stat-label">Total Conversations</div>
+                    <div class="cs-value" id="cs-total">—</div>
+                    <div class="cs-label">Total Conversations</div>
                   </div>
                 </div>
-                <div
-                  class="stat-card card"
-                  style="border-left-color: #22c55e; flex: 1; min-width: 130px"
-                >
-                  <div class="stat-icon"><i class="bi bi-people"></i></div>
+                <div class="chat-stat-card">
+                  <i class="fa-solid fa-users"></i>
                   <div>
-                    <div class="stat-value" id="cs-users">—</div>
-                    <div class="stat-label">Unique Users</div>
+                    <div class="cs-value" id="cs-users">—</div>
+                    <div class="cs-label">Unique Users</div>
                   </div>
                 </div>
               </div>
+
               <div id="chat-logs-wrap">
-                <div class="loading">
-                  <div class="spinner"></div>
-                  Loading…
+                <div class="skeleton-list">
+                  <div class="sk-item tall"></div>
+                  <div class="sk-item tall"></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- PAGE 5: SETTINGS -->
+          <!-- ─── PAGE: SETTINGS ─────────────────────────── -->
           <div id="page-settings" class="page">
-            <div
-              style="
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-                gap: 0.9rem;
-              "
-            >
+            <div class="settings-grid">
+              <!-- Signal Level -->
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">Typhoon Signal Level</span>
+                  <div class="card-title-group">
+                    <i class="fa-solid fa-wind card-icon c-amber"></i>
+                    <span class="card-title">Typhoon Signal Level</span>
+                  </div>
                 </div>
-                <p
-                  style="
-                    font-size: 0.8rem;
-                    color: var(--muted);
-                    margin-bottom: 0.9rem;
-                  "
-                >
-                  Set the current signal level shown to all residents.
+                <p class="card-desc">
+                  Set the current signal level broadcast to all residents.
                 </p>
-                <button
-                  class="sig-btn"
-                  data-level="0"
-                  onclick="setSignalLevel(this)"
-                >
-                  ⚪ No Active Signal
-                </button>
-                <button
-                  class="sig-btn"
-                  data-level="1"
-                  onclick="setSignalLevel(this)"
-                >
-                  🟡 Signal #1 — Moderate winds (30–60 km/h)
-                </button>
-                <button
-                  class="sig-btn"
-                  data-level="2"
-                  onclick="setSignalLevel(this)"
-                >
-                  🟠 Signal #2 — Strong winds (61–120 km/h)
-                </button>
-                <button
-                  class="sig-btn"
-                  data-level="3"
-                  onclick="setSignalLevel(this)"
-                >
-                  🔴 Signal #3 — Very strong winds (121–170 km/h)
-                </button>
-                <button
-                  class="sig-btn"
-                  data-level="4"
-                  onclick="setSignalLevel(this)"
-                >
-                  🟣 Signal #4 — Extreme winds (171–220 km/h)
-                </button>
-                <div
-                  id="signal-saved"
-                  style="
-                    margin-top: 0.65rem;
-                    font-size: 0.78rem;
-                    color: #22c55e;
-                    display: none;
-                  "
-                >
-                  Signal level updated!
+                <div class="signal-btns">
+                  <button
+                    class="sig-btn"
+                    data-level="0"
+                    onclick="setSignalLevel(this)"
+                  >
+                    <span class="sig-dot none"></span>
+                    <div>
+                      <strong>No Active Signal</strong
+                      ><span>All clear — no typhoon threat</span>
+                    </div>
+                  </button>
+                  <button
+                    class="sig-btn"
+                    data-level="1"
+                    onclick="setSignalLevel(this)"
+                  >
+                    <span class="sig-dot s1"></span>
+                    <div>
+                      <strong>Signal #1</strong
+                      ><span>Moderate winds 30–60 km/h</span>
+                    </div>
+                  </button>
+                  <button
+                    class="sig-btn"
+                    data-level="2"
+                    onclick="setSignalLevel(this)"
+                  >
+                    <span class="sig-dot s2"></span>
+                    <div>
+                      <strong>Signal #2</strong
+                      ><span>Strong winds 61–120 km/h</span>
+                    </div>
+                  </button>
+                  <button
+                    class="sig-btn"
+                    data-level="3"
+                    onclick="setSignalLevel(this)"
+                  >
+                    <span class="sig-dot s3"></span>
+                    <div>
+                      <strong>Signal #3</strong
+                      ><span>Very strong winds 121–170 km/h</span>
+                    </div>
+                  </button>
+                  <button
+                    class="sig-btn"
+                    data-level="4"
+                    onclick="setSignalLevel(this)"
+                  >
+                    <span class="sig-dot s4"></span>
+                    <div>
+                      <strong>Signal #4</strong
+                      ><span>Extreme winds 171–220 km/h</span>
+                    </div>
+                  </button>
+                </div>
+                <div class="save-feedback" id="signal-saved">
+                  ✓ Signal level updated
                 </div>
               </div>
+
+              <!-- Registered Residents -->
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">Registered Residents</span
-                  ><button class="btn-ghost" onclick="loadUsers()">
-                    Refresh
+                  <div class="card-title-group">
+                    <i class="fa-solid fa-users card-icon c-blue"></i>
+                    <span class="card-title">Registered Residents</span>
+                  </div>
+                  <button class="icon-btn" onclick="loadUsers()">
+                    <i class="fa-solid fa-rotate-right"></i>
                   </button>
                 </div>
                 <div id="users-wrap">
-                  <div class="loading">
-                    <div class="spinner"></div>
-                    Loading…
+                  <div class="skeleton-list">
+                    <div class="sk-item"></div>
+                    <div class="sk-item"></div>
                   </div>
                 </div>
               </div>
+
+              <!-- Contact Info -->
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title"
-                    ><i class="fa-solid fa-phone-volume"></i> MDRRMO Contact
-                    Info</span
-                  >
+                  <div class="card-title-group">
+                    <i class="fa-solid fa-phone-volume card-icon c-green"></i>
+                    <span class="card-title">MDRRMO Contact Info</span>
+                  </div>
                 </div>
-                <div class="fg">
-                  <label class="fl">Office Head</label
-                  ><input
-                    class="fi"
-                    id="s-head"
-                    placeholder="e.g. Juan dela Cruz"
-                  />
-                </div>
-                <div class="fg">
-                  <label class="fl">Contact Number</label
-                  ><input
-                    class="fi"
-                    id="s-contact"
-                    placeholder="(052) 486-0160"
-                  />
-                </div>
-                <div class="fg">
-                  <label class="fl">Email</label
-                  ><input
-                    class="fi"
-                    id="s-email"
-                    placeholder="mdrrmo@polangui.gov.ph"
-                  />
-                </div>
-                <div class="fg">
-                  <label class="fl">Operating Hours</label
-                  ><input
-                    class="fi"
-                    id="s-hours"
-                    placeholder="24/7 during alerts"
-                  />
+                <div class="form-grid">
+                  <div class="fg">
+                    <label class="fl">Office Head</label>
+                    <input
+                      class="fi"
+                      id="s-head"
+                      placeholder="e.g. Juan dela Cruz"
+                    />
+                  </div>
+                  <div class="fg">
+                    <label class="fl">Contact Number</label>
+                    <input
+                      class="fi"
+                      id="s-contact"
+                      placeholder="(052) 486-0160"
+                    />
+                  </div>
+                  <div class="fg">
+                    <label class="fl">Email Address</label>
+                    <input
+                      class="fi"
+                      id="s-email"
+                      placeholder="mdrrmo@polangui.gov.ph"
+                    />
+                  </div>
+                  <div class="fg">
+                    <label class="fl">Operating Hours</label>
+                    <input
+                      class="fi"
+                      id="s-hours"
+                      placeholder="24/7 during alerts"
+                    />
+                  </div>
                 </div>
                 <button class="save-btn" onclick="saveContact()">
-                  <i
-                    class="fa-solid fa-floppy-disk"
-                    style="color: rgb(236, 239, 255)"
-                  ></i>
-                  Save
+                  <i class="fa-solid fa-floppy-disk"></i> Save Changes
                 </button>
-                <div
-                  id="contact-saved"
-                  style="
-                    margin-top: 0.55rem;
-                    font-size: 0.78rem;
-                    color: #22c55e;
-                    display: none;
-                  "
-                >
-                  Saved!
+                <div class="save-feedback" id="contact-saved">
+                  ✓ Saved successfully
                 </div>
               </div>
+
+              <!-- Evacuation Centers -->
               <div class="card">
                 <div class="card-header">
-                  <span class="card-title">Evacuation Centers</span>
+                  <div class="card-title-group">
+                    <i
+                      class="fa-solid fa-house-chimney-medical card-icon c-teal"
+                    ></i>
+                    <span class="card-title">Evacuation Centers</span>
+                  </div>
                 </div>
-                <div
-                  style="
-                    font-size: 0.8rem;
-                    line-height: 1.95;
-                    color: var(--muted);
-                  "
-                >
-                  🏫 Polangui Central School — Poblacion<br />
-                  🏛️ Polangui Municipal Gym — Poblacion<br />
-                  🏫 Agos Elementary School — Agos<br />
-                  🏫 Ason National High School — Ason<br />
-                  🏫 Cotmon Elementary School — Cotmon<br />
-                  🏫 Burabod Elementary School — Burabod
+                <div class="evac-list">
+                  <div class="evac-item">
+                    <i class="fa-solid fa-school"></i>
+                    <div>
+                      <strong>Polangui Central School</strong
+                      ><span>Poblacion</span>
+                    </div>
+                  </div>
+                  <div class="evac-item">
+                    <i class="fa-solid fa-landmark"></i>
+                    <div>
+                      <strong>Municipal Gymnasium</strong><span>Poblacion</span>
+                    </div>
+                  </div>
+                  <div class="evac-item">
+                    <i class="fa-solid fa-school"></i>
+                    <div>
+                      <strong>Agos Elementary School</strong><span>Agos</span>
+                    </div>
+                  </div>
+                  <div class="evac-item">
+                    <i class="fa-solid fa-school"></i>
+                    <div>
+                      <strong>Ason National High School</strong
+                      ><span>Ason</span>
+                    </div>
+                  </div>
+                  <div class="evac-item">
+                    <i class="fa-solid fa-school"></i>
+                    <div>
+                      <strong>Cotmon Elementary School</strong
+                      ><span>Cotmon</span>
+                    </div>
+                  </div>
+                  <div class="evac-item">
+                    <i class="fa-solid fa-school"></i>
+                    <div>
+                      <strong>Burabod Elementary School</strong
+                      ><span>Burabod</span>
+                    </div>
+                  </div>
                 </div>
-                <p
-                  style="
-                    font-size: 0.7rem;
-                    color: var(--muted);
-                    margin-top: 0.65rem;
-                    opacity: 0.65;
-                  "
-                >
-                  * To update, edit CHATBOT_KB in dashboard.js
-                </p>
               </div>
             </div>
           </div>
@@ -622,13 +1144,21 @@
       </div>
     </div>
 
+    <!-- ═══════ REPORT MODAL ═══════ -->
     <div class="modal-overlay" id="rptModal" onclick="closeModal()">
       <div class="rpt-modal" onclick="event.stopPropagation()">
-        <button class="modal-x" onclick="closeModal()">✕ Close</button>
-        <div class="modal-title" id="modal-title">Report Details</div>
-        <div id="modal-body"></div>
+        <div class="modal-header">
+          <div class="modal-title" id="modal-title">Report Details</div>
+          <button class="modal-close" onclick="closeModal()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+        <div class="modal-body" id="modal-body"></div>
       </div>
     </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
 
     <script src="admin.js"></script>
   </body>
