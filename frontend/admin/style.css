@@ -674,7 +674,7 @@ html, body {
 }
 @media (max-width:900px) { .map-layout { grid-template-columns: 1fr; } }
 
-.map-card {}
+
 .map-coord-bar {
   background: var(--bg-base);
   border: 1px solid var(--border);
@@ -804,7 +804,6 @@ html, body {
   margin-bottom: 10px;
   line-height: 1.5;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1189,25 +1188,461 @@ html, body {
   .main { padding: 14px; }
 }
 
+/* ══════════════════════════════════════════════════════
+   LIVE MAP — CLEAN TACTICAL STYLE
+   REPLACE YOUR ENTIRE LIVE MAP VISUALS SECTION WITH THIS
+══════════════════════════════════════════════════════ */
 
-  @keyframes blink-red { 0%,100%{opacity:1;r:7} 50%{opacity:.3;r:10} }
-  @keyframes blink-amber { 0%,100%{opacity:1;r:6} 50%{opacity:.25;r:9} }
-  @keyframes blink-green { 0%,100%{opacity:1;r:5} 50%{opacity:.3;r:7} }
-  .sev-critical { animation: blink-red 0.8s ease-in-out infinite; fill: #E24B4A; }
-  .sev-moderate { animation: blink-amber 1.2s ease-in-out infinite; fill: #EF9F27; }
-  .sev-minor { animation: blink-green 1.8s ease-in-out infinite; fill: #639922; }
-  .brgy-path { stroke: #fff; stroke-width: 1.2; cursor: pointer; transition: opacity .15s; }
-  .brgy-path:hover { opacity: .75; }
-  .brgy-label { font-family: var(--font-sans, sans-serif); font-size: 7.5px; fill: #fff; text-anchor: middle; dominant-baseline: central; pointer-events: none; font-weight: 500; }
-  .legend-dot { r: 5; }
-  select, button { font-family: var(--font-sans, sans-serif); font-size: 13px; background: var(--color-background-secondary); color: var(--color-text-primary); border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 6px 10px; cursor: pointer; }
-  button:hover { background: var(--color-background-tertiary); }
-  #report-panel { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; margin-top: 10px; }
-  #report-list { margin-top: 10px; max-height: 130px; overflow-y: auto; }
-  .report-item { display:flex; align-items:center; gap:8px; padding: 4px 0; border-bottom: 0.5px solid var(--color-border-tertiary); font-size: 13px; color: var(--color-text-primary); }
-  .dot-badge { width:10px; height:10px; border-radius:50%; flex-shrink:0; }
-  .dot-critical { background:#E24B4A; }
-  .dot-moderate { background:#EF9F27; }
-  .dot-minor { background:#639922; }
-  .tooltip { position:absolute; background:var(--color-background-primary); border:0.5px solid var(--color-border-secondary); border-radius:8px; padding:6px 10px; font-size:12px; color:var(--color-text-primary); pointer-events:none; display:none; z-index:10; box-shadow:0 2px 8px rgba(0,0,0,.12); }
+/* MAP CONTAINER */
+.map-frame-wrap{
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background:
+    radial-gradient(circle at top left,
+      rgba(80,120,80,0.14),
+      transparent 35%),
+    radial-gradient(circle at bottom right,
+      rgba(40,80,40,0.22),
+      transparent 45%),
+    linear-gradient(180deg,
+      #071107 0%,
+      #081508 100%);
+}
 
+/* MAIN SVG */
+#map-svg{
+  width:100%;
+  height:auto;
+  display:block;
+  background: transparent;
+  filter: saturate(1.05);
+}
+
+/* ══════════════════════════════════════════════════════
+   BARANGAYS
+══════════════════════════════════════════════════════ */
+
+.brgy-path{
+  fill:#214d21;
+  stroke:rgba(255,255,255,0.12);
+  stroke-width:1.3;
+  cursor:pointer;
+
+  transition:
+    fill .22s ease,
+    transform .22s ease,
+    filter .22s ease,
+    stroke .22s ease;
+}
+
+/* alternating subtle shades para hindi flat */
+.brgy-path:nth-child(odd){
+  fill:#295329;
+}
+
+.brgy-path:nth-child(even){
+  fill:#244924;
+}
+
+/* hover effect */
+.brgy-path:hover{
+  fill:#356a35;
+  stroke:rgba(255,255,255,0.35);
+  stroke-width:1.6;
+
+  filter:
+    brightness(1.08)
+    drop-shadow(0 0 10px rgba(60,255,120,0.12));
+
+  transform:translateY(-1px);
+}
+
+/* active / selected barangay */
+.brgy-active{
+  fill:#3f7f3f !important;
+
+  stroke:rgba(140,255,170,0.7) !important;
+  stroke-width:2 !important;
+
+  filter:
+    brightness(1.15)
+    drop-shadow(0 0 12px rgba(80,255,140,0.35));
+}
+
+/* ══════════════════════════════════════════════════════
+   LABELS
+══════════════════════════════════════════════════════ */
+
+.brgy-label{
+  fill:rgba(255,255,255,0.9);
+
+  font-size:7px;
+  font-weight:700;
+  text-anchor:middle;
+  dominant-baseline:middle;
+
+  font-family:var(--font-body);
+
+  letter-spacing:.03em;
+  pointer-events:none;
+
+  text-shadow:
+    0 1px 2px rgba(0,0,0,0.9),
+    0 0 6px rgba(0,0,0,0.6);
+}
+
+/* ══════════════════════════════════════════════════════
+   REPORT PULSE DOTS
+══════════════════════════════════════════════════════ */
+
+@keyframes criticalPulse{
+  0%{
+    transform:scale(1);
+    opacity:1;
+    filter:drop-shadow(0 0 4px rgba(239,68,68,.7));
+  }
+
+  50%{
+    transform:scale(1.45);
+    opacity:.45;
+    filter:drop-shadow(0 0 12px rgba(239,68,68,1));
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+@keyframes moderatePulse{
+  0%{
+    transform:scale(1);
+    opacity:1;
+  }
+
+  50%{
+    transform:scale(1.25);
+    opacity:.45;
+  }
+
+  100%{
+    transform:scale(1);
+    opacity:1;
+  }
+}
+
+@keyframes minorPulse{
+  0%{
+    opacity:1;
+  }
+
+  50%{
+    opacity:.5;
+  }
+
+  100%{
+    opacity:1;
+  }
+}
+
+/* SEVERITY CIRCLES */
+.sev-critical{
+  fill:#ef4444;
+  animation:criticalPulse .9s infinite;
+}
+
+.sev-moderate{
+  fill:#f59e0b;
+  animation:moderatePulse 1.3s infinite;
+}
+
+.sev-minor{
+  fill:#22c55e;
+  animation:minorPulse 2s infinite;
+}
+
+/* ══════════════════════════════════════════════════════
+   LIVE GLOW EFFECT
+══════════════════════════════════════════════════════ */
+
+.map-frame-wrap::before{
+  content:'';
+  position:absolute;
+  inset:0;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.025),
+      transparent
+    );
+
+  animation:mapSweep 8s linear infinite;
+
+  pointer-events:none;
+}
+
+@keyframes mapSweep{
+  0%{
+    transform:translateX(-100%);
+  }
+
+  100%{
+    transform:translateX(100%);
+  }
+}
+
+/* vignette */
+.map-frame-wrap::after{
+  content:'';
+  position:absolute;
+  inset:0;
+
+  background:
+    radial-gradient(circle,
+      transparent 55%,
+      rgba(0,0,0,.25) 100%);
+
+  pointer-events:none;
+}
+
+/* ══════════════════════════════════════════════════════
+   MAP LEGEND
+══════════════════════════════════════════════════════ */
+
+.map-legend{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  flex-wrap:wrap;
+
+  margin-top:14px;
+
+  padding:10px 14px;
+
+  border-radius:12px;
+
+  background:rgba(0,0,0,0.35);
+
+  border:1px solid rgba(255,255,255,0.06);
+
+  backdrop-filter:blur(8px);
+}
+
+.map-legend span{
+  display:flex;
+  align-items:center;
+  gap:7px;
+
+  font-size:.72rem;
+  color:rgba(255,255,255,.8);
+}
+
+.legend-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+}
+
+.legend-dot.red{
+  background:#ef4444;
+  box-shadow:0 0 10px rgba(239,68,68,.7);
+}
+
+.legend-dot.amber{
+  background:#f59e0b;
+  box-shadow:0 0 10px rgba(245,158,11,.55);
+}
+
+.legend-dot.green{
+  background:#22c55e;
+  box-shadow:0 0 10px rgba(34,197,94,.55);
+}
+
+/* ══════════════════════════════════════════════════════
+   TOOLTIP
+══════════════════════════════════════════════════════ */
+
+.tooltip{
+  position:absolute;
+  z-index:50;
+
+  min-width:160px;
+
+  padding:10px 12px;
+
+  border-radius:12px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(18,24,32,.96),
+      rgba(10,14,20,.96)
+    );
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  backdrop-filter:blur(12px);
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.45),
+    0 0 0 1px rgba(255,255,255,.02);
+
+  font-size:.72rem;
+  color:#e8ecf5;
+
+  pointer-events:none;
+
+  opacity:0;
+  transform:translateY(6px);
+
+  transition:
+    opacity .18s ease,
+    transform .18s ease;
+}
+
+.tooltip.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.tooltip strong{
+  display:block;
+  margin-bottom:4px;
+
+  font-size:.78rem;
+  color:#fff;
+}
+
+/* ══════════════════════════════════════════════════════
+   SIGNAL STATUS PANEL
+══════════════════════════════════════════════════════ */
+
+.al-row{
+  background:
+    linear-gradient(
+      180deg,
+      rgba(20,25,38,.9),
+      rgba(14,18,28,.95)
+    );
+
+  border:1px solid rgba(255,255,255,.07);
+
+  border-radius:14px;
+
+  padding:12px 14px;
+
+  transition:
+    border-color .2s ease,
+    transform .2s ease,
+    background .2s ease;
+}
+
+.al-row:hover{
+  transform:translateY(-1px);
+
+  border-color:rgba(255,255,255,.14);
+}
+
+.al-row.al-active{
+  border-color:rgba(239,68,68,.4);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(80,20,20,.5),
+      rgba(35,12,12,.8)
+    );
+}
+
+.al-name{
+  font-size:.76rem;
+  font-weight:700;
+  color:#fff;
+}
+
+.al-desc{
+  margin-top:3px;
+
+  font-size:.66rem;
+  color:rgba(255,255,255,.62);
+}
+
+.al-badge{
+  background:#ef4444;
+  color:#fff;
+
+  font-size:.6rem;
+  font-weight:700;
+
+  padding:3px 8px;
+
+  border-radius:999px;
+
+  letter-spacing:.05em;
+}
+
+/* ══════════════════════════════════════════════════════
+   REPORT LIST
+══════════════════════════════════════════════════════ */
+
+#report-panel{
+  margin-top:14px;
+
+  padding:16px;
+
+  border-radius:16px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(20,25,38,.85),
+      rgba(12,16,24,.95)
+    );
+
+  border:1px solid rgba(255,255,255,.06);
+}
+
+#report-list{
+  max-height:180px;
+  overflow-y:auto;
+}
+
+.report-item{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:10px 0;
+
+  border-bottom:1px solid rgba(255,255,255,.05);
+
+  font-size:.74rem;
+}
+
+.report-item:last-child{
+  border-bottom:none;
+}
+
+.report-item strong{
+  color:#fff;
+}
+
+/* ══════════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════════ */
+
+@media(max-width:768px){
+
+  .brgy-label{
+    font-size:5px;
+  }
+
+  .map-legend{
+    gap:10px;
+  }
+
+}

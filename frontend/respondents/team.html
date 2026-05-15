@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,maximum-scale=1.0"
+    />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <title>DRES Response Team — MDRRMO Polangui</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <!-- TOPBAR -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <div class="team-avatar" id="team-avatar">RT</div>
+          <div class="team-info">
+            <div class="team-name" id="team-name">Response Team</div>
+            <div class="team-role" id="team-unit">Field Unit</div>
+          </div>
+        </div>
+        <div class="topbar-right" id="topbar-right">
+          <div class="status-pill" id="status-pill" onclick="toggleStatus()">
+            <span class="s-dot"></span>
+            <span id="status-text">Available</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SCROLL AREA -->
+      <div class="scroll-area" id="scroll-area">
+        <!-- PAGE: HOME (orders + summary) -->
+        <div class="rt-page active" id="rt-page-home">
+          <div class="sec-label">My Status</div>
+          <div class="summary-row">
+            <div class="sum-pill">
+              <div class="sp-val" id="sum-assigned" style="color: var(--blue)">
+                0
+              </div>
+              <div class="sp-lbl">Assigned</div>
+            </div>
+            <div class="sum-pill">
+              <div class="sp-val" id="sum-resolved" style="color: var(--green)">
+                0
+              </div>
+              <div class="sp-lbl">Resolved</div>
+            </div>
+            <div class="sum-pill">
+              <div class="sp-val" id="sum-pending" style="color: var(--amber)">
+                0
+              </div>
+              <div class="sp-lbl">Pending</div>
+            </div>
+          </div>
+
+          <div class="sec-label">Orders from Admin</div>
+          <div id="orders-list">
+            <div class="loading">
+              <div class="spinner"></div>
+              <br />Loading orders…
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE: SUBMIT REPORT -->
+        <div class="rt-page" id="rt-page-submit">
+          <div class="sec-label">Field Report</div>
+          <div class="report-form">
+            <div class="form-title">
+              <i
+                class="fa-solid fa-clipboard-list"
+                style="color: var(--blue)"
+              ></i>
+              Submit Field Report
+            </div>
+
+            <div class="fg">
+              <label class="fl">Barangay</label>
+              <select class="fs" id="rf-barangay">
+                <option value="">— Select Barangay —</option>
+                <option>AGOS</option>
+                <option>ALOMON</option>
+                <option>ALNAY</option>
+                <option>AMOGUIS</option>
+                <option>ANOPOL</option>
+                <option>APAD</option>
+                <option>BALABA</option>
+                <option>BALANGIBANG</option>
+                <option>BALINAD</option>
+                <option>BASUD</option>
+                <option>BUYO</option>
+                <option>CEPRES</option>
+                <option>CENTRO OCC.</option>
+                <option>CENTRO OR.</option>
+                <option>COTMON</option>
+                <option>COTONOGAN</option>
+                <option>DANAO</option>
+                <option>GAMOT</option>
+                <option>ITARAN</option>
+                <option>KINALE</option>
+                <option>KINUARTILAN</option>
+                <option>LA MEDALLA</option>
+                <option>LANIGAY</option>
+                <option>LAPURISIMA</option>
+                <option>LIDONG</option>
+                <option>LOURDES</option>
+                <option>MAGPANAMBO</option>
+                <option>MATACON</option>
+                <option>MAYSUA</option>
+                <option>MAYNAGA</option>
+                <option>MENDEZ</option>
+                <option>NAPO</option>
+                <option>PINAGDAPUGAN</option>
+                <option>PINTOR</option>
+                <option>PONSO</option>
+                <option>QARON</option>
+                <option>SAN ROQUE</option>
+                <option>SANTICON</option>
+                <option>STA. CRUZ</option>
+                <option>STA. TERESITA</option>
+                <option>SUGCAD</option>
+                <option>UBALIW</option>
+              </select>
+            </div>
+
+            <div class="fg">
+              <label class="fl">Report Type</label>
+              <select class="fs" id="rf-type">
+                <option value="">— Select Type —</option>
+                <option>Flood</option>
+                <option>Wind Damage</option>
+                <option>Missing Person</option>
+                <option>Road Block</option>
+                <option>Power Outage</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="fg">
+              <label class="fl">Severity</label>
+              <div class="sev-row">
+                <div class="sev-opt sev-low" onclick="setSev(this, 'low')">
+                  LOW
+                </div>
+                <div
+                  class="sev-opt sev-moderate"
+                  onclick="setSev(this, 'moderate')"
+                >
+                  MOD
+                </div>
+                <div class="sev-opt sev-high" onclick="setSev(this, 'high')">
+                  HIGH
+                </div>
+                <div
+                  class="sev-opt sev-critical"
+                  onclick="setSev(this, 'critical')"
+                >
+                  CRIT
+                </div>
+              </div>
+              <input type="hidden" id="rf-sev" value="" />
+            </div>
+
+            <div class="fg">
+              <label class="fl">GPS Location</label>
+              <div class="gps-row">
+                <div class="fg" style="margin: 0">
+                  <input
+                    class="fi"
+                    id="rf-lat"
+                    placeholder="Latitude"
+                    type="number"
+                    step="any"
+                    inputmode="decimal"
+                  />
+                </div>
+                <div class="fg" style="margin: 0">
+                  <input
+                    class="fi"
+                    id="rf-lng"
+                    placeholder="Longitude"
+                    type="number"
+                    step="any"
+                    inputmode="decimal"
+                  />
+                </div>
+                <button class="gps-btn" onclick="getGPS()">
+                  <i class="fa-solid fa-location-crosshairs"></i> Get
+                </button>
+              </div>
+            </div>
+
+            <div class="fg">
+              <label class="fl">Description</label>
+              <textarea
+                class="fi"
+                id="rf-desc"
+                placeholder="Describe the situation in detail…"
+                rows="4"
+              ></textarea>
+            </div>
+
+            <div class="fg">
+              <label class="fl">Photo (optional)</label>
+              <label class="photo-pick" for="rf-photo" id="photo-label">
+                <i class="fa-solid fa-camera"></i>
+                <span>Tap to take or choose photo</span>
+              </label>
+              <input
+                type="file"
+                id="rf-photo"
+                accept="image/*"
+                capture="environment"
+                style="display: none"
+                onchange="previewPhoto(this)"
+              />
+              <div class="photo-preview" id="photo-preview">
+                <img id="photo-img" src="" alt="Preview" />
+              </div>
+            </div>
+
+            <div class="fg">
+              <label class="fl">Linked Order / Report ID (optional)</label>
+              <input
+                class="fi"
+                id="rf-linked"
+                placeholder="e.g. RPT-0042"
+                style="font-family: var(--font-mono)"
+              />
+            </div>
+
+            <button class="submit-btn" id="submit-btn" onclick="submitReport()">
+              <i class="fa-solid fa-paper-plane"></i> Submit Field Report
+            </button>
+          </div>
+        </div>
+
+        <!-- PAGE: HISTORY -->
+        <div class="rt-page" id="rt-page-history">
+          <div class="sec-label">My Submissions</div>
+          <div id="history-list">
+            <div class="loading">
+              <div class="spinner"></div>
+              <br />Loading…
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /scroll-area -->
+
+      <!-- BOTTOM NAV -->
+      <nav class="bottom-nav">
+        <button
+          class="bn-btn active"
+          id="bn-home"
+          onclick="rtSwitchPage('home', this)"
+        >
+          <i class="fa-solid fa-house"></i>
+          <span>Home</span>
+          <span class="bn-badge" id="bn-badge-home">0</span>
+        </button>
+        <button
+          class="bn-btn"
+          id="bn-submit"
+          onclick="rtSwitchPage('submit', this)"
+        >
+          <i class="fa-solid fa-plus-circle"></i>
+          <span>Report</span>
+        </button>
+        <button
+          class="bn-btn"
+          id="bn-history"
+          onclick="rtSwitchPage('history', this)"
+        >
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>History</span>
+        </button>
+        <button
+          class="bn-btn"
+          id="bn-notif"
+          onclick="rtSwitchPage('notif', this)"
+        >
+          <i class="fa-regular fa-bell"></i>
+          <span>Alerts</span>
+          <span class="bn-badge" id="bn-badge-notif">0</span>
+        </button>
+      </nav>
+    </div>
+    <!-- /app -->
+
+    <!-- ORDER DETAIL MODAL -->
+    <div class="rt-modal-overlay" id="order-modal">
+      <div class="rt-modal">
+        <div class="rt-modal-handle"></div>
+        <div class="rt-modal-title" id="om-title">Order Details</div>
+        <div id="om-body"></div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="rt-toast" id="rt-toast"></div>
+
+    <script src="script.js"></script>
+    <script src="notifications.js"></script>
+  </body>
+</html>
