@@ -1,313 +1,812 @@
 
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+/* ═══════════════════════════════════════════════════════════════
+   COMPLETE MERGED CSS — Retaining All States + Perfect Layout Fixes
+   ═══════════════════════════════════════════════════════════════ */
 
-      :root {
-        --primary: #001aff;
-        --primary-d: #1540ff;
-        --bg: #ffffff;
-        --bg2: #ffffff;
-        --surface: #1e293b;
-        --border: hsla(216, 100%, 87%, 0.568);
-        --text: #000000;
-        --text-muted: #5a626e;
-        --success: #22c55e;
-        --danger: #ef4444;
-      }
+/* ───────────────── RESET ───────────────── */
 
-      html,
-      body {
-        height: 100%;
-        font-family: "Plus Jakarta Sans", sans-serif;
-        background: var(--bg);
-        color: var(--text);
-        overflow-x: hidden;
-      }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-      /*── BACKGROUND ── */
-      .bg-layer {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        background:
-          radial-gradient(
-            ellipse 80% 60% at 20% 10%,
-            rgb(197, 232, 252) 0%,
-            transparent 60%
-          ),
-          radial-gradient(
-            ellipse 60% 50% at 80% 90%,
-            rgb(197, 232, 252) 0%,
-            transparent 60%
-          ),
-          linear-gradient(160deg, #ebf1ff 0%, #ebf1ff 100%);
-      }
-      .bg-grid {
-        position: fixed;
-        inset: 0;
-        z-index: 0;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.24) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.24) 1px, transparent 1px);
-        background-size: 32px 32px;
-      }
+/* ───────────────── VARIABLES ───────────────── */
 
+:root {
+  --primary: #001aff;
+  --primary-d: #1540ff;
 
+  --bg: #ffffff;
+  --bg2: #ffffff;
 
-      /* ── SHELL ── */
-      .shell {
-        position: relative;
-        z-index: 1;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem;
-      }
+  --surface: #1e293b;
 
-      /* ── CARD ── */
-      .auth-card {
-        width: 100%;
-        max-width: 420px;
-        background: rgb(211, 228, 255);
-        border: 1px solid var(--border);
-        border-radius: 20px;
-        padding: 2rem 1.75rem;
-        backdrop-filter: blur(20px);
-        box-shadow: 0 24px 64px rgba(0, 1, 2, 0.205);
-        animation: slideUp 0.4s ease;
-      }
-      @keyframes slideUp {
-        from {
-          opacity: 0;
-          transform: translateY(24px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+  --border: rgba(117, 154, 255, 0.25);
 
-      /* ── LOGO ── */
-      .logo-block {
-        text-align: center;
-        margin-bottom: 1.75rem;
-      }
-      .logo-icon {
-        font-size: 2.5rem;
-        display: block;
-        margin-bottom: 0.5rem;
-        filter: drop-shadow(0 0 16px rgba(220, 38, 38, 0.5));
-      }
-      .logo-title {
-        font-size: 1.4rem;
-        font-weight: 800;
-        letter-spacing: -0.5px;
-        color: #fa4f00;
-      }
-      .logo-title span {
-        color: var(--primary);
-      }
-      .logo-sub {
-        font-size: 0.78rem;
-        color: var(--text-muted);
-        margin-top: 0.25rem;
-      }
+  --text: #000000;
+  --text-muted: #5a626e;
 
-      /* ── TABS ── */
-      .tabs {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        background: rgba(255, 183, 141, 0.932);
-        border-radius: 10px;
-        padding: 4px;
-        margin-bottom: 1.5rem;
-        gap: 4px;
-      }
-      .tab-btn {
-        padding: 0.55rem;
-        border: none;
-        border-radius: 7px;
-        font-family: inherit;
-        font-size: 0.85rem;
-        font-weight: 600;
-        cursor: pointer;
-        transition:
-          background 0.2s,
-          color 0.2s;
-        background: transparent;
-        color: var(--text-muted);
-      }
-      .tab-btn.active {
-        background: var(--primary);
-        color: #fff;
-      }
+  --success: #22c55e;
+  --danger: #ef4444;
 
-      /* ── FORM PANEL ── */
-      .panel {
-        display: none;
-      }
-      .panel.active {
-        display: block;
-      }
+  --glass: rgba(255, 255, 255, 0.5);
 
-      .form-group {
-        margin-bottom: 1rem;
-      }
-      .form-label {
-        display: block;
-        font-size: 0.78rem;
-        font-weight: 600;
-        color: var(--text-muted);
-        margin-bottom: 0.4rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-      }
-      .form-input,
-      .form-select {
-        width: 100%;
-        padding: 0.7rem 0.9rem;
-        background: rgba(255, 231, 217, 0.87);
-        border: #001483;
-        border-radius: 10px;
-        color: var(--text);
-        font-family: inherit;
-        font-size: 0.9rem;
-        outline: none;
-        transition:
-          border-color 0.2s,
-          box-shadow 0.2s;
-      }
-      .form-input:focus,
-      .form-select:focus {
-        border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
-      }
-      .form-input::placeholder {
-        color: var(--text-muted);
-        opacity: 0.7;
-      }
-      .form-select option {
-        background: var(--bg2);
-      }
+  --orange: #fa4f00;
+  --orange-soft: #ffe7d9; /* Fixed color tint value to match mockup inputs */
 
-      /* ── PASSWORD TOGGLE ── */
-      .pw-wrap {
-        position: relative;
-      }
-      .pw-wrap .form-input {
-        padding-right: 2.75rem;
-      }
-      .pw-eye {
-        position: absolute;
-        right: 0.75rem;
-        top: 50%;
-        transform: translateY(-50%);
-        background: none;
-        border: none;
-        color: var(--text-muted);
-        cursor: pointer;
-        font-size: 1rem;
-        padding: 2px;
-      }
+  --blue-soft: rgba(0, 26, 255, 0.1);
+}
 
-      /* ── SUBMIT ── */
-      .submit-btn {
-        width: 100%;
-        padding: 0.8rem;
-        background: var(--primary);
-        color: #fff;
-        border: none;
-        border-radius: 10px;
-        font-family: inherit;
-        font-size: 0.95rem;
-        font-weight: 700;
-        cursor: pointer;
-        margin-top: 0.5rem;
-        transition:
-          background 0.2s,
-          transform 0.1s,
-          box-shadow 0.2s;
-        box-shadow: 0 4px 16px rgb(77, 74, 255);
-      }
-      .submit-btn:hover {
-        background: var(--primary-d);
-        box-shadow: 0 6px 24px rgba(77, 74, 255, 0.26);
-      }
-      .submit-btn:active {
-        transform: scale(0.98);
-      }
-      .submit-btn:disabled {
-        opacity: 0.6;
-        cursor: not-allowed;
-      }
+/* ───────────────── BASE ───────────────── */
 
-      /* ── ALERT ── */
-      .alert {
-        padding: 0.75rem 1rem;
-        border-radius: 9px;
-        font-size: 0.83rem;
-        font-weight: 500;
-        margin-bottom: 1rem;
-        display: none;
-      }
-      .alert.show {
-        display: block;
-      }
-      .alert.error {
-        background: rgba(239, 68, 68, 0.15);
-        border: 1px solid rgba(239, 68, 68, 0.3);
-        color: #fd2020;
-      }
-      .alert.success {
-        background: rgba(34, 197, 94, 0.15);
-        border: 1px solid rgba(34, 197, 94, 0.3);
-        color: #205733;
-      }
+html,
+body {
+  min-height: 100%;
+  font-family: "DM Sans", sans-serif;
+  background: linear-gradient(135deg, #edf4ff 0%, #dcecff 100%);
+  color: var(--text);
+  overflow-x: hidden;
+}
 
-      /* ── DIVIDER ── */
-      .divider {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin: 1.25rem 0;
-        color: var(--text-muted);
-        font-size: 0.78rem;
-      }
-      .divider::before,
-      .divider::after {
-        content: "";
-        flex: 1;
-        height: 1px;
-        background: var(--border);
-      }
+/* ───────────────── BACKGROUND ───────────────── */
 
-      /* ── ADMIN LINK ── */
-      .admin-link {
-        text-align: center;
-        margin-top: 1.25rem;
-        font-size: 0.78rem;
-        color: var(--text-muted);
-      }
-      .admin-link a {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 600;
-      }
-      .admin-link a:hover {
-        text-decoration: underline;
-      }
+.bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
 
-      /* ── FOOTER ── */
-      .auth-footer {
-        text-align: center;
-        margin-top: 1.5rem;
-        font-size: 0.72rem;
-        color: var(--text-muted);
-        opacity: 0.7;
-      }
+  background:
+    radial-gradient(
+      ellipse 80% 60% at 20% 10%,
+      rgb(197, 232, 252) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 80% 90%,
+      rgb(197, 232, 252) 0%,
+      transparent 60%
+    ),
+    linear-gradient(160deg, #ebf1ff 0%, #ebf1ff 100%);
+}
+
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.28) 1px, transparent 1px),
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.28) 1px,
+      transparent 1px
+    );
+
+  background-size: 32px 32px;
+}
+
+.bg-orb {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(90px);
+  opacity: 0.35;
+  z-index: 0;
+}
+
+.orb1 {
+  width: 300px;
+  height: 300px;
+  background: #7db4ff;
+  top: -100px;
+  left: -80px;
+}
+
+.orb2 {
+  width: 260px;
+  height: 260px;
+  background: #92d3ff;
+  bottom: -100px;
+  right: -50px;
+}
+
+.orb3 {
+  width: 220px;
+  height: 220px;
+  background: #ffb57a;
+  top: 40%;
+  right: 15%;
+}
+
+/* ───────────────── SHELL ───────────────── */
+
+.shell {
+  position: relative;
+  z-index: 2;
+
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2rem 1rem;
+}
+
+/* ───────────────── CARD (FIXED FOR COMPACT VERTICAL LAYOUT) ───────────────── */
+
+.card {
+  width: 100%;
+  max-width: 540px; /* Reduced to match login.jpg single-column form view */
+  margin: 40px auto;
+
+  /* Changed from grid to block-flex wrapper to prevent horizontal splitting */
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border-radius: 28px;
+
+  background: rgba(224, 235, 255, 0.75); /* Cleaned up background card tint */
+
+  border: 1px solid var(--border);
+
+  backdrop-filter: blur(22px);
+
+  box-shadow: 0 24px 64px rgba(0, 1, 2, 0.06);
+
+  animation: slideUp 0.45s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ───────────────── LEFT PANEL (FORCE DISABLED IN STANDALONE VIEW) ───────────────── */
+
+.left-panel {
+  display: none !important; /* Completely hides the split-screen image layout */
+}
+
+/* ───────────────── RIGHT PANEL (MAIN BOX CONTAINER) ───────────────── */
+
+.right-panel {
+  padding: 3rem 2.5rem; /* Clean internal element margins */
+  width: 100%;
+}
+
+/* ───────────────── LOGO ───────────────── */
+
+.logo-block {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.logo-seal {
+  width: 74px;
+  height: 74px;
+
+  margin: 0 auto 1rem;
+
+  border-radius: 18px;
+
+  display: grid;
+  place-items: center;
+
+  background: transparent; /* Cleaned color overlap */
+
+  color: var(--orange);
+
+  font-size: 2.2rem;
+}
+
+.logo-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--orange);
+}
+
+.logo-title span {
+  color: var(--primary);
+}
+
+.logo-sub {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.4rem;
+}
+
+/* ───────────────── TABS ───────────────── */
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 4px;
+
+  padding: 6px;
+
+  border-radius: 14px;
+
+  background: var(--orange-soft); /* Fixed container styling to match mockup look */
+
+  margin-bottom: 2rem;
+}
+
+.tab-btn {
+  border: none;
+  background: transparent;
+
+  padding: 0.85rem;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+
+  color: var(--text-muted);
+
+  transition: 0.25s ease;
+}
+
+.tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+
+  box-shadow: 0 6px 20px rgba(0, 26, 255, 0.2);
+}
+
+/* ───────────────── PANELS & STEPS (RETAINED) ───────────────── */
+
+.panel {
+  display: none;
+}
+
+.panel.active {
+  display: block;
+}
+
+.step {
+  display: none;
+}
+
+.step.active {
+  display: block;
+}
+
+/* ───────────────── FORMS ───────────────── */
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+
+.form-label {
+  display: block;
+
+  margin-bottom: 0.5rem;
+
+  font-size: 0.8rem;
+  font-weight: 700;
+
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  color: var(--text-muted);
+}
+
+.req {
+  color: var(--danger);
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.fi {
+  position: absolute;
+  left: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  color: var(--primary);
+
+  font-size: 0.95rem;
+}
+
+.form-input,
+.form-select {
+  width: 100%;
+
+  border: 1.5px solid transparent;
+
+  border-radius: 14px;
+
+  background: var(--orange-soft); /* Applied soft peach tint precisely */
+
+  color: var(--text);
+
+  font-family: inherit;
+  font-size: 0.95rem;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s,
+    background 0.2s;
+}
+
+.form-input {
+  padding: 0.95rem 1rem 0.95rem 2.8rem; /* Padded left for system icons */
+}
+
+.form-select {
+  padding: 0.95rem 1rem;
+}
+
+.form-input:focus,
+.form-select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(0, 26, 255, 0.1);
+  background: #fff;
+}
+
+.form-input::placeholder {
+  color: rgba(90, 98, 110, 0.6);
+}
+
+.pw-wrap {
+  position: relative;
+}
+
+.pw-eye {
+  position: absolute;
+  right: 1.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border: none;
+  background: transparent;
+
+  cursor: pointer;
+
+  color: var(--text-muted);
+}
+
+/* Form Extras Container (Remember Me / Forgot Password Alignment) */
+.form-extras {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.form-extras label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.form-extras a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.form-extras a:hover {
+  color: var(--primary);
+}
+
+/* ───────────────── BUTTONS ───────────────── */
+
+.submit-btn {
+  width: 100%;
+
+  border: none;
+
+  border-radius: 14px;
+
+  padding: 1rem 1rem;
+
+  cursor: pointer;
+
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  transition:
+    0.2s ease,
+    transform 0.1s ease;
+}
+
+.submit-btn:hover {
+  transform: translateY(-1px);
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+.submit-btn.blue {
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-d)
+  );
+
+  box-shadow: 0 10px 25px rgba(0, 26, 255, 0.22);
+}
+
+.submit-btn.green {
+  background: linear-gradient(135deg, #0ca74d, #16c55e);
+}
+
+.submit-btn.gold {
+  background: linear-gradient(135deg, #ff9f0f, #f5c518);
+}
+
+/* ───────────────── ALERT (RETAINED) ───────────────── */
+
+.alert {
+  display: none;
+
+  margin-bottom: 1rem;
+
+  padding: 0.9rem 1rem;
+
+  border-radius: 12px;
+
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.alert.show {
+  display: block;
+}
+
+.alert.error {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  color: #c81414;
+}
+
+.alert.success {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.22);
+  color: #116c33;
+}
+
+.alert.info {
+  background: rgba(0, 26, 255, 0.08);
+  border: 1px solid rgba(0, 26, 255, 0.15);
+  color: var(--primary);
+}
+
+/* ───────────────── DIVIDER ───────────────── */
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  margin: 1.5rem 0;
+
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ───────────────── QUICK ROLES ───────────────── */
+
+.quick-roles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.quick-role {
+  text-align: center;
+
+  padding: 0.9rem 0.5rem;
+
+  border-radius: 14px;
+
+  border: 1px solid var(--border);
+
+  background: #ffffff;
+
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+
+.quick-role:hover {
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.quick-role i {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+.quick-role span {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+/* ───────────────── ROLE CARDS (RETAINED) ───────────────── */
+
+.role-selector-head {
+  margin-bottom: 1rem;
+}
+
+.rsh-title {
+  font-size: 1rem;
+  font-weight: 800;
+  margin-bottom: 0.2rem;
+}
+
+.rsh-sub {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.role-cards {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.role-card {
+  position: relative;
+
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+
+  padding: 1rem;
+
+  border-radius: 18px;
+
+  border: 1px solid var(--border);
+
+  background: rgba(255, 255, 255, 0.55);
+
+  cursor: pointer;
+
+  transition: 0.22s ease;
+}
+
+.role-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.06);
+}
+
+.role-card.selected {
+  border-color: var(--primary);
+  background: rgba(0, 26, 255, 0.05);
+}
+
+.rc-icon {
+  width: 52px;
+  height: 52px;
+
+  flex-shrink: 0;
+
+  border-radius: 14px;
+
+  display: grid;
+  place-items: center;
+
+  color: #fff;
+
+  font-size: 1.1rem;
+}
+
+.rc-icon.brgy {
+  background: linear-gradient(135deg, #0052ff, #4f7fff);
+}
+
+.rc-icon.resp {
+  background: linear-gradient(135deg, #0ca74d, #16c55e);
+}
+
+.rc-icon.admin {
+  background: linear-gradient(135deg, #ff9f0f, #f5c518);
+}
+
+.rc-name {
+  font-size: 0.92rem;
+  font-weight: 800;
+  margin-bottom: 0.3rem;
+}
+
+.rc-desc {
+  font-size: 0.77rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.rc-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+
+  padding: 0.35rem 0.6rem;
+
+  border-radius: 999px;
+
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.rc-badge.brgy {
+  background: rgba(0, 82, 255, 0.12);
+  color: #0052ff;
+}
+
+.rc-badge.resp {
+  background: rgba(22, 197, 94, 0.12);
+  color: #0ca74d;
+}
+
+.rc-badge.admin {
+  background: rgba(245, 197, 24, 0.14);
+  color: #d28a00;
+}
+
+.rc-check {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+
+  width: 24px;
+  height: 24px;
+
+  display: none;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: var(--primary);
+
+  color: #fff;
+
+  font-size: 0.72rem;
+}
+
+.role-card.selected .rc-check {
+  display: grid;
+}
+
+/* ───────────────── ADMIN NOTE (RETAINED) ───────────────── */
+
+.admin-note {
+  display: none;
+
+  margin-top: 1rem;
+
+  padding: 0.9rem 1rem;
+
+  border-radius: 14px;
+
+  background: rgba(245, 197, 24, 0.12);
+
+  border: 1px solid rgba(245, 197, 24, 0.2);
+
+  color: #9a7000;
+
+  font-size: 0.78rem;
+  line-height: 1.6;
+
+  gap: 0.65rem;
+}
+
+.admin-note.show {
+  display: flex;
+}
+
+/* ───────────────── ROLE INDICATOR (RETAINED) ───────────────── */
+
+.role-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 0.9rem 1rem;
+
+  border-radius: 14px;
+
+  margin-bottom: 1rem;
+
+  background: rgba(255, 255, 255, 0.6);
+
+  border: 1px solid var(--border);
+
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.change-role-btn {
+  border: none;
+
+  background: rgba(0, 26, 255, 0.08);
+
+  color: var(--primary);
+
+  padding: 0.45rem 0.75rem;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+/* ───────────────── FOOTER ───────────────── */
+
+.auth-footer {
+  text-align: center;
+
+  margin-top: 1.75rem;
+
+  font-size: 0.8rem;
+
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ───────────────── RESPONSIVE BREAKPOINTS ───────────────── */
+
+@media (max-width: 580px) {
+  .right-panel {
+    padding: 2rem 1.5rem;
+  }
+
+  .form-row-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-roles {
+    grid-template-columns: 1fr;
+  }
+}

@@ -4,51 +4,54 @@
     <meta charset="UTF-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
     />
-    <title>DRES Polangui — Login</title>
+    <title>DRES Polangui — Access Portal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap"
       rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     />
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="bg">
+      <div class="bg-grid"></div>
+      <div class="bg-orb orb1"></div>
+      <div class="bg-orb orb2"></div>
+      <div class="bg-orb orb3"></div>
+    </div>
 
-    <div class="bg-layer"></div>
-    <div class="bg-grid"></div>
+    <div class="card">
+      <div class="logo-block">
+        <div class="logo-seal">🛡️</div>
+        <div class="logo-title">DRES <span>Polangui</span></div>
+        <div class="logo-sub">Disaster Response & Emergency System · Albay</div>
+      </div>
 
-    <div class="shell">
-      <div class="auth-card">
-        <div class="logo-block">
-          <span class="logo-icon"></span>
-          <div class="logo-title">DRES <span>Polangui</span></div>
-          <div class="logo-sub">
-            Disaster Response & Emergency System · Albay
-          </div>
-        </div>
+      <!-- TABS -->
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('login')">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
+        </button>
+        <button class="tab-btn" onclick="switchTab('register')">
+          <i class="fa-solid fa-user-plus"></i> Register
+        </button>
+      </div>
 
-        <!-- TABS -->
-        <div class="tabs">
-          <button class="tab-btn active" onclick="switchTab('login')">
-            <i class="fa-solid fa-arrow-right-to-bracket"></i> Login
-          </button>
-          <button class="tab-btn" onclick="switchTab('register')">
-            <i class="fa-solid fa-person-circle-plus"></i>
-            Register
-          </button>
-        </div>
+      <!-- ALERT -->
+      <div class="alert" id="authAlert"></div>
 
-        <!-- ALERT -->
-        <div class="alert" id="authAlert"></div>
-        
-
-        <!-- LOGIN PANEL -->
-        <div class="panel active" id="panel-login">
-          <div class="form-group">
-            <label class="form-label">Email Address</label>
+      <!-- ═══════════════════ LOGIN PANEL ═══════════════════ -->
+      <div class="panel active" id="panel-login">
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <div class="input-wrap">
+            <i class="fa-solid fa-envelope fi"></i>
             <input
               class="form-input"
               id="loginEmail"
@@ -56,151 +59,668 @@
               placeholder="your@email.com"
             />
           </div>
-          <div class="form-group">
-            <label class="form-label">Password</label>
-            <div class="pw-wrap">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="pw-wrap">
+            <div class="input-wrap">
+              <i class="fa-solid fa-lock fi"></i>
               <input
                 class="form-input"
                 id="loginPassword"
                 type="password"
                 placeholder="••••••••"
+                style="padding-right: 2.5rem"
                 onkeypress="if (event.key === 'Enter') doLogin();"
               />
+            </div>
+            <button
+              class="pw-eye"
+              style="
+                right: 0.7rem;
+                top: 50%;
+                transform: translateY(-50%);
+                position: absolute;
+              "
+              onclick="togglePw('loginPassword', this)"
+            >
+              <i class="fa-solid fa-eye-slash"></i>
+            </button>
+          </div>
+        </div>
+
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.25rem;
+          "
+        >
+          <label
+            style="
+              display: flex;
+              align-items: center;
+              gap: 0.45rem;
+              cursor: pointer;
+              font-size: 0.8rem;
+              color: var(--text2);
+            "
+          >
+            <input
+              type="checkbox"
+              id="rememberMe"
+              style="accent-color: var(--blue2); width: 14px; height: 14px"
+            />
+            Remember me
+          </label>
+          <a
+            href="#"
+            style="
+              font-size: 0.8rem;
+              color: var(--blue-lt);
+              text-decoration: none;
+            "
+            onclick="showForgotPw(event)"
+            >Forgot password?</a
+          >
+        </div>
+        <button class="submit-btn blue" id="loginBtn" onclick="doLogin()">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In
+        </button>
+
+        <div class="divider">or continue as</div>
+
+        <!-- Quick role login hints -->
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.5rem;
+            margin-bottom: 0.25rem;
+          "
+        >
+          <div
+            style="
+              text-align: center;
+              padding: 0.65rem 0.5rem;
+              border-radius: 8px;
+              border: 1px solid var(--border);
+              background: var(--glass);
+              font-size: 0.72rem;
+              color: var(--blue-lt);
+            "
+          >
+            <i
+              class="fa-solid fa-house-user"
+              style="display: block; font-size: 1rem; margin-bottom: 0.3rem"
+            ></i>
+            Brgy. Officer
+          </div>
+          <div
+            style="
+              text-align: center;
+              padding: 0.65rem 0.5rem;
+              border-radius: 8px;
+              border: 1px solid var(--border);
+              background: var(--glass);
+              font-size: 0.72rem;
+              color: var(--green);
+            "
+          >
+            <i
+              class="fa-solid fa-helmet-safety"
+              style="display: block; font-size: 1rem; margin-bottom: 0.3rem"
+            ></i>
+            Respondent
+          </div>
+          <div
+            style="
+              text-align: center;
+              padding: 0.65rem 0.5rem;
+              border-radius: 8px;
+              border: 1px solid var(--border);
+              background: var(--glass);
+              font-size: 0.72rem;
+              color: var(--gold);
+            "
+          >
+            <i
+              class="fa-solid fa-shield-halved"
+              style="display: block; font-size: 1rem; margin-bottom: 0.3rem"
+            ></i>
+            MDRRMO Admin
+          </div>
+        </div>
+        <p
+          style="
+            text-align: center;
+            font-size: 0.72rem;
+            color: var(--text3);
+            margin-top: 0.5rem;
+          "
+        >
+          You'll be redirected based on your role after login.
+        </p>
+      </div>
+
+      <!-- ═══════════════════ REGISTER PANEL ═══════════════════ -->
+      <div class="panel" id="panel-register">
+        <!-- STEP 1: Choose Role -->
+        <div class="step active" id="reg-step1">
+          <div class="role-selector-head">
+            <div class="rsh-title">Select Your Account Type</div>
+            <div class="rsh-sub">
+              Choose the role that matches your position
+            </div>
+          </div>
+
+          <div class="role-cards">
+            <!-- Barangay Officer -->
+            <div
+              class="role-card brgy"
+              id="rc-brgy"
+              onclick="selectRole('brgy')"
+            >
+              <div class="rc-icon brgy">
+                <i class="fa-solid fa-house-user"></i>
+              </div>
+              <div class="rc-info">
+                <div class="rc-name">Barangay Officer / Personnel</div>
+                <div class="rc-desc">
+                  Designated disaster response officer in a barangay. Files
+                  incident reports to MDRRMO.
+                </div>
+              </div>
+              <span class="rc-badge brgy">BRGY</span>
+              <div class="rc-check"><i class="fa-solid fa-check"></i></div>
+            </div>
+
+            <!-- Respondent -->
+            <div
+              class="role-card resp"
+              id="rc-resp"
+              onclick="selectRole('resp')"
+            >
+              <div class="rc-icon resp">
+                <i class="fa-solid fa-helmet-safety"></i>
+              </div>
+              <div class="rc-info">
+                <div class="rc-name">Respondent / Field Personnel</div>
+                <div class="rc-desc">
+                  MDRRMO field responder. Receives dispatched reports, updates
+                  status on the ground.
+                </div>
+              </div>
+              <span class="rc-badge resp">RESP</span>
+              <div class="rc-check"><i class="fa-solid fa-check"></i></div>
+            </div>
+
+            <!-- Admin -->
+            <div
+              class="role-card admin"
+              id="rc-admin"
+              onclick="selectRole('admin')"
+            >
+              <div class="rc-icon admin">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <div class="rc-info">
+                <div class="rc-name">MDRRMO Administrator</div>
+                <div class="rc-desc">
+                  MDRRMO office administrator. Manages all reports, dispatches,
+                  and system oversight.
+                </div>
+              </div>
+              <span class="rc-badge admin">ADMIN</span>
+              <div class="rc-check"><i class="fa-solid fa-check"></i></div>
+            </div>
+          </div>
+
+          <div class="admin-note" id="adminNote">
+            <i
+              class="fa-solid fa-triangle-exclamation"
+              style="flex-shrink: 0; margin-top: 0.1rem"
+            ></i>
+            <span
+              >Admin accounts require verification by MDRRMO Polangui. You'll
+              receive a confirmation before access is granted.</span
+            >
+          </div>
+
+          <button
+            class="submit-btn blue"
+            id="step1Btn"
+            onclick="goStep2()"
+            style="margin-top: 1rem"
+          >
+            Continue <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- STEP 2: Fill Details -->
+        <div class="step" id="reg-step2">
+          <!-- Role indicator pill -->
+          <div class="role-indicator" id="roleIndicator">
+            <i class="fa-solid fa-circle-dot"></i>
+            <span id="roleIndicatorText">—</span>
+            <button class="change-role-btn" onclick="goBackStep1()">
+              Change role
+            </button>
+          </div>
+
+          <!-- BRGY FIELDS -->
+          <div id="fields-brgy" style="display: none">
+            <div class="form-group">
+              <label class="form-label"
+                >Full Name <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fa-solid fa-user fi"></i>
+                <input
+                  class="form-input"
+                  id="brgy-name"
+                  type="text"
+                  placeholder="Juan dela Cruz"
+                />
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label"
+                  >Position <span class="req">*</span></label
+                >
+                <select
+                  class="form-select"
+                  id="brgy-position"
+                  style="padding-left: 0.85rem"
+                >
+                  <option value="">— Select —</option>
+                  <option>Barangay Captain</option>
+                  <option>Barangay Kagawad</option>
+                  <option>BDRRMC Coordinator</option>
+                  <option>Barangay Tanod</option>
+                  <option>BHW / Health Worker</option>
+                  <option>Evacuation Manager</option>
+                  <option>Damage Assessment Officer</option>
+                  <option>Other Personnel</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label"
+                  >Barangay <span class="req">*</span></label
+                >
+                <select
+                  class="form-select"
+                  id="brgy-barangay"
+                  style="padding-left: 0.85rem"
+                >
+                  <option value="">— Select —</option>
+                  <option>Agos</option>
+                  <option>Alnay</option>
+                  <option>Alomon</option>
+                  <option>Amoguis</option>
+                  <option>Anopol</option>
+                  <option>Apad</option>
+                  <option>Balaba</option>
+                  <option>Balangibang</option>
+                  <option>Balinad</option>
+                  <option>Basud</option>
+                  <option>Binagbangan</option>
+                  <option>Buyo</option>
+                  <option>Centro Occidental</option>
+                  <option>Centro Oriental</option>
+                  <option>Cepres</option>
+                  <option>Cotmon</option>
+                  <option>Cotnogan</option>
+                  <option>Danao</option>
+                  <option>Gabon</option>
+                  <option>Gamot</option>
+                  <option>Itaran</option>
+                  <option>Kinale</option>
+                  <option>Kinuartilan</option>
+                  <option>La Medalla</option>
+                  <option>La Purisima</option>
+                  <option>Lanigay</option>
+                  <option>Lidong</option>
+                  <option>Lourdes</option>
+                  <option>Magpanambo</option>
+                  <option>Magurang</option>
+                  <option>Matacon</option>
+                  <option>Maynaga</option>
+                  <option>Maysua</option>
+                  <option>Mendez</option>
+                  <option>Napo</option>
+                  <option>Pinagdapugan</option>
+                  <option>Ponso</option>
+                  <option>Salvacion</option>
+                  <option>San Roque</option>
+                  <option>Santa Cruz</option>
+                  <option>Santa Teresita</option>
+                  <option>Santicon</option>
+                  <option>Sugcad</option>
+                  <option>Ubaliw</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label"
+                >Contact Number <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fa-solid fa-phone fi"></i>
+                <input
+                  class="form-input"
+                  id="brgy-contact"
+                  type="tel"
+                  placeholder="09XX-XXX-XXXX"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label"
+                >Email Address <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fa-solid fa-envelope fi"></i>
+                <input
+                  class="form-input"
+                  id="brgy-email"
+                  type="email"
+                  placeholder="officer@brgy.polangui.gov.ph"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- RESPONDENT FIELDS -->
+          <div id="fields-resp" style="display: none">
+            <div class="form-group">
+              <label class="form-label"
+                >Full Name <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fa-solid fa-user fi"></i>
+                <input
+                  class="form-input"
+                  id="resp-name"
+                  type="text"
+                  placeholder="Juan dela Cruz"
+                />
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label"
+                  >Team / Unit <span class="req">*</span></label
+                >
+                <select
+                  class="form-select"
+                  id="resp-team"
+                  style="padding-left: 0.85rem"
+                >
+                  <option value="">— Select —</option>
+                  <option>MDRRMO Response Team</option>
+                  <option>BFP Fire Team</option>
+                  <option>PNP Police Unit</option>
+                  <option>Rural Health Unit</option>
+                  <option>Philippine Red Cross</option>
+                  <option>CDRRMO Support</option>
+                  <option>Volunteer Rescue Team</option>
+                  <option>Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Personnel ID</label>
+                <div class="input-wrap">
+                  <i class="fa-solid fa-id-badge fi"></i>
+                  <input
+                    class="form-input"
+                    id="resp-id"
+                    type="text"
+                    placeholder="e.g. MDRRMO-001"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label"
+                >Contact Number <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fa-solid fa-phone fi"></i>
+                <input
+                  class="form-input"
+                  id="resp-contact"
+                  type="tel"
+                  placeholder="09XX-XXX-XXXX"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label"
+                >Email Address <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fa-solid fa-envelope fi"></i>
+                <input
+                  class="form-input"
+                  id="resp-email"
+                  type="email"
+                  placeholder="responder@mdrrmo.polangui.gov.ph"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- ADMIN FIELDS -->
+          <div id="fields-admin" style="display: none">
+            <div class="form-group">
+              <label class="form-label"
+                >Full Name <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fa-solid fa-user fi"></i>
+                <input
+                  class="form-input"
+                  id="admin-name"
+                  type="text"
+                  placeholder="Juan dela Cruz"
+                />
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label"
+                  >Designation <span class="req">*</span></label
+                >
+                <select
+                  class="form-select"
+                  id="admin-designation"
+                  style="padding-left: 0.85rem"
+                >
+                  <option value="">— Select —</option>
+                  <option>MDRRMO Head</option>
+                  <option>Operations Officer</option>
+                  <option>Plans Officer</option>
+                  <option>Warning & Comm. Officer</option>
+                  <option>Admin & Finance Officer</option>
+                  <option>System Administrator</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label"
+                  >Office ID <span class="req">*</span></label
+                >
+                <div class="input-wrap">
+                  <i class="fa-solid fa-id-card fi"></i>
+                  <input
+                    class="form-input"
+                    id="admin-officeid"
+                    type="text"
+                    placeholder="MDRRMO-ADM-XXX"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label"
+                >Official Email <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fa-solid fa-envelope fi"></i>
+                <input
+                  class="form-input"
+                  id="admin-email"
+                  type="email"
+                  placeholder="admin@mdrrmo.polangui.gov.ph"
+                />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label"
+                >Contact Number <span class="req">*</span></label
+              >
+              <div class="input-wrap">
+                <i class="fa-solid fa-phone fi"></i>
+                <input
+                  class="form-input"
+                  id="admin-contact"
+                  type="tel"
+                  placeholder="09XX-XXX-XXXX"
+                />
+              </div>
+            </div>
+            <div
+              style="
+                padding: 0.75rem 0.85rem;
+                background: rgba(245, 197, 24, 0.07);
+                border: 1px solid rgba(245, 197, 24, 0.2);
+                border-radius: 8px;
+                font-size: 0.77rem;
+                color: rgba(245, 197, 24, 0.8);
+                margin-bottom: 1rem;
+                line-height: 1.5;
+              "
+            >
+              <i class="fa-solid fa-lock" style="margin-right: 0.4rem"></i>
+              Admin accounts require manual approval by MDRRMO. You will be
+              contacted for verification before access is activated.
+            </div>
+          </div>
+
+          <!-- SHARED PASSWORD FIELDS -->
+          <div class="form-group">
+            <label class="form-label"
+              >Password <span class="req">*</span></label
+            >
+            <div class="pw-wrap" style="position: relative">
+              <div class="input-wrap">
+                <i class="fa-solid fa-lock fi"></i>
+                <input
+                  class="form-input"
+                  id="reg-password"
+                  type="password"
+                  placeholder="Min. 8 characters"
+                  style="padding-right: 2.5rem"
+                />
+              </div>
               <button
                 class="pw-eye"
-                onclick="togglePw('loginPassword', this)"
-                type="button"
+                style="
+                  right: 0.7rem;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  position: absolute;
+                "
+                onclick="togglePw('reg-password', this)"
+              >
+                <i class="fa-solid fa-eye-slash"></i>
+              </button>
+            </div>
+            <div id="pwStrength" style="margin-top: 0.35rem; display: none">
+              <div
+                style="
+                  height: 3px;
+                  border-radius: 2px;
+                  background: var(--border);
+                  overflow: hidden;
+                "
+              >
+                <div
+                  id="pwBar"
+                  style="
+                    height: 100%;
+                    width: 0;
+                    border-radius: 2px;
+                    transition:
+                      width 0.3s,
+                      background 0.3s;
+                  "
+                ></div>
+              </div>
+              <div
+                id="pwLabel"
+                style="
+                  font-size: 0.7rem;
+                  color: var(--text3);
+                  margin-top: 0.25rem;
+                "
+              ></div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label"
+              >Confirm Password <span class="req">*</span></label
+            >
+            <div class="pw-wrap" style="position: relative">
+              <div class="input-wrap">
+                <i class="fa-solid fa-lock fi"></i>
+                <input
+                  class="form-input"
+                  id="reg-confirm"
+                  type="password"
+                  placeholder="Repeat password"
+                  style="padding-right: 2.5rem"
+                  onkeypress="if (event.key === 'Enter') doRegister();"
+                />
+              </div>
+              <button
+                class="pw-eye"
+                style="
+                  right: 0.7rem;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  position: absolute;
+                "
+                onclick="togglePw('reg-confirm', this)"
               >
                 <i class="fa-solid fa-eye-slash"></i>
               </button>
             </div>
           </div>
-          <button class="submit-btn" id="loginBtn" onclick="doLogin()">
-            <i class="fa-solid fa-arrow-right-to-bracket"></i> Mag-login / Login
+
+          <button
+            class="submit-btn blue"
+            id="registerBtn"
+            onclick="doRegister()"
+          >
+            <i class="fa-solid fa-user-plus"></i>
+            <span id="regBtnText">Create Account</span>
           </button>
-        </div>
-
-        <!-- REGISTER PANEL -->
-        <div class="panel" id="panel-register">
-          <div class="form-group">
-            <label class="form-label"
-              >Full Name <span style="color: var(--primary)">*</span></label
-            >
-            <input
-              class="form-input"
-              id="regName"
-              type="text"
-              placeholder="Juan dela Cruz"
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label"
-              >Email Address <span style="color: var(--primary)">*</span></label
-            >
-            <input
-              class="form-input"
-              id="regEmail"
-              type="email"
-              placeholder="your@email.com"
-            />
-          </div>
-          <div class="form-group">
-            <label class="form-label">Barangay</label>
-            <select class="form-select" id="regBarangay">
-              <option value="">— Piliin ang inyong barangay —</option>
-              <option>Agos</option>
-              <option>Alnay</option>
-              <option>Alomon</option>
-              <option>Amoguis</option>
-              <option>Anopol</option>
-              <option>Apad</option>
-              <option>Balaba</option>
-              <option>Balangibang</option>
-              <option>Basud</option>
-              <option>Centro Occidental</option>
-              <option>Centro Oriental</option>
-              <option>Cotnogan</option>
-              <option>Cotmon</option>
-              <option>Danao</option>
-              <option>Gabon</option>
-              <option>Maysua</option>
-              <option>Mendez</option>
-              <option>Magurang</option>
-              <option>Matacon</option>
-              <option>Pintor</option>
-              <option>Pinagdapugan</option>
-              <option>Ponso</option>
-              <option>Quinale</option>
-              <option>San Roque</option>
-              <option>Santicon</option>
-              <option>Sugcad</option>
-              <option>Salvacion</option>
-              <option>Ubaliw</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label"
-              >Password <span style="color: var(--primary)">*</span></label
-            >
-            <div class="pw-wrap">
-              <input
-                class="form-input"
-                id="regPassword"
-                type="password"
-                placeholder="Min. 6 characters"
-              />
-              <button
-                class="pw-eye"
-                onclick="togglePw('regPassword', this)"
-                type="button"
-              >
-                <i class="fa-solid fa-eye"></i>
-              </button>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-label"
-              >Confirm Password
-              <span style="color: var(--primary)">*</span></label
-            >
-            <div class="pw-wrap">
-              <input
-                class="form-input"
-                id="regConfirm"
-                type="password"
-                placeholder="Repeat password"
-                onkeypress="if (event.key === 'Enter') doRegister();"
-              />
-              <button
-                class="pw-eye"
-                onclick="togglePw('regConfirm', this)"
-                type="button"
-              >
-                <i class="fa-solid fa-eye"></i>
-              </button>
-            </div>
-          </div>
-          <button class="submit-btn" id="registerBtn" onclick="doRegister()">
-            <i class="fa-solid fa-user-plus"></i> Mag-register / Register
-          </button>
-        </div>
-
-        <div class="divider">or</div>
-        <div class="admin-link">
-          MDRRMO Admin?
-          <a href="/admin/dashboard.html">Admin Dashboard →</a>
-        </div>
-
-        <div class="auth-footer">
-          DRES Polangui · Polangui, Albay · Disaster Response System
         </div>
       </div>
-    </div>
+      <!-- /panel-register -->
 
+      <div class="auth-footer">DRES Polangui · MDRRMO · Polangui, Albay</div>
+    </div>
 
     <script>
       const API = "";
+      let selectedRole = null; // 'brgy' | 'resp' | 'admin'
+      let currentRegStep = 1;
 
+      /* ── TABS ── */
       function switchTab(tab) {
         document
           .querySelectorAll(".tab-btn")
@@ -217,42 +737,386 @@
           .getElementById("panel-register")
           .classList.toggle("active", tab === "register");
         hideAlert();
+        // Always reset register back to step 1 when switching to register tab
+        if (tab === "register" && currentRegStep === 2) {
+          goBackStep1();
+        }
       }
 
+      /* ── PW TOGGLE ── */
       function togglePw(id, btn) {
-  const inp = document.getElementById(id);
-  const icon = btn.querySelector("i");
-  if (inp.type === "password") {
-    inp.type = "text";
-    icon.className = "fa-solid fa-eye";
-  } else {
-    inp.type = "password";
-    icon.className = "fa-solid fa-eye-slash";
-  }
-}
+        const inp = document.getElementById(id);
+        const icon = btn.querySelector("i");
+        if (inp.type === "password") {
+          inp.type = "text";
+          icon.className = "fa-solid fa-eye";
+        } else {
+          inp.type = "password";
+          icon.className = "fa-solid fa-eye-slash";
+        }
+      }
 
+      /* ── ALERT ── */
       function showAlert(msg, type = "error") {
         const el = document.getElementById("authAlert");
-        el.innerHTML = msg;
+        el.innerHTML =
+          '<i class="fa-solid fa-' +
+          (type === "error"
+            ? "circle-exclamation"
+            : type === "success"
+              ? "circle-check"
+              : "circle-info") +
+          '"></i> ' +
+          msg;
         el.className = `alert show ${type}`;
+        el.scrollIntoView({ behavior: "smooth", block: "nearest" });
       }
       function hideAlert() {
         document.getElementById("authAlert").className = "alert";
       }
 
-      async function doLogin() {
-        const email = document.getElementById("loginEmail").value.trim();
-        const password = document.getElementById("loginPassword").value;
-        if (!email || !password) {
-          showAlert( '<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Ilagay ang email at password.');
+      /* ── ROLE SELECT ── */
+      function selectRole(role) {
+        selectedRole = role;
+        document.querySelectorAll(".role-card").forEach((c) => {
+          c.classList.remove("selected");
+        });
+        document.getElementById("rc-" + role).classList.add("selected");
+        // Admin note
+        const note = document.getElementById("adminNote");
+        note.classList.toggle("show", role === "admin");
+        // Update continue btn color
+        const btn = document.getElementById("step1Btn");
+        btn.className =
+          "submit-btn " +
+          (role === "brgy" ? "blue" : role === "resp" ? "green" : "gold");
+        hideAlert();
+      }
+
+      /* ── STEP NAV ── */
+      function goStep2() {
+        if (!selectedRole) {
+          showAlert("Please select an account type to continue.", "error");
           return;
         }
+        hideAlert();
+        // Show step2
+        document.getElementById("reg-step1").classList.remove("active");
+        document.getElementById("reg-step2").classList.add("active");
+        currentRegStep = 2;
+        // Set role indicator
+        const map = {
+          brgy: {
+            cls: "brgy",
+            icon: "fa-house-user",
+            text: "Barangay Officer / Personnel",
+          },
+          resp: {
+            cls: "resp",
+            icon: "fa-helmet-safety",
+            text: "Respondent / Field Personnel",
+          },
+          admin: {
+            cls: "admin",
+            icon: "fa-shield-halved",
+            text: "MDRRMO Administrator",
+          },
+        };
+        const m = map[selectedRole];
+        const ind = document.getElementById("roleIndicator");
+        ind.className = "role-indicator " + m.cls;
+        ind.querySelector("i").className = "fa-solid " + m.icon;
+        document.getElementById("roleIndicatorText").textContent = m.text;
+        // Show correct fields
+        ["brgy", "resp", "admin"].forEach(
+          (r) =>
+            (document.getElementById("fields-" + r).style.display =
+              r === selectedRole ? "block" : "none"),
+        );
+        // Update register btn
+        const rBtn = document.getElementById("registerBtn");
+        rBtn.className =
+          "submit-btn " +
+          (selectedRole === "brgy"
+            ? "blue"
+            : selectedRole === "resp"
+              ? "green"
+              : "gold");
+        document.getElementById("regBtnText").textContent =
+          selectedRole === "admin" ? "Submit for Approval" : "Create Account";
+        // PW strength + field validators
+        document
+          .getElementById("reg-password")
+          .addEventListener("input", updatePwStrength);
+        document.getElementById("pwStrength").style.display = "block";
+        initFieldValidators(selectedRole);
+      }
 
+      function goBackStep1() {
+        document.getElementById("reg-step2").classList.remove("active");
+        document.getElementById("reg-step1").classList.add("active");
+        currentRegStep = 1;
+        hideAlert();
+      }
+
+      /* ── PW STRENGTH ── */
+      function updatePwStrength() {
+        const pw = document.getElementById("reg-password").value;
+        let score = 0;
+        if (pw.length >= 8) score++;
+        if (/[A-Z]/.test(pw)) score++;
+        if (/[0-9]/.test(pw)) score++;
+        if (/[^A-Za-z0-9]/.test(pw)) score++;
+        const bar = document.getElementById("pwBar");
+        const lbl = document.getElementById("pwLabel");
+        const levels = [
+          { w: "25%", bg: "#e03030", t: "Weak" },
+          { w: "50%", bg: "#e8821a", t: "Fair" },
+          { w: "75%", bg: "#f5c518", t: "Good" },
+          { w: "100%", bg: "#16c55e", t: "Strong" },
+        ];
+        const l = levels[Math.min(score, 4) - 1] || levels[0];
+        bar.style.width = pw ? l.w : "0";
+        bar.style.background = l.bg;
+        lbl.textContent = pw ? l.t : "";
+        lbl.style.color = pw ? l.bg : "var(--text3)";
+      }
+
+      /* ── HELPERS ── */
+      function getField(id) {
+        const el = document.getElementById(id);
+        return el ? el.value.trim() : "";
+      }
+
+      function isValidEmail(v) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+      }
+      function isValidPhone(v) {
+        return /^(09|\+639)\d{9}$/.test(v.replace(/[-\s]/g, ""));
+      }
+
+      /* ── FIELD VALIDATION HELPERS ── */
+      function setFieldError(id, msg) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.borderColor = "rgba(224,48,48,0.6)";
+        el.style.boxShadow = "0 0 0 3px rgba(224,48,48,0.12)";
+        let hint = el.parentElement.querySelector(".field-hint");
+        if (!hint) {
+          // go up one if wrapped in input-wrap
+          hint = el.closest(".form-group")?.querySelector(".field-hint");
+        }
+        if (!hint) {
+          hint = document.createElement("div");
+          hint.className = "field-hint";
+          hint.style.cssText =
+            "font-size:0.71rem;margin-top:0.3rem;display:flex;align-items:center;gap:0.3rem;";
+          const wrap =
+            el.closest(".pw-wrap") ||
+            el.closest(".input-wrap") ||
+            el.parentElement;
+          wrap.insertAdjacentElement("afterend", hint);
+        }
+        hint.innerHTML =
+          '<i class="fa-solid fa-circle-exclamation" style="color:#e03030;font-size:0.68rem"></i><span style="color:rgba(224,48,48,0.85)">' +
+          msg +
+          "</span>";
+      }
+      function clearFieldError(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.style.borderColor = "";
+        el.style.boxShadow = "";
+        const group = el.closest(".form-group");
+        if (group) {
+          const h = group.querySelector(".field-hint");
+          if (h) h.remove();
+        }
+      }
+      function setFieldOk(id) {
+        const el = document.getElementById(id);
+        if (!el || !el.value.trim()) return;
+        el.style.borderColor = "rgba(22,197,94,0.5)";
+        el.style.boxShadow = "0 0 0 3px rgba(22,197,94,0.1)";
+        const group = el.closest(".form-group");
+        if (group) {
+          const h = group.querySelector(".field-hint");
+          if (h) h.remove();
+        }
+      }
+
+      /* ── PHONE AUTO-FORMATTER ── */
+      function attachPhoneFormatter(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("input", function () {
+          let v = this.value.replace(/\D/g, "");
+          if (v.startsWith("63")) v = "0" + v.slice(2);
+          if (v.length > 11) v = v.slice(0, 11);
+          if (v.length > 7)
+            this.value = v.slice(0, 4) + "-" + v.slice(4, 7) + "-" + v.slice(7);
+          else if (v.length > 4) this.value = v.slice(0, 4) + "-" + v.slice(4);
+          else this.value = v;
+        });
+        el.addEventListener("blur", function () {
+          const raw = this.value.replace(/[-\s]/g, "");
+          if (this.value && !isValidPhone(raw))
+            setFieldError(id, "Enter a valid PH mobile number (09XX-XXX-XXXX)");
+          else if (this.value) setFieldOk(id);
+        });
+      }
+
+      /* ── EMAIL VALIDATOR (blur) ── */
+      function attachEmailValidator(id) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("blur", function () {
+          if (this.value && !isValidEmail(this.value.trim()))
+            setFieldError(id, "Enter a valid email address");
+          else if (this.value.trim()) setFieldOk(id);
+        });
+        el.addEventListener("input", function () {
+          if (isValidEmail(this.value.trim())) setFieldOk(id);
+        });
+      }
+
+      /* ── TEXT FIELD BLUR VALIDATOR ── */
+      function attachRequiredValidator(id, msg) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("blur", function () {
+          if (!this.value.trim()) setFieldError(id, msg);
+          else setFieldOk(id);
+        });
+        el.addEventListener("input", function () {
+          if (this.value.trim()) clearFieldError(id);
+        });
+      }
+
+      /* ── SELECT BLUR VALIDATOR ── */
+      function attachSelectValidator(id, msg) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.addEventListener("change", function () {
+          if (!this.value) setFieldError(id, msg);
+          else setFieldOk(id);
+        });
+      }
+
+      /* ── CONFIRM PASSWORD MATCH ── */
+      function attachConfirmMatch() {
+        const confirm = document.getElementById("reg-confirm");
+        const pw = document.getElementById("reg-password");
+        if (!confirm || !pw) return;
+        function check() {
+          if (!confirm.value) return;
+          if (confirm.value !== pw.value) {
+            confirm.style.borderColor = "rgba(224,48,48,0.6)";
+            confirm.style.boxShadow = "0 0 0 3px rgba(224,48,48,0.12)";
+            let hint = confirm
+              .closest(".form-group")
+              ?.querySelector(".field-hint");
+            if (!hint) {
+              hint = document.createElement("div");
+              hint.className = "field-hint";
+              hint.style.cssText =
+                "font-size:0.71rem;margin-top:0.3rem;display:flex;align-items:center;gap:0.3rem;";
+              const wrap = confirm.closest(".pw-wrap") || confirm.parentElement;
+              wrap.insertAdjacentElement("afterend", hint);
+            }
+            hint.innerHTML =
+              '<i class="fa-solid fa-circle-xmark" style="color:#e03030;font-size:0.68rem"></i><span style="color:rgba(224,48,48,0.85)">Passwords do not match</span>';
+          } else {
+            confirm.style.borderColor = "rgba(22,197,94,0.5)";
+            confirm.style.boxShadow = "0 0 0 3px rgba(22,197,94,0.1)";
+            let hint = confirm
+              .closest(".form-group")
+              ?.querySelector(".field-hint");
+            if (!hint) {
+              hint = document.createElement("div");
+              hint.className = "field-hint";
+              hint.style.cssText =
+                "font-size:0.71rem;margin-top:0.3rem;display:flex;align-items:center;gap:0.3rem;";
+              const wrap = confirm.closest(".pw-wrap") || confirm.parentElement;
+              wrap.insertAdjacentElement("afterend", hint);
+            }
+            hint.innerHTML =
+              '<i class="fa-solid fa-circle-check" style="color:#16c55e;font-size:0.68rem"></i><span style="color:rgba(22,197,94,0.85)">Passwords match</span>';
+          }
+        }
+        confirm.addEventListener("input", check);
+        pw.addEventListener("input", function () {
+          if (confirm.value) check();
+        });
+      }
+
+      /* ── INIT VALIDATORS AFTER ROLE FIELDS SHOWN ── */
+      function initFieldValidators(role) {
+        if (role === "brgy") {
+          attachRequiredValidator("brgy-name", "Full name is required");
+          attachSelectValidator("brgy-position", "Please select your position");
+          attachSelectValidator("brgy-barangay", "Please select your barangay");
+          attachPhoneFormatter("brgy-contact");
+          attachEmailValidator("brgy-email");
+        } else if (role === "resp") {
+          attachRequiredValidator("resp-name", "Full name is required");
+          attachSelectValidator("resp-team", "Please select your team/unit");
+          attachPhoneFormatter("resp-contact");
+          attachEmailValidator("resp-email");
+        } else {
+          attachRequiredValidator("admin-name", "Full name is required");
+          attachSelectValidator(
+            "admin-designation",
+            "Please select your designation",
+          );
+          attachRequiredValidator("admin-officeid", "Office ID is required");
+          attachPhoneFormatter("admin-contact");
+          attachEmailValidator("admin-email");
+        }
+        attachConfirmMatch();
+      }
+
+      /* ── REMEMBER ME — restore saved email on page load ── */
+      window.addEventListener("DOMContentLoaded", function () {
+        const saved = localStorage.getItem("dres_remembered_email");
+        if (saved) {
+          document.getElementById("loginEmail").value = saved;
+          document.getElementById("rememberMe").checked = true;
+        }
+        // Enter key on email field triggers login
+        document
+          .getElementById("loginEmail")
+          .addEventListener("keypress", function (e) {
+            if (e.key === "Enter")
+              document.getElementById("loginPassword").focus();
+          });
+      });
+
+      /* ── LOGIN ── */
+      async function doLogin() {
+        const email = getField("loginEmail");
+        const password = document.getElementById("loginPassword").value;
+        if (!email) {
+          setFieldError("loginEmail", "Email is required");
+          return;
+        }
+        if (!isValidEmail(email)) {
+          setFieldError("loginEmail", "Enter a valid email address");
+          return;
+        }
+        if (!password) {
+          showAlert("Please enter your password.");
+          return;
+        }
         const btn = document.getElementById("loginBtn");
         btn.disabled = true;
-        btn.textContent = '<i class="fa-solid fa-spinner fa-spin fa-spin-reverse" style="color: rgb(203, 226, 255);"></i> Logging in...';
+        btn.innerHTML =
+          '<i class="fa-solid fa-spinner fa-spin"></i> Signing in...';
         hideAlert();
-
+        // Handle remember me
+        const remember = document.getElementById("rememberMe")?.checked;
+        if (remember) localStorage.setItem("dres_remembered_email", email);
+        else localStorage.removeItem("dres_remembered_email");
         try {
           const res = await fetch(`${API}/api/auth/login`, {
             method: "POST",
@@ -260,98 +1124,194 @@
             body: JSON.stringify({ email, password }),
           });
           const data = await res.json();
-
           if (!res.ok) {
-            showAlert('<i class="fa-regular fa-circle-xmark" style="color: rgb(255, 7, 7);"></i>' + (data.detail || "Invalid email or password."));
+            showAlert(data.detail || "Invalid email or password.");
             return;
           }
-
           const u = data.data;
           sessionStorage.setItem("user_id", u.user_id);
           sessionStorage.setItem("user_name", u.name);
           sessionStorage.setItem("user_email", u.email);
           sessionStorage.setItem("token", u.token);
           sessionStorage.setItem("role", u.role);
-
-          showAlert(
-            '<i class="fa-solid fa-circle-check" style="color: rgb(0, 214, 10);"></i> Welcome back, ' + u.name + "! Redirecting...",
-            "success",
-          );
+          const dest =
+            {
+              brgy_officer: "/brgy/dashboard.html",
+              respondent: "/respondent/dashboard.html",
+              admin: "/admin/dashboard.html",
+            }[u.role] || "/dashboard.html";
+          showAlert("Welcome, " + u.name + "! Redirecting...", "success");
           setTimeout(() => {
-            window.location.href = "/resident/dashboard.html";
+            window.location.href = dest;
           }, 1200);
         } catch (e) {
-          showAlert(
-            '<i class="fa-solid fa-xmark" style="color: rgb(225, 11, 11);"></i> Hindi ma-reach ang server. Siguraduhing tumatakbo ang backend.',
-          );
+          showAlert("Cannot reach server. Make sure the backend is running.");
         } finally {
           btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-arrow-right-to-bracket"></i> Mag-login / Login';
+          btn.innerHTML =
+            '<i class="fa-solid fa-arrow-right-to-bracket"></i> Sign In';
         }
       }
 
-      async function doRegister() {
-        const name = document.getElementById("regName").value.trim();
-        const email = document.getElementById("regEmail").value.trim();
-        const barangay = document.getElementById("regBarangay").value;
-        const password = document.getElementById("regPassword").value;
-        const confirm = document.getElementById("regConfirm").value;
-
-        if (!name) {
-          showAlert('<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Ilagay ang inyong pangalan.');
+      /* ── FORGOT PASSWORD ── */
+      function showForgotPw(e) {
+        e.preventDefault();
+        const email = getField("loginEmail");
+        if (!email || !isValidEmail(email)) {
+          setFieldError(
+            "loginEmail",
+            "Enter your email above first, then click Forgot password",
+          );
+          document.getElementById("loginEmail").focus();
           return;
+        }
+        showAlert(
+          "If <strong>" +
+            email +
+            "</strong> is registered, a reset link will be sent. Please contact your MDRRMO admin if you need immediate access.",
+          "info",
+        );
+        // Uncomment and wire to your backend:
+        // fetch(`${API}/api/auth/forgot-password`, { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email}) });
+      }
+
+      /* ── REGISTER ── */
+      async function doRegister() {
+        if (!selectedRole) {
+          showAlert("No role selected.");
+          return;
+        }
+        let name,
+          email,
+          password,
+          confirm,
+          extra = {};
+        const pw = document.getElementById("reg-password").value;
+        confirm = document.getElementById("reg-confirm").value;
+        if (selectedRole === "brgy") {
+          name = getField("brgy-name");
+          email = getField("brgy-email");
+          const pos = getField("brgy-position"),
+            brgy = getField("brgy-barangay"),
+            contact = getField("brgy-contact");
+          if (!name) {
+            showAlert("Please enter your full name.");
+            return;
+          }
+          if (!pos) {
+            showAlert("Please select your position.");
+            return;
+          }
+          if (!brgy) {
+            showAlert("Please select your barangay.");
+            return;
+          }
+          if (!contact) {
+            showAlert("Please enter your contact number.");
+            return;
+          }
+          extra = { position: pos, barangay: brgy, contact };
+        } else if (selectedRole === "resp") {
+          name = getField("resp-name");
+          email = getField("resp-email");
+          const team = getField("resp-team"),
+            contact = getField("resp-contact"),
+            pid = getField("resp-id");
+          if (!name) {
+            showAlert("Please enter your full name.");
+            return;
+          }
+          if (!team) {
+            showAlert("Please select your team/unit.");
+            return;
+          }
+          if (!contact) {
+            showAlert("Please enter your contact number.");
+            return;
+          }
+          extra = { team, contact, personnel_id: pid };
+        } else {
+          name = getField("admin-name");
+          email = getField("admin-email");
+          const des = getField("admin-designation"),
+            oid = getField("admin-officeid"),
+            contact = getField("admin-contact");
+          if (!name) {
+            showAlert("Please enter your full name.");
+            return;
+          }
+          if (!des) {
+            showAlert("Please select your designation.");
+            return;
+          }
+          if (!oid) {
+            showAlert("Please enter your Office ID.");
+            return;
+          }
+          if (!contact) {
+            showAlert("Please enter your contact number.");
+            return;
+          }
+          extra = { designation: des, office_id: oid, contact };
         }
         if (!email) {
-          showAlert('<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Ilagay ang email address.');
+          showAlert("Please enter your email address.");
           return;
         }
-        if (!password) {
-          showAlert('<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Pumili ng password.');
+        if (!pw || pw.length < 8) {
+          showAlert("Password must be at least 8 characters.");
           return;
         }
-        if (password.length < 6) {
-          showAlert('<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Password ay dapat 6 characters man lang.');
+        if (pw !== confirm) {
+          showAlert("Passwords do not match.");
           return;
         }
-        if (password !== confirm) {
-          showAlert('<i class="fa-solid fa-circle-exclamation" style="color: rgb(255, 7, 7);"></i> Hindi magkapareho ang passwords.');
-          return;
-        }
-
+        password = pw;
         const btn = document.getElementById("registerBtn");
         btn.disabled = true;
-        btn.innerHTML = '<i class="fa-solid fa-spinner" style="color: rgb(116, 192, 252);"></i> Registering...';
+        btn.innerHTML =
+          '<i class="fa-solid fa-spinner fa-spin"></i> Processing...';
         hideAlert();
-
         try {
           const res = await fetch(`${API}/api/auth/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ name, email, password, barangay }),
+            body: JSON.stringify({
+              name,
+              email,
+              password,
+              role: selectedRole,
+              ...extra,
+            }),
           });
           const data = await res.json();
-
           if (!res.ok) {
-            showAlert("❌ " + (data.detail || "Registration failed."));
+            showAlert(data.detail || "Registration failed.");
             return;
           }
-
-          showAlert('<i class="fa-solid fa-circle-check" style="color: rgb(0, 214, 10);"></i> Account created! Redirecting to login...', "success");
-          setTimeout(() => {
-            document.getElementById("regName").value = "";
-            document.getElementById("regEmail").value = "";
-            document.getElementById("regPassword").value = "";
-            document.getElementById("regConfirm").value = "";
-            switchTab("login");
-            document.getElementById("loginEmail").value = email;
-          }, 1500);
+          if (selectedRole === "admin") {
+            showAlert(
+              "Application submitted! MDRRMO will contact you for verification.",
+              "info",
+            );
+          } else {
+            showAlert(
+              "Account created successfully! Redirecting to login...",
+              "success",
+            );
+            setTimeout(() => {
+              goBackStep1();
+              switchTab("login");
+              document.getElementById("loginEmail").value = email;
+            }, 1800);
+          }
         } catch (e) {
-          showAlert(
-            "❌ Hindi ma-reach ang server. Siguraduhing tumatakbo ang backend.",
-          );
+          showAlert("Cannot reach server. Make sure the backend is running.");
         } finally {
           btn.disabled = false;
-          btn.innerHTML = '<i class="fa-solid fa-user-plus" style="color: rgb(116, 192, 252);"></i> Mag-register / Register';
+          const t =
+            selectedRole === "admin" ? "Submit for Approval" : "Create Account";
+          btn.innerHTML = '<i class="fa-solid fa-user-plus"></i> ' + t;
         }
       }
     </script>
