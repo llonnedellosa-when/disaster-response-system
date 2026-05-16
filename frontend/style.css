@@ -9,7 +9,7 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  margin: 0;
+  margin: auto;
   padding: 0;
 }
 
@@ -233,7 +233,7 @@ body {
   display: grid;
   grid-template-columns: 1fr 1fr;
 
-  gap: 4px;
+  gap: 2px;
 
   padding: 6px;
 
@@ -613,6 +613,8 @@ body {
   cursor: pointer;
 
   transition: 0.22s ease;
+
+  width:400px;
 }
 
 .role-card:hover {
