@@ -1,6 +1,3 @@
-# auto_report.py — Add this to your backend/routes/ folder
-# Endpoint: GET /api/admin/summary-report
-# Generates a structured consolidated report for MDRRMO
 
 from fastapi import APIRouter
 from fastapi.responses import HTMLResponse
